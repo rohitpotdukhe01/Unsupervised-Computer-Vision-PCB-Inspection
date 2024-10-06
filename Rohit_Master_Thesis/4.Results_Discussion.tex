@@ -1,0 +1,173 @@
+\section{Results \& Discussion}
+
+This section presents the detailed findings and results of our experiments of using various unsupervised anomaly detection models for the task of identifying faulty solder joints in \gls{pcb}. The models which we have evaluated here are PatchCore(section \ref{subsec:patchcore}), \gls{dfm}(section \ref{subsec:dfm}), \gls{dfkde}(section \ref{subsec:dfkde}), EfficientAD(section \ref{subsec:efficientad}), FastFlow(section \ref{subsec:fastflow}), which uses different hyper parameters, feature extraction backbones and its layers. Our aim is the study the effectiveness of these models in comparison to the current baseline models used by Siemens \gls{yolo}(section \ref{subsec:yolo}), while also the factors affecting their performances.
+
+\subsection{Overall Performance of Models}
+
+%Table \ref{tab:overall model accuracy} shows the accuracy of best performing experiment for all the models. The \gls{yolo} \cite{Ultralytics2024} is our baseline model and the rest of the models are part of our approach. The baseline \gls{yolo} has an accuracy of \textbf{96.3\%}, and from our approach the best performing one is the PatchCore model with accuracy of \textbf{91.25\%}. Here as you can see none of the anomaly detection models could beat the baseline model. It was never the aim of this thesis to outperform the baseline model but try to come as close to it as possible. Most obvious reason for the baseline \gls{yolo} model's performance is because it was trained in supervised fashion, where the model had access to the images labels as well. While all the other models were trained in unsupervised fashion. Considering this the PatchCore model introduced by \cite{roth2022totalrecallindustrialanomaly} in year 2022 performs quite well and with no supervision.
+
+The table \ref{tab:overall model accuracy} and the bar chart \ref{fig:bar chart models accruacy} represents the overall accuracy performance of each model, which gives an initial overview of how these models compare in terms of how they classify anomalies correctly.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Model} & \textbf{Accuracy} \\ \hline
+        \textbf{Yolov8-L} & \textbf{95\%} \\ \hline
+        \textbf{Yolov8-M} & \textbf{93.75\%} \\ \hline
+        \textbf{PatchCore} & \textbf{91.25\%} \\ \hline
+        Deep Feature Modeling(DFM) & 72.85\% \\ \hline
+        Deep Feature Kernel Density Estimation(DFKDE) & 70.71\% \\ \hline
+        FastFlow & 66.87\% \\ \hline
+        EfficientAD & 60\% \\ \hline
+    \end{tabular}
+    \caption{Overall comparison of different models accuracy}
+    \label{tab:overall model accuracy}
+\end{table}
+
+The chart \ref{fig:bar chart models accruacy} provides a graphical representation of the same data of each models accuracy, where we can clearly visualize the performance of different models. As can be seen in table \ref{tab:overall model accuracy} and bar chart \ref{fig:bar chart models accruacy} that the baseline model \gls{yolo}v8-L achieves the highest accuracy of 95\%, while the best performing unsupervised model is PatchCore closely following with an accuracy of 91.25\%, with only a 2.5\% difference in the accuracy of different size of baseline model \gls{yolo}v8-M. Other models such as \gls{dfm}, \gls{dfkde}, FastFlow, and EfficientAD shows moderate performance. Here none of the unsupervised anomaly detection models could over take the supervised baseline model, one of the reasons for this is that the baseline model was trained in supervised fashion, where it had access to all the labels of the image dataset. Whereas the anomaly detection models were not given any labels of the images and while training only anomaly free data was used, and it had to figure out on its own which images are anomalous and which images are normal.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.1\linewidth]{Rohit_Master_Thesis//Images/bar_chart_model_acc.png}
+    \caption{Bar chart representation of the different models accuracy like \gls{yolo}(baseline), our approach including PatchCore, \gls{dfm}, \gls{dfkde}, FastFlow, and EfficientAD.}
+    \label{fig:bar chart models accruacy}
+\end{figure}
+
+\subsection{Model-wise breakdown of results}
+
+\paragraph*{PatchCore : }
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore heatmap.png}
+    \caption{PatchCore heatmap for the experiment where backbone "Wide Resnet50" and layers "2, 3" were used.}
+    \label{fig:patchcore heatmap}
+\end{figure}
+
+\iffalse
+\begin{figure}[ht!]
+    \centering  
+    % First image
+    \begin{minipage}{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Rohit_Master_Thesis//Images/patchcore_config1_confusion_matrix.jpg} % Add your image file name here
+        \caption{Configuration 1}
+    \end{minipage}
+    
+    \vspace{0.5cm} % Adds vertical space between images
+    
+    % Second image
+    \begin{minipage}{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Rohit_Master_Thesis//Images/patchcore_config2_confusion_matrix.jpg} % Add your image file name here
+        \caption{Configuration 2}
+    \end{minipage}
+    
+    \vspace{0.5cm} % Adds vertical space between images
+    
+    % Third image
+    \begin{minipage}{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Rohit_Master_Thesis//Images/patchcore_config3_confusion_matrix.jpg} % Add your image file name here
+        \caption{Configuration 3}
+    \end{minipage}
+    
+    \caption{Comparison of Confusion Matrices for Different Configurations.}
+    \label{fig:dataset-NG}
+\end{figure}
+\fi
+
+For this experiment, we employed PatchCore with \texttt{wide\_resnet50\_2} backbone as feature extraction for performing anomaly detection. Firstly the model extracts feature representations from specific layers of the backbone and then compares the patch-level features of test images with those stored in a memory bank built from normal data. PatchCore uses \gls{k-nn} retrival for detecting deviations from nominal behavior by calculating the anomaly score based on the distance between patches from the test image and their closest counterparts in the memory bank. This allows PatchCore to perform well when the labeled data is not abundantly available, this model is explained in much more detail in \ref{subsec:patchcore}.
+
+For the first configuration, we have used backbone \texttt{wide\_resnet50\_2} with layer2 and layer3 as shown in the heatmap \ref{fig:patchcore heatmap}. This configuration achieves an \gls{auroc} score of 0.8816 and an overall accuracy of 83.75\%. The F1 score was relatively strong at 0.8571, suggesting that the model maintained balance between precision and recall. The model had a precision of 0.7647 suggesting that sometimes the model classified normal data as anomalous, which resulted in moderate occurrence of false positive as can be confirmed by the confusion matrix \ref{fig:patchcore config1 confusion matrix}. Whereas, the high recall value of 0.975 indicates that the model was highly accurate in detecting almost all the anomalies as anomalies, with some false negatives as can be seen in the \ref{fig:patchcore config1 confusion matrix}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore_config1_confusion_matrix.jpg}
+    \caption{Confusion matrix for the first configuration where backbone "Wide Resnet50" and layers "2, 3" were used.}
+    \label{fig:patchcore config1 confusion matrix}
+\end{figure}
+
+The second configuration resulted in the best overall performance across all metrics, where the feature extraction was carried out by layer1 and layer2 of the same backbone \texttt{wide\_resnet50\_2}. This configuration resulted in a high \gls{auroc} score of 0.9271, with a significant increase in accuracy of 91.25\% as shown in the heatmap \ref{fig:patchcore heatmap}. We also saw improvement in F1 score by about 6.6\% from the previous configuration, reaching 0.9176 indicating an even better balance between precision and recall. The precision improved to 0.8667, indicating a reduction in false positives as can be seen in the confusion matrix \ref{fig:patchcore config2 confusion matrix} where the false positives reduced by 50\% from the first configuration. While the recall remained high but same as the first configuration at 0.975, meaning the model continued to detect almost all anomalies like show in the figure \ref{fig:patchcore config2 confusion matrix}. The improved performance of this configuration can be due to the use of features from the combination of layer1 and layer2, which incorporates the combination of both low-level and mid-level features. As low-level features might allow the model to detect fine-grained details, while layer2 might provide the more complex structures needed to detect anomalies. These features can provide a more richer, and detailed representation of normal data, making the detection of anomalies without overfitting on normal data easier.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore_config2_confusion_matrix.jpg}
+    \caption{Confusion matrix for the second configuration where backbone "Wide Resnet50" and layers "1, 2" were used.}
+    \label{fig:patchcore config2 confusion matrix}
+\end{figure}
+
+In the third configuration, layer2, layer3, layer4 was used of the backbone \texttt{wide\_resnet50\_2}, it resulted in lower \gls{auroc}score of 0.8807 which is almost equal to the \gls{auroc} score for first configuration, and the accuracy we got is 76.25\% which is the lowest of all the configuration. The F1 score also decreased slightly to 0.8061, due to drop in precision value to 0.6810. This lower precision indicates that the model produced higher number of false positives i.e. more normal images were classified as anomalous as can be seen in confusion matrix \ref{fig:patchcore config3 confusion matrix} where out 0f 80 normal images 37 were classified as anomalous. But the recall was the highest at 0.9875, which means that the model was still able to detect almost all of the anomalies as can been seen in the figure \ref{fig:patchcore config3 confusion matrix} out of 80, 79 were correctly classified as anomalous with only one being misclassified as normal. The inclusion of deeper layers, like layer4 probably introduced more abstract features which may have been less effective for the detection of fine-grained anomalies, resulting in the reduction of overall performance. This configuration highlights the importance of extraction of features from appropriate layers for ensuring balance between detecting true anomalies and avoiding excessive false positives.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore_config3_confusion_matrix.jpg}
+    \caption{Confusion matrix for the third configuration where backbone "Wide Resnet50" and layers "2, 3, 4" were used.}
+    \label{fig:patchcore config3 confusion matrix}
+\end{figure}
+
+\paragraph*{\gls{yolo} : }Two different model sizes of \gls{yolo}v8 \cite{Ultralytics2024} were evaluated for this experiment: \gls{yolo}v8-M(medium) and \gls{yolo}v8-L(large). Both the models were trained for 200 epochs on the training dataset.
+
+The \textbf{\gls{yolo}v8-L} model which is larger in size and more complex, reached accuracy of 95\% after 200 epochs. The model's high accuracy could be due to its increase in the depth and number of parameters, which allows it to capture more detailed and complex patterns in the dataset. Also it being a supervised model, having access to all the labels while training helps it to learn better and fit the model well to the data.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.3\linewidth]{Rohit_Master_Thesis//Images/yolov8l_confusion_matrix.png}
+    \caption{Confusion matrix for the baseline model \gls{yolo}v8-L, its accuracy is 95\%}
+    \label{fig:yolov8l confusion matrix}
+\end{figure}
+
+The confusion matrix as shown in figure \ref{fig:yolov8l confusion matrix} provides a more detailed look into how well the model performs in classification task. We can see that the model correctly classified all the normal(FC) images as normal, while only 6 were false positive i.e. anomalous(NG) images were classified as normal images, rest of the 74 were correctly classified as NG i.e. True Negatives. These values are consistent with the precision, recall and F1 score results as shown in table \ref{tab:yolov8_performance}. The precision of 1.0 highlights the models reliability in predicting normal(FC) instances, as it didn't make any incorrect predictions for that class. The recall of 0.925, while still quite good, indicates that the model, it misclassified a small number of anomalous(NG) as normal(FC). With the impressive F1 score of 0.9615, shows the models well-rounded performance.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 Score} \\ \hline
+        \textbf{YOLOv8-M} & 93.75\% & 0.9867 & 0.925 & 0.9547 \\ \hline
+        \textbf{YOLOv8-L} & 95\% & 1.0 & 0.925 & 0.9615 \\ \hline
+    \end{tabular}
+    \caption{Comparison of YOLOv8-M and YOLOv8-L Model Performance}
+    \label{tab:yolov8_performance}
+\end{table}
+
+%Probably for discussion section(remember to paraphrase)
+%Explanation of Results
+%The performance of YOLOv8-L is in line with its design as a larger, more powerful model. The depth and complexity of the YOLOv8-L architecture allow it to capture a wide variety of patterns and features in the data, leading to its high precision and recall. The non-maximum suppression (NMS) technique used in YOLOv8 helps further refine the predictions by ensuring that overlapping bounding boxes are filtered, resulting in more accurate object classification. Additionally, YOLOv8-L's anchor-free detection mechanism improves its ability to generalize across objects of various sizes, contributing to its robustness in detecting NG and FC items.
+
+The \textbf{\gls{yolo}v8-M} model, which is smaller and more lightweight when compared to \gls{yolo}v8-L, reaching an accuracy of 93.75\%. Which is slightly lower than its bigger model as can be seen from the table \ref{tab:yolov8_performance}, but it overall performance was still quite impressive.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.3\linewidth]{Rohit_Master_Thesis//Images/yolov8m_confusion_matrix.png}
+    \caption{Confusion matrix for the baseline model \gls{yolo}v8-M, its accuracy is 93.75\%}
+    \label{fig:yolov8m confusion matrix}
+\end{figure}
+
+The confusion matrix in figure \ref{fig:yolov8m confusion matrix} shows almost similar results to that of \gls{yolo}v8-L. With 79 True positives and 74 true negatives, while only making 6 false positives and 1 false negative predictions, apart from the 1 misclassified normal image as anomalous the results are similar to that of \gls{yolo}v8-L. This indicates that the \gls{yolo}v8-M performance though highly accurate, but still falls just short of \gls{yolo}v8-L's performance due to its smaller capacity for learning complex patterns. As can be seen from the table \ref{tab:yolov8_performance}, the model achieved a precision of 0.9867, meaning that almost all of the predictions of normal(FC) images were correct. The recall for both the \gls{yolo}v8-L and \gls{yolo}v8-M matches and is equal to 0.925, indicating that both the models were able to successfully detect same number of FC cases. The F1 score of the model was 0.9547, which is slightly lower than \gls{yolo}v8-L, due to the small decrease in the precision. While the model was highly accurate, it did produce a small number of false positives, in this case 6 anomalous(NG) images were misclassified as normal(FC), which reduced it's precision slightly.
+
+%See if you need to include loss and accuracy curve for both the models of YOLO
+
+%Probably for discussion section(remember to paraphrase)
+%Explanation of Results
+
+%YOLOv8-M strikes a balance between computational efficiency and accuracy. The model achieves 93.75\% accuracy, which is competitive given its smaller architecture compared to YOLOv8-L. The slightly lower performance is expected due to YOLOv8-M’s reduced depth and number of parameters, which limits its ability to capture as many intricate patterns in the data as YOLOv8-L. However, YOLOv8-M’s simpler structure makes it faster and more computationally efficient, making it suitable for tasks where real-time performance and resource limitations are important.
+
+%Model Comparison and Insights
+%YOLOv8-L outperforms YOLOv8-M by achieving 95\% accuracy, compared to YOLOv8-M’s 93.75\%. This difference in performance can be attributed to the larger number of layers and parameters in YOLOv8-L, which allows it to capture more detailed features from the dataset. YOLOv8-L’s larger architecture is particularly beneficial for classification tasks that involve complex patterns or subtle differences between classes, making it a better choice for applications where accuracy is critical.
+
+%However, YOLOv8-M offers significant advantages in terms of speed and computational efficiency. Despite having fewer layers, YOLOv8-M achieves strong results, making it a good option for scenarios where real-time inference is necessary or where computational resources are limited. The slight trade-off in accuracy is reasonable given the gains in efficiency, making YOLOv8-M ideal for environments where fast processing is prioritized over achieving the highest possible accuracy.
+
+\paragraph*{\gls{dfm} : }
+
+In this section, we will look into the results obtained from various experiments using \gls{dfm} with different configurations of backbones and its layers for feature extraction. \gls{dfm} is explained in the section \ref{subsec:dfm}, and in our experiments, we evaluated \gls{dfm} performance using various backbones, their layers, and pooling techniques to explore the robustness and accuracy of the model. Below the results are divided based on the backbone used. 
+
+\textbf{ResNet50} : Here we used ResNet50's layer4 for feature extraction along with \gls{nll} as the scoring type. This gave us the \gls{auroc} score of 0.6309 and F1 score of 0.6689, with an overall accuracy of 50.7\% which is not very good, its basically doing random guessing. The low F1 score suggests that while the model was good at detecting anomalies, it struggled with precision due to the high number of false positives. For another experiment conducted with ResNet50 was using layer2 for feature extraction, rest all the hyperparameters were the same as with layer4. This configuration produced 
+
+%\subsection{Layer wise performance comparison}
+
+%\subsection{Performance on NG images}
+
+%\subsection{Performance on FC images}
+

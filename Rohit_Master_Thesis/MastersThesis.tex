@@ -1,0 +1,224 @@
+\documentclass[12pt,oneside,reqno,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm}     % ams stuff should be before font loading
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}        % should be after font loading
+\usepackage{babel}
+\usepackage[numbers]{natbib}    % bibtex package
+%\usepackage{typearea}           % custom type area
+%   \areaset[0mm]{135mm}{210mm}  % typearea configuration
+%   \topmargin5mm                % typearea configuration
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{tocloft}
+%\usepackage{verbatim}
+\usepackage{forest}
+\usepackage{float}
+
+%Added the below two lines for adding chapter number in images
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
+\usepackage{ifpdf}
+\ifpdf
+  \pdfminorversion=5
+  \pdfoutput=1
+% Diese Pakete laufen anscheinend nur mit pdflatex gescheit
+    \usepackage[bitstream-charter]{mathdesign}
+    \usepackage[pdfusetitle,colorlinks=true,linktoc=all]{hyperref}
+\else
+    \usepackage{times}
+    \usepackage[dvips,ps2pdf,linktoc=all]{hyperref}
+
+\fi
+
+\ifdefined\hypersetup
+  \hypersetup{
+    pdfkeywords={}, linkcolor=black, citecolor=black, filecolor=black, urlcolor=black,
+  }
+\fi
+
+%Load additional packages
+\usepackage[utf8]{inputenc}
+
+% Load the required packages
+%\usepackage[binary-units,abbreviations]{siunitx}
+\usepackage[abbreviations, shortcuts=true]{glossaries-extra}
+
+% Set the abbreviation style
+\setabbreviationstyle{long-short}
+
+% Include the abbreviations file
+\input{abbreviations.tex}
+
+	
+\usepackage{blindtext}
+
+\usepackage{fancyhdr}
+
+% Das ist nur fuer den Blindtext zustaending
+
+
+% Blattlayout
+\textwidth15cm
+\textheight23cm
+\topmargin0cm
+\oddsidemargin0.5cm
+\evensidemargin0.5cm
+
+% Adjust header height as per the warning
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+% Einzug f"ur den Absatz
+\parindent0em
+\parskip0.5em
+% Header, Footer
+\usepackage{fancyhdr}
+ % Text in Kopfzeile aussen
+\fancyhead[LE,RO]{\nouppercase{\leftmark} }
+% Text in Kopfzeile innen
+\fancyhead[RE,LO]{}
+% Text in Fusszeile mittig
+\fancyfoot[CE,CO]{\thepage}
+\pagestyle{fancy}
+
+\begin{document}
+
+\pagenumbering{Alpha}
+\renewcommand{\thepage}{C-\Roman{page}}
+\begin{titlepage}
+      \textsf{
+    \begin{center}
+      %\vspace*{1cm}
+    \huge \textbf{Solder Inspection for Pseudo Error Reduction in Printed Circuit Board production using Unsupervised Learning} \\%TODO
+    \vspace{2cm}
+    \LARGE\textbf{Master's Thesis}\\[5mm]
+    \Large for the degree of \\[5mm]
+    \textbf{Master of Science (M.Sc.) \\[5mm]
+    Data Science\\[5mm]
+    %TODO Mathematics\\[5mm]
+    %TODO Mathematical Economics\\[5mm]
+    %TODO Data Sience\\[5mm]
+    %TODO Computational and Applied Mathematics \\[5mm]
+    }
+    at the Faculty of Sciences of\\ Friedrich-Alexander-Universität
+    Erlangen-Nürnberg\\[1cm]
+    in Cooperation with\\ Siemens AG, Berlin, Germany\\[1cm]
+    submitted on 01-07-2024 \\[3mm] %TODO
+    by \textbf{Rohit Potdukhe} %TODO
+    \vfill
+    \normalsize
+    Advisor: Prof. Dr. Enrique Zuazua\\Supervisor: Dr. Majid Mortazavi
+    \\[3em] %TODO
+    \includegraphics[width=0.5\textwidth]{logo/fau-nat-digital}
+    \end{center}
+%
+}
+\end{titlepage}
+
+\pagenumbering{Roman}
+
+\begin{center}
+    Ich versichere, dass ich die Arbeit ohne fremde Hilfe und ohne Benutzung anderer als der angegebenen Quellen angefertigt habe und dass die Arbeit in gleicher oder ähnlicher Form noch keiner anderen Prüfungsbehörde vorgelegen hat und von dieser als Teil einer Prüfungsleistung angenommen wurde. Alle Ausführungen, die wörtlich oder sinngemäß übernommen wurden, sind als solche gekennzeichnet.
+\end{center}
+
+\newpage 
+
+\textbf{Non-disclosure notice}
+
+
+The Academic Work contains confidential information that is subject to secrecy. Therefore, the Academic Work must not be duplicated or published without prior written approval of Siemens AG.\\\\\\\\\\
+
+
+\textbf{Sperrvermerk}
+
+
+Die Arbeit beinhaltet vertrauliche Informationen, die der Geheimhaltun unterliegen. Aus diesem Grund darf die Arbeit ohne vorherige schriftliche Zustimmung der Siemens AG nicht vervielfältigt oder veröffentlicht werden.
+
+\newpage
+\begin{center}
+    \section*{Acknowledgements}
+\end{center}
+\sloppy
+First and foremost, I would like to thank my advisor, Dr. Majid Mortazavi, for his invaluable guidance, support, and encouragement throughout the course of my research. His insights and expertise were crucial to the successful completion of this work.
+I am also deeply grateful to my supervisor, Prof. Dr. Enrique Zuazua, for his continuous support, constructive feedback, and for always being available to discuss ideas and provide guidance.
+I would like to extend my gratitude to Siemens AG, Berlin, Germany, for providing me with the opportunity to conduct my research in collaboration with their team and for providing me with the required resources.
+Finally my heartfelt thanks go to my family and friends for their unwavering support, patience, and understanding throughout this journey. Their encouragement has been a source of strength for me.
+
+\newpage % To ensure the abstract starts on a new page
+
+% Abstract
+\input{0.Abstract}
+
+
+
+
+\clearpage
+
+% Set the dots for the sections
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\tableofcontents
+
+\clearpage \pagenumbering{arabic}
+
+\include{1.Introduction}   % Introduction 
+\clearpage
+\include{2.Theory}   % (\chapter{})
+\clearpage
+\include{3.Methodology}   % (\chapter{})
+\clearpage
+\include{4.Results_Discussion}
+\clearpage
+\include{5.Conclusion_Future_Works}
+\input{chapter_summary}
+
+\clearpage
+%\printglossary[type=\acronymtype, toctitle=Abbreviations]
+\printunsrtglossary[type=abbreviations]
+%\printglossary[type=abbreviation]
+
+
+\clearpage
+\urlstyle{same}
+% Sollen Literaturnachweise eingebunden werden, die nicht zitiert wurden,
+% so kann der Befehl \nocite{} verwendet werden.
+%\bibliographystyle{plainurl}
+% Fuer deutschsprachige Texte fast besser geeignet
+
+
+\bibliographystyle{natdin}
+
+\bibliography{bibliography}
+\addcontentsline{toc}{section}{Bibliography}
+
+% Erklärung 
+
+\clearpage\thispagestyle{empty}
+
+
+
+\begin{center}\textbf{\large Declaration}\end{center}
+
+\noindent
+ I hereby certify that I have written this thesis independently
+and that I have not used any sources or aids other than those indicated,
+that all passages of the work which have been taken over verbatim or in spirit from other sources
+from other sources have been marked as such and that the work 
+has not yet been submitted to any examination authority in the same or a similar form.
+
+
+\vspace{4\baselineskip}
+
+\noindent
+Erlangen, \today \hspace*{2cm} my signature
+
+% Lebenslauf
+
+\clearpage
+\input{CV}
+\addcontentsline{toc}{section}{Curriculum Vitae}
+\end{document}
+
+
+
