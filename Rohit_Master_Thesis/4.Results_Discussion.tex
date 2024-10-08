@@ -159,7 +159,7 @@ The confusion matrix in figure \ref{fig:yolov8m confusion matrix} shows almost s
 
 \paragraph*{\gls{dfm} : }
 
-In this section, we will look into the results obtained from various experiments using \gls{dfm} with different configurations of backbones and its layers for feature extraction. \gls{dfm} is explained in the section \ref{subsec:dfm}, and in our experiments, we evaluated \gls{dfm} performance using various backbones, their layers, and pooling techniques to explore the robustness and accuracy of the model. Below the results are divided based on the backbone used. 
+In this section, we will look into the results obtained from various experiments using \gls{dfm}. \gls{dfm} is explained in the section \ref{subsec:dfm}, and in our experiments, we evaluated \gls{dfm} performance using various backbones, their layers, and pooling techniques to explore the robustness and accuracy of the model. Below the results are divided based on the backbone used. 
 
 \textbf{ResNet50} : Here we used ResNet50's layer4 for feature extraction along with \gls{nll} as the scoring type. This gave us the \gls{auroc} score of 0.6309 and F1-score of 0.6689, with an overall accuracy of 50.7\% which is not very good as can be seen from the table \ref{tab:dfm resnet results}, its basically doing random guessing. The low F1-score suggests that while the model was good at detecting anomalies, it struggled with precision due to the high number of false positives. These findings suggests that using features extracted from higher layers like layer4, may have led the model to focus on more abstract, high-level features which are less effective at determining anomalies from normal samples.
 
@@ -181,7 +181,7 @@ Another configuration which we tried was using a different variant of ResNet50 c
 
 \textbf{Densenet} : 
 
-Next, we conducted experiments using different DenseNet backbones. Firstly we used DenseNet121, with beatures being extracted from the features.norm5 layer and the \gls{fre} score type. This configuration improved the models performance further, with an \gls{auroc} score of 0.7309 and an accuracy of 61.43\%. The model reached a precision of 0.5645 and a recall of 1.0, giving an F1-score of 0.7216. These improved scores suggests that the DenseNet architecture, which relies on dense connections and feature reuse, contributed to improved feature representations for anomaly detection. Table \ref{tab:dfm densenet results} shows the results of different backbones of DenseNet.
+Next, we conducted experiments using different DenseNet backbones. Firstly, we used DenseNet121, which extracted features from the features.norm5 layer and the \gls{fre} score type. This configuration improved the models performance further, with an \gls{auroc} score of 0.7309 and an accuracy of 61.43\%. The model reached a precision of 0.5645 and a recall of 1.0, giving an F1-score of 0.7216. These improved scores suggests that the DenseNet architecture, which relies on dense connections and feature reuse, contributed to improved feature representations for anomaly detection. Table \ref{tab:dfm densenet results} shows the results of different backbones of DenseNet.
 
 \begin{table}[ht!]
     \centering
@@ -217,7 +217,42 @@ After getting good results with the configuration explained above, we thought of
 
 \paragraph*{\gls{dfkde} : }
 
+Here we discuss the results obtained for the model \gls{dfkde}. It combines the power of \gls{dl} with statistical methods like \gls{pca} and \gls{kde}. The model first extracts robust features using a pretrained deep neural network, then reducing their dimensionality by using \gls{pca}, and finally applying \gls{kde} to model the distribution of normal data. Two backbones were tested in this experiments namely ResNet18 and Wide-ResNet50. The overview of the results for different configurations in the form of bar chart is shown in the figure \ref{fig:dfkde model results}.
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.2\linewidth]{Rohit_Master_Thesis//Images/dfkde_model_results.png}
+    \caption{DFKDE model results for different backbones. The values shown here include \gls{auroc} score, F1-score, accuracy, and precision.}
+    \label{fig:dfkde model results}
+\end{figure}
+
+\textbf{ResNet18} : 
+
+For the first experiment with ResNet18 backbone, we use the feature extraction layer1. This configuration aims at capturing the lower level basic features, and its trained with a maximum of 3000 training points to fit the \gls{kde} model.
+
+Its results are showed in the table \ref{tab:dfkde resnet18 results}. As can be seen, the performance is not quite good, with \gls{auroc} score of 0.7364 and an accuracy of 57.86\%. Precision is quite low at 0.5447, while recall is high at 0.9571, resulting in an F1-score of 0.6943. The lower precision value indicates that the features extracted from lower layer leads to introduction of noise, leading to higher false positives. While the high recall value suggests that the model was still able to detect most of the anomalies correctly. But still the overall performance of the model suffered as low-level features are less effective in anomaly detection for \gls{dfkde} model.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+        \hline
+        \textbf{Layer} & \textbf{AUROC} & \textbf{Accuracy(\%)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 Score} \\ \hline
+        Layer1, max training points 3000 & 0.7364 & 57.86\% & 0.5447 & 0.9571 & 0.6943 \\ \hline
+        Layer2, max training points 3000 & 0.7535 & 65.71\% & 0.6078 & 0.8857 & 0.7209 \\ \hline
+        Layer3, max training points 3000 & 0.7428 & 70.71\% & 0.6355 & 0.9714 & 0.7684 \\ \hline
+        Layer3, max training points 5000 & 0.7310 & 68.57\% & 0.6182 & 0.9714 & 0.7556 \\ \hline
+    \end{tabular}
+    \caption{Results for DFKDE Model with ResNet18 Backbone}
+    \label{tab:dfkde resnet18 results}
+\end{table}
+
+For the second experiment with ResNet18 backbone, we used feature extraction layer2, the number of maximum data points for \gls{kde} model remained the same as like before at 3000.
+
+The model achieved an \gls{auroc} score of 0.7535 which is slightly better than when features were extracted from layer1, an accuracy of 65,71\% is observed, which is about 14\% higher than that of configuration 1, as can be seen in the table \ref{tab:dfkde resnet18 results}. A precision of 0.6078, and a recall of 0.8857, resulting in an F1-score of 0.7209. This improvement in \gls{auroc} score and precision indicates that the mid-level features are more effective in anomaly detection for \gls{dfkde} model as they maintain balance of the low-level details and high-level semantic information. Even though recall slightly reduced compared to layer1, but the improvement in precision indicates a reduction in false positives.
+
+For the third experiment, we select layer3 for feature extraction of the backbone ResNet18, which is responsible for capturing higher-level semantic information. This layer offers a more abstract representation of the input data, which can be particularly suitable for anomaly detection tasks. This configuration was the best performing one in the \gls{dfkde} model.
+
+As shown in the table \ref{tab:dfkde resnet18 results} an \gls{auroc} score of 0.7427, an accuracy of 70.71\% which is more than 22\% higher than configuration 1, and more than 7\% higher than configuration 2. A further improvement in precision was observed at 0.6355, and a recall of 0.9714, leading to an F1-score of 0.7684. The layer3 features gives more abstract representations of the data, which helped reduce false positive rate further while also maintaining high recall. However, a slight dip in \gls{auroc} compared to layer2 configuration can indicate that while the high-level features are useful, they might lack some of the finer details necessary for achieving good anomaly detection performance.
 
 %\subsection{Layer wise performance comparison}
 
@@ -254,3 +289,5 @@ After getting good results with the configuration explained above, we thought of
 %The use of PCA for dimensionality reduction also played a crucial role in balancing the model’s performance. A PCA level of 0.97 generally provided a good balance between computational efficiency and information retention, while increasing the PCA level to 0.995 resulted in slightly higher overfitting and a decrease in precision. Additionally, the frequentist score type consistently outperformed the negative log-likelihood score in anomaly detection tasks, as it provided a more robust measure of the distance between the new data points and the normal data distribution.
 
 %In conclusion, the DFM model’s performance varied significantly across different configurations. The best-performing setup used DenseNet169 with features extracted from DenseBlock3, a PCA level of 0.97, and the frequentist score type, achieving a balance between high precision and recall while maintaining a high sensitivity to anomalies. Future work could explore the integration of attention mechanisms or ensemble methods to further improve precision and reduce the false-positive rate, particularly in configurations that show a tendency to misclassify normal samples as anomalies.
+
+%I can add diagram showing the performance according to layers
