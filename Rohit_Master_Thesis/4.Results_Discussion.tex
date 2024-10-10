@@ -236,7 +236,7 @@ Its results are showed in the table \ref{tab:dfkde resnet18 results}. As can be 
     \centering
     \begin{tabular}{|l|c|c|c|c|c|c|}
         \hline
-        \textbf{Layer} & \textbf{AUROC} & \textbf{Accuracy(\%)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1 Score} \\ \hline
+        \textbf{Configuration} & \textbf{AUROC} & \textbf{Accuracy(\%)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
         Layer1, max training points 3000 & 0.7364 & 57.86\% & 0.5447 & 0.9571 & 0.6943 \\ \hline
         Layer2, max training points 3000 & 0.7535 & 65.71\% & 0.6078 & 0.8857 & 0.7209 \\ \hline
         Layer3, max training points 3000 & 0.7428 & 70.71\% & 0.6355 & 0.9714 & 0.7684 \\ \hline
@@ -253,6 +253,89 @@ The model achieved an \gls{auroc} score of 0.7535 which is slightly better than 
 For the third experiment, we select layer3 for feature extraction of the backbone ResNet18, which is responsible for capturing higher-level semantic information. This layer offers a more abstract representation of the input data, which can be particularly suitable for anomaly detection tasks. This configuration was the best performing one in the \gls{dfkde} model.
 
 As shown in the table \ref{tab:dfkde resnet18 results} an \gls{auroc} score of 0.7427, an accuracy of 70.71\% which is more than 22\% higher than configuration 1, and more than 7\% higher than configuration 2. A further improvement in precision was observed at 0.6355, and a recall of 0.9714, leading to an F1-score of 0.7684. The layer3 features gives more abstract representations of the data, which helped reduce false positive rate further while also maintaining high recall. However, a slight dip in \gls{auroc} compared to layer2 configuration can indicate that while the high-level features are useful, they might lack some of the finer details necessary for achieving good anomaly detection performance.
+
+Next for the fourth experiment, to examine the effects of increasing the number of training points, we increased the max training points parameter to 5000 points to fit the \gls{kde} model, while keeping the backbone and the feature extraction layer the same as ResNet18 layer3. The goal was to see if more training data would improve \gls{kde}'s ability to model normal distribution, as the layer3 gave the best results.
+
+In table \ref{tab:dfkde resnet18 results}, we can see that the model reached an \gls{auroc} score of 0.7310, with an accuracy of 68.57\% which is lower than the third experiment, and with precision and recall of 0.6182 and 0.9714 respectively, leading to an F1-score of 0.7556.The performance was slightly worse than configuration 3 where layer3 with 3000 max training points were used. This indicates that the number of training points may be less important than the layer from which the features are extracted, at least beyond a threshold.
+
+\textbf{Wide-ResNet50} :
+
+The second backbone we experimented with was Wide-ResNet50-2, which is a wider version of the standard ResNet50 architecture. In this experiments features were extracted using the layer2 of the backbone. This configuration was chosen seeing as the middle layer performed better for the ResNet18 backbone experiments, and with the wider architecture which can capture more detailed feature representations, which could possibly improve the anomaly detection performance.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+        \hline
+        \textbf{Configuration} & \textbf{AUROC} & \textbf{Accuracy(\%)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
+        Layer2, max training points 3000 & 0.7725 & 67.86\% & 0.6344 & 0.8429 & 0.7239 \\ \hline
+    \end{tabular}
+    \caption{Results for DFKDE Model with Wide-ResNet50-2 Backbone}
+    \label{tab:dfkde wide-resnet50 results}
+\end{table}
+
+
+This configuration showed improved performance in \gls{auroc} score and precision as can be seen from the table \ref{tab:dfkde wide-resnet50 results} of 0.7725 and 0.6344 respectively. The accuracy was 67.86\%, and the recall fell to 0.8429, resulting in the F1-score of 0.7239. The wider architecture and mid-level features from the layer2 did help the model capture more subtle patterns in the data, which resulted in higher \gls{auroc} score when compared to ResNet18 experiments. The precision also slightly improved, indicating that the model was comparatively more accurate in detecting true anomalies. However, the lowest recall value of all the experiments combined from resNet18 and Wide-ResNet50 indicates that the model became slightly less sensitive to anomalies, likely as a result of the increase in specificity brought by the wider backbone.
+
+\paragraph*{FastFlow : }
+
+For this experiment, we used FastFlow model with ResNet18, Wide-ResNet50-2, \gls{deit}, \gls{cait} as backbones for feature extraction. An overview of all the result is shown in the form of bar chart in the figure \ref{fig:fastflow model results}. The best performing configuration in terms of accuracy was the one where \gls{deit} architecture was used for feature extraction achieving 66.87\%. Below we will discuss all the experiments and their results in detail, grouped based on the backbones being used.
+
+\textbf{ResNet18} : 
+
+
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.2\linewidth]{Rohit_Master_Thesis//Images/fastflow_model_results.png}
+    \caption{FastFlow model's results bar-chart for different configurations  and backbones used for feature extraction.}
+    \label{fig:fastflow model results}
+\end{figure}
+
+\paragraph*{EfficientAD : }
+
+EfficientAD is a novel approach to visual anomaly detection, specifically developed to operate at millisecond-level latencies. This model was introduced as a lightweight alternative to existing anomaly detection architectures. EfficientAD is built on a \gls{s-t} framework, where the teacher model learns representations from a more complex and larger model while the student attempts to mimic the teachers performance using fewer resources.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.2\linewidth]{Rohit_Master_Thesis//Images/efficientad_model_results.png}
+    \caption{EfficientAD models results bar-chart for different configurations used.}
+    \label{fig:efficientad model results}
+\end{figure}
+
+While the EfficientAD model claims to outperform existing models, such as PatchCore\cite{roth2022totalrecallindustrialanomaly}, as given in the paper \cite{batzner2024efficientadaccuratevisualanomaly}, the experimental results conducted in this study suggest otherwise. The performance of EfficientAD was found to be suboptimal when evaluated on unseen data, as can be seen in the diagram \ref{fig:efficientad model results}. This section will discuss the results of different configurations in detail.
+
+This experiments were carried out using three different configurations of the EfficientAD model. there are two sizes available for the model, which are EfficientAD\_S(small) and EfficientAD\_M(medium). For the first two configurations the model size was constant, but in the second configuration a callback mechanism was added. The Performance metrics used are same as the rest of the models namely \gls{auroc}, accuracy, precision, recall and F1-score. Also, confusion matrices were also generated to provide visual insights into the classification performance of the model.
+
+\textbf{EfficientAD-S} : 
+
+In the first configuration, the base model (EfficientAdModelSize.S) was used without callbacks as shown in the table \ref{tab:efficientad results}. This gave the \gls{auroc} of 0.7244. However, the model's accuracy was only 51.87\% which clearly highlights its struggles in correctly classifying the majority of images. More specifically, out of 80 normal images, only 4 were correctly classified, with the remaining 76 being classified as abnormal i.e. false positives. But on the other hand, the model performed quite well in detecting abnormal instances, with 79 out of 80 correctly classified as abnormal, resulting in a recall of 0.9875. But the precision is quite low at 0.5097, showing the imbalance between the true positives and false positives. The resulting F1-score was 0.6723, indicating a tendency towards recall, with the model detecting most anomalies but at the cost of misclassifying a large number of normal images as abnormal.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Model Size} & \textbf{AUROC} & \textbf{Accuracy(\%)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
+        EfficientAd-S & 0.7244 & 51.88\% & 0.5097 & 0.9875 & 0.6723 \\ \hline
+        EfficientAd-S (with callbacks) & 0.7203 & 51.25\% & 0.5063 & 1.0 & 0.6723 \\ \hline
+        EfficientAd-M & 0.6678 & 60\% & 0.5556 & 1.0 & 0.7143 \\ \hline
+    \end{tabular}
+    \caption{Performance of EfficientAD Models with Different Sizes}
+    \label{tab:efficientad results}
+\end{table}
+
+For the second configuration, the same model size (EfficientAdModelSize.S) was used, but ModelCheckpoint and EarlyStopping callbacks are added. The purpose of these callbacks was to improve the training process by making sure that the model didn't overfit and by preserving the best weights during the training. Despite these improvements, the model's \gls{auroc} dropped slightly to 0.7203, and an overall accuracy of which relatively remained same as before at 51.25\%, as seen in the table \ref{tab:efficientad results}. This result suggests that the callbacks had minimal to no impact on the models ability to generalize on unseen data. In terms of precision and recall, the scores were 0.5063, and 1.0 respectively, this shows us that while the model was able to classify all the abnormal images correctly, but it struggled a lot at classifying the normal images correctly and ended up with lots of false positives. The confusion matrix values further confirms these findings, with only 2 normal samples being correctly classifying with rest 78 being misclassified as abnormal. The F1-score came out to be 0.6723, which is identical to that of the first configuration with no callbacks.
+
+In the third and final configuration, the larger variant of the model (EfficientAdModelSize.M) was used. An \gls{auroc} score of 0.6678 was observed, which is less than the smaller models configurations scores, indicating a further decline in the model's ability to differentiate between normal and abnormal instances. Even then, an increase in overall accuracy was observed 60\% with 16 normal samples correctly classified as normal, with 64 still being misclassified as shown in the confusion matrix \ref{fig:efficientad confusion matrix}. Although this is an improvement compared to other configurations, the model still struggles with high number of false positives. The recall of 1.0 and increased precision of 0.5556, which indicates an improved ability to correctly classify more normal images. The resulting F1-score is 0.7143 which is an improvement over smaller models, but still far from ideal.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/efficientad_confusion_matrix_best.png}
+    \caption{Confusion matrix for the best performing configuration for EfficientAD model with size EfficientAdModelSize.M, its accuracy is 60\%}
+    \label{fig:efficientad confusion matrix}
+\end{figure}
+
+
+
 
 %\subsection{Layer wise performance comparison}
 
@@ -291,3 +374,28 @@ As shown in the table \ref{tab:dfkde resnet18 results} an \gls{auroc} score of 0
 %In conclusion, the DFM model’s performance varied significantly across different configurations. The best-performing setup used DenseNet169 with features extracted from DenseBlock3, a PCA level of 0.97, and the frequentist score type, achieving a balance between high precision and recall while maintaining a high sensitivity to anomalies. Future work could explore the integration of attention mechanisms or ensemble methods to further improve precision and reduce the false-positive rate, particularly in configurations that show a tendency to misclassify normal samples as anomalies.
 
 %I can add diagram showing the performance according to layers
+
+%DFKDE
+
+%Discussion of Results Based on Backbone
+%The results of the experiments show that the choice of backbone architecture and the layer from which features are extracted significantly affect the performance of the DFKDE model. Across the ResNet18 experiments, the best results were obtained when extracting features from layer2 or layer3, as these layers provided a balance between precision and recall. Layer1, which captures low-level features, produced the lowest precision and accuracy, likely due to its inability to capture the necessary high-level patterns required for accurate anomaly detection.
+
+%In contrast, the Wide-ResNet50-2 backbone consistently outperformed ResNet18 in terms of AUROC, suggesting that the wider architecture was more effective at capturing subtle differences between normal and anomalous data. However, the performance of the Wide-ResNet50-2 model was highly dependent on the number of principal components retained during the PCA step. Retaining too many components, as seen in the final experiment, introduced noise that reduced precision, while using fewer components provided a better balance between recall and precision.
+
+%In conclusion, the DFKDE model's performance is sensitive to both the choice of backbone architecture and the feature extraction layer. While ResNet18 provides satisfactory results, Wide-ResNet50-2 offers better overall performance, especially when mid-level features are extracted from layer2. The trade-off between precision and recall is heavily influenced by the layer used for feature extraction, and careful tuning of the PCA level is essential for optimizing the model’s anomaly detection capabilities. These findings suggest that DFKDE is a flexible and powerful anomaly detection framework, with its performance closely tied to the choices made during the feature extraction and dimensionality reduction processes.
+
+%EfficientAD Discussion
+%The results of the experiments demonstrate that while EfficientAD is designed for efficiency, it struggles with the accuracy and precision required for real-world anomaly detection tasks. In all three configurations, the model exhibited high recall, meaning that it was consistently able to identify abnormal instances. This is an important quality for anomaly detection, particularly in applications where it is critical to catch every possible anomaly. However, the model’s precision was consistently low across all configurations, highlighting a major issue: a significant number of normal samples were misclassified as anomalies.
+
+%One of the key reasons for this performance discrepancy could be the model's underlying architecture. EfficientAD's focus on reducing computational complexity through the use of a smaller student model might have come at the cost of reduced representational capacity. The model's teacher-student framework is designed to ensure that the student model can mimic the teacher’s outputs, but this transfer of knowledge might not be as effective when it comes to detecting subtle variations between normal and abnormal instances. In contrast, PatchCore, which relies on more robust and larger feature representations, seems to be better suited for capturing these nuances, which could explain why it outperformed EfficientAD in these experiments.
+
+%Another factor to consider is the dataset used in these experiments. While EfficientAD was trained and tested on a large-scale dataset like Imagenet, the generalization capabilities of the model may be limited when applied to unseen data. Anomaly detection is highly sensitive to the specific characteristics of the dataset, and a model that performs well on one dataset may not necessarily generalize to others. In this case, the dataset used for testing may contain subtle differences from the training data, which EfficientAD was unable to capture, leading to a higher rate of misclassification.
+
+%PatchCore’s superior performance can also be attributed to its underlying architectural advantages. PatchCore uses a memory bank of features extracted from the training data, which allows it to compare new samples against a more diverse and representative set of normal instances. This approach enables PatchCore to better detect subtle anomalies that might be overlooked by more simplified models like EfficientAD. In contrast, EfficientAD’s reliance on a student-teacher framework, while computationally efficient, may result in the loss of critical information that is necessary for accurate anomaly detection.
+
+%Additionally, PatchCore’s design allows for better feature extraction, as it does not reduce the complexity of the model as much as EfficientAD. This could explain why, despite being an older model, PatchCore consistently outperforms EfficientAD in terms of both precision and recall. EfficientAD's strength lies in its ability to operate in real-time and on resource-constrained devices, but this efficiency comes with trade-offs in accuracy that may not be acceptable for certain applications.
+
+%In conclusion, while EfficientAD offers an attractive solution for real-time anomaly detection in resource-constrained environments, it faces significant challenges in achieving the level of accuracy and precision required for high-stakes applications. The model’s high recall is commendable, but its low precision indicates that it generates too many false positives, which could limit its usability in certain domains. PatchCore, on the other hand, continues to outperform newer models like EfficientAD due to its more robust feature extraction and memory-based approach. As such, the choice between EfficientAD and PatchCore ultimately depends on the specific requirements of the application, with EfficientAD being more suited for real-time tasks where speed is of the essence, and PatchCore being the better choice for tasks where accuracy is paramount.
+
+
+
