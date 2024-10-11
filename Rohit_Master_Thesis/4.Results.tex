@@ -1,4 +1,4 @@
-\section{Results \& Discussion}
+\section{Results}
 
 This section presents the detailed findings and results of our experiments of using various unsupervised anomaly detection models for the task of identifying faulty solder joints in \gls{pcb}. The models which we have evaluated here are PatchCore(section \ref{subsec:patchcore}), \gls{dfm}(section \ref{subsec:dfm}), \gls{dfkde}(section \ref{subsec:dfkde}), EfficientAD(section \ref{subsec:efficientad}), FastFlow(section \ref{subsec:fastflow}), which uses different hyper parameters, feature extraction backbones and its layers. Our aim is the study the effectiveness of these models in comparison to the current baseline models used by Siemens \gls{yolo}(section \ref{subsec:yolo}), while also the factors affecting their performances.
 
@@ -278,18 +278,87 @@ This configuration showed improved performance in \gls{auroc} score and precisio
 
 \paragraph*{FastFlow : }
 
-For this experiment, we used FastFlow model with ResNet18, Wide-ResNet50-2, \gls{deit}, \gls{cait} as backbones for feature extraction. An overview of all the result is shown in the form of bar chart in the figure \ref{fig:fastflow model results}. The best performing configuration in terms of accuracy was the one where \gls{deit} architecture was used for feature extraction achieving 66.87\%. Below we will discuss all the experiments and their results in detail, grouped based on the backbones being used.
+For this experiment, we used FastFlow model with ResNet18, Wide-ResNet50-2, \gls{deit}, \gls{cait} as backbones for feature extraction. An overview of all the result is shown in the form of bar chart in the figure \ref{fig:fastflow model results}. The best performing configuration in terms of accuracy was the one where \gls{deit} architecture was used for feature extraction achieving 66.87\%. Below we will discuss all the experiments and their results in detail, grouped based on the backbones being used. Here all the models were trained for 50 epochs except for when callbacks functionality is used, then its trained until a condition is met.
 
-\textbf{ResNet18} : 
-
-
-
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.2\linewidth]{Rohit_Master_Thesis//Images/fastflow_model_results.png}
     \caption{FastFlow model's results bar-chart for different configurations  and backbones used for feature extraction.}
     \label{fig:fastflow model results}
 \end{figure}
+
+\textbf{ResNet18} : 
+
+For the first experiment, we have used ResNet18 as backbone for feature extraction. This configuration achieved an \gls{auroc} score of 0.9199, which is quite good and it demonstrates the models effectiveness in distinguishing normal images from abnormal ones on training and testing dataset. But, the overall accuracy on the unseen custom dataset is as good as random guessing equating to 51.88\%, reflecting imbalanced classification performance, as shown in the table \ref{tab:fastflow resnet18}. The recall of 1.0 shows that the model was able to detect all anomalous instances. However, the precision was low, at 0.5096, giving an F1 score of 0.6751. 
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Backbone} & \textbf{Accuracy (\%)} & \textbf{AUROC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
+        ResNet18 & 51.88\% & 0.9199 & 0.5096 & 1.0 & 0.6751 \\ \hline
+    \end{tabular}
+    \caption{Results for FastFlow model with ResNet18 Backbone}
+    \label{tab:fastflow resnet18}
+\end{table}
+
+From the confusion matrix results shows that out of 80 normal samples, only 3 were correctly classified, while 77 were misclassified as abnormal. This significant misclassification of normal samples can be due to simplicity of the ResNet18 architecture, which might lack the depth required to correctly capture subtle differences between normal and anomalous features. Due to this, the model’s ability to generalize across the dataset declined, showing its bias toward identifying anomalies, but at the cost of higher false positives.
+
+\textbf{Wide-ResNet50} :
+
+For the second experiment, we used Wide-ResNet50-2 backbone for feature extraction. Along with that we employed callback mechanism, here we used early stopping, which monitors the image\_AUROC while training and when it stays the same for 5 consecutive epochs then the training stops and those weights are saved. As can be seen in the table \ref{tab:fastflow wideresnet50}, the \gls{auroc} score dropped slightly to 0.9041, but again achieving 1.0 recall, indicating it was able to classify all the anomalous images correctly. However, the accuracy remained was 50\%, which means the model effectively didn't learn anything and is just making random guesses. The precision was 0.5, resulting in an F1-score of 0.666.
+
+From the results of confusion matrix, we can see that the performance was terrible as the model classified all the images whether it's normal or abnormal images as abnormal.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Backbone} & \textbf{Accuracy (\%)} & \textbf{AUROC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
+        Wide-ResNet50-2 (with callbacks) & 50.00\% & 0.9041 & 0.5000 & 1.0 & 0.6667 \\ \hline
+        Wide-ResNet50-2 & 58.13\% & 0.9125 & 0.5442 & 1.0 & 0.7048 \\ \hline
+    \end{tabular}
+    \caption{Results for FastFlow with Wide-ResNet50-2 Backbone}
+    \label{tab:fastflow wideresnet50}
+\end{table}
+
+Looking at the above results we decided to see the effect on the FastFlow model by keeping all the hyperparameters same, but removing the callback mechanism and letting the training continue for 50 epochs. The \gls{auroc} score increased to 0.9125, suggesting that the model's longer training led to better feature extraction. Along with that, the accuracy improved to 58.13\%, with precision reaching at 0.5442 and recall of 1.0. Resulting in an F1 score of 0.7048.
+
+The results of confusion matrix showed improvement as well, the number of correctly classified normal samples increased to 13, however 67 normal samples still misclassified as abnormal. This suggests that extended training helps the model better differentiate between normal and anomalous samples. This performance improvement can also be due to the backbone's ability to capture more better features over a longer training period, refining the normalizing flow process and providing a more detailed understanding of normality in the dataset. Further increase in epochs didn't show much improvement here on.
+
+\textbf{\gls{deit}\_base} : 
+
+For the fourth experiment, the "\gls{deit} Base Distilled Patch16\_384" backbone was used for feature extraction, and the model was trained for 50 epochs. This configuration resulted in an \gls{auroc} of 0.8787, which is slightly lower than the previous experiments. But despite that, the model achieved the highest accuracy so far for the FastFlow model, at 66.88\%. With a precision and recall of 0.6015, and 1.0 respectively, resulting in an F1 score of 0.7512 which is also the highest in all the experiments, as shown in the table \ref{tab:fastflow deit-base}.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Backbone} & \textbf{Accuracy (\%)} & \textbf{AUROC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
+        DeiT Base Distilled Patch16 384 & 66.88\% & 0.8787 & 0.6015 & 1.0 & 0.7512 \\ \hline
+    \end{tabular}
+    \caption{Results for FastFlow with DeiT\_Base Backbone}
+    \label{tab:fastflow deit-base}
+\end{table}
+
+The confusion matrix results shows that 27 normal images were correctly classified, with 53 being misclassified as abnormal, reflecting its improved performance in detecting normal images compared to earlier configurations. The transformer-based \gls{deit} backbone most likely contributed to these results, as its global attention mechanism allows the model to capture more contextual information across images. However, the slight drop in \gls{auroc} suggests that, while the model is capable of extracting features from normal samples, it might struggle more with identifying anomalies, which can be more subtle and context-dependent.
+
+\textbf{\gls{cait}} :
+
+For the fifth and final experiment, the "CaiT-M48" backbone was used and trained for 50 epochs. As can be seen from the table \ref{tab:fastflow cait}, this model achieved the highest image AUROC across all configurations, at 0.9223. The accuracy was 60.63\% which is about 9\% lower than the configuration with \gls{deit} as backbone, with a precision of 0.5594 and an F1 score of 0.7175.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Backbone} & \textbf{Accuracy (\%)} & \textbf{AUROC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\ \hline
+        CaiT M48 448 & 60.63\% & 0.9223 & 0.5594 & 1.0 & 0.7175 \\ \hline
+    \end{tabular}
+    \caption{Results for FastFlow with CaiT\_M48\_448 Backbone}
+    \label{tab:fastflow cait}
+\end{table}
+
+The confusion matrix results showed that 17 normal images were correctly classified, while 63 were misclassified as abnormal. Despite no improvement in accuracy over the \gls{deit} configuration results, the \gls{cait} backbone performed better at maintaining a balance between precision and recall.
 
 \paragraph*{EfficientAD : }
 
@@ -308,7 +377,7 @@ This experiments were carried out using three different configurations of the Ef
 
 \textbf{EfficientAD-S} : 
 
-In the first configuration, the base model (EfficientAdModelSize.S) was used without callbacks as shown in the table \ref{tab:efficientad results}. This gave the \gls{auroc} of 0.7244. However, the model's accuracy was only 51.87\% which clearly highlights its struggles in correctly classifying the majority of images. More specifically, out of 80 normal images, only 4 were correctly classified, with the remaining 76 being classified as abnormal i.e. false positives. But on the other hand, the model performed quite well in detecting abnormal instances, with 79 out of 80 correctly classified as abnormal, resulting in a recall of 0.9875. But the precision is quite low at 0.5097, showing the imbalance between the true positives and false positives. The resulting F1-score was 0.6723, indicating a tendency towards recall, with the model detecting most anomalies but at the cost of misclassifying a large number of normal images as abnormal.
+In the first configuration, the base model (EfficientAdModelSize.S) was used without callbacks as shown in the table \ref{tab:efficientad results}. This gave the \gls{auroc} of 0.7244. However, the model's accuracy was only 51.87\% which clearly highlights its struggles in correctly classifying the majority of images. More specifically, out of 80 normal images, only 4 were correctly classified, with the remaining 76 being classified as abnormal i.e. false positives. But on the other hand, the model performed quite well in detecting abnormal instances, with 79 out of 80 correctly classified as abnormal, resulting in a recall of 0.9875. But the precision is quite low at 0.5097, showing the imbalance between the true positives and false positives. The resulting F1-score was 0.6723, indicating a tendency towards recall, with the model detecting most anomalies but at the cost of misclassifying a large number of normal images as abnormal. Here all the models were trained for 50 epochs except for when callbacks functionality is used, then its trained until a condition is met.
 
 \begin{table}[ht!]
     \centering
@@ -344,6 +413,16 @@ In the third and final configuration, the larger variant of the model (Efficient
 %\subsection{Performance on FC images}
 
 \subsection{Discussion}
+
+%5.2 The Case for Unsupervised Models: Patchcore's Robustness
+
+%Patchcore emerged as the strongest unsupervised model, achieving 91.25% accuracy and an AUROC of 0.9271. One of the key strengths of Patchcore is its ability to function effectively without requiring labeled anomaly data, making it highly suitable for real-world industrial applications. This model leverages feature representations from multiple layers of the network (layer1 and layer2 in its best configuration), allowing it to capture complex anomalies across different scales and granularities.
+
+%Patchcore's F1 score of 0.9434 further underscores its effectiveness in balancing precision and recall, ensuring that false positives and false negatives are minimized. From a practical standpoint, this makes Patchcore a strong candidate for use in settings where it is crucial to minimize missed anomalies (false negatives) but also to reduce the burden of excessive false positives, which can lead to unnecessary inspections or interventions.
+
+%Additionally, Patchcore's confusion matrix reflects a well-rounded performance with only 2 false negatives and 12 false positives, highlighting its ability to handle both normal and abnormal cases effectively. This is especially important in applications such as predictive maintenance, where the cost of missing a potential failure is high, and unnecessary repairs due to false positives can also be costly.
+
+%Conclusion: Patchcore's robust performance without the need for labeled data makes it an ideal choice for unsupervised anomaly detection tasks, especially in industries like manufacturing, medical diagnostics, and predictive maintenance, where labeling anomalies is often impractical.
 
 % In discussions explain also the difference between scoring type fre and nll
 % In discussion also discuss why was the recall for most part 1.0
@@ -396,6 +475,17 @@ In the third and final configuration, the larger variant of the model (Efficient
 %Additionally, PatchCore’s design allows for better feature extraction, as it does not reduce the complexity of the model as much as EfficientAD. This could explain why, despite being an older model, PatchCore consistently outperforms EfficientAD in terms of both precision and recall. EfficientAD's strength lies in its ability to operate in real-time and on resource-constrained devices, but this efficiency comes with trade-offs in accuracy that may not be acceptable for certain applications.
 
 %In conclusion, while EfficientAD offers an attractive solution for real-time anomaly detection in resource-constrained environments, it faces significant challenges in achieving the level of accuracy and precision required for high-stakes applications. The model’s high recall is commendable, but its low precision indicates that it generates too many false positives, which could limit its usability in certain domains. PatchCore, on the other hand, continues to outperform newer models like EfficientAD due to its more robust feature extraction and memory-based approach. As such, the choice between EfficientAD and PatchCore ultimately depends on the specific requirements of the application, with EfficientAD being more suited for real-time tasks where speed is of the essence, and PatchCore being the better choice for tasks where accuracy is paramount.
+
+
+%Fastflow Discussion and Insights
+
+%Across the experiments, we observe that increasing model complexity through the use of wider or deeper backbones generally improves anomaly detection, though at the cost of classifying normal images less accurately. The backbone architectures like Wide-ResNet50-2, DeiT, and CaiT each offered unique advantages. Wide-ResNet50-2, with its increased width, struggled with balancing normal and anomalous classifications. DeiT, with its transformer-based approach, improved classification of normal samples, and CaiT’s deep attention mechanism allowed for even more nuanced understanding of the image space, reflected by its superior AUROC.
+
+%FastFlow’s reliance on normalizing flows works well in modeling the distribution of normal images but can struggle when anomalies are not sufficiently distinct in the feature space. This is evident from the precision-recall tradeoff seen across all experiments: while recall was consistently high, precision fluctuated, highlighting that misclassifications of normal samples as abnormal remained a challenge.
+
+%Incorporating pre-trained models provided a solid foundation, though the results suggest that the specific nature of anomaly detection tasks may require fine-tuning of these pre-trained backbones for optimal performance. Training for additional epochs, as seen in Experiments 3 through 5, consistently improved results, implying that FastFlow benefits from extended training periods to better capture the feature space of normal images.
+
+%These findings highlight that while FastFlow is effective at detecting anomalies, future work could focus on balancing the precision-recall tradeoff, perhaps through more advanced fine-tuning techniques or hybrid architectures that combine the benefits of convolutional networks and transformers, or more carefully tuned flow step configurations.
 
 
 
