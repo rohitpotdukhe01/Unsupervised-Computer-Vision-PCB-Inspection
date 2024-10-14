@@ -27,3 +27,6 @@ A notable observation across the evaluated models was the consistent high recall
 
 However, this emphasis on recall may come with the drawback of lower precision, as observed in some models. Precision measures the ability to correctly classify anomalies without misclassifying normal samples, and a lower precision value indicates a higher rate of false positives. In practical terms, while a high recall ensures comprehensive defect coverage, the accompanying lower precision necessitates additional post inspection checks to filter out the false positives.
 
+\section*{Final Thoughts}
+
+While none of the unsupervised learning models could outperform the baseline \gls{yolo} model, but PatchCore still provided competitive results. Its ability to correctly detect anomalies without the need for labeled data or a mask during training makes it a valuable alternative, especially in settings where labeling is costly or impractical. This not only helps reduce the dependency on extensive manual labeling but also significantly cuts down the associated costs, making PatchCore a practical choice for industrial applications. 
