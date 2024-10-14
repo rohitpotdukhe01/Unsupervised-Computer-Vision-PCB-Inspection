@@ -1,8 +1,8 @@
-\section{Results}
+\chapter{Results}
 
 This section presents the detailed findings and results of our experiments of using various unsupervised anomaly detection models for the task of identifying faulty solder joints in \gls{pcb}. The models which we have evaluated here are PatchCore(section \ref{subsec:patchcore}), \gls{dfm}(section \ref{subsec:dfm}), \gls{dfkde}(section \ref{subsec:dfkde}), EfficientAD(section \ref{subsec:efficientad}), FastFlow(section \ref{subsec:fastflow}), which uses different hyper parameters, feature extraction backbones and its layers. Our aim is the study the effectiveness of these models in comparison to the current baseline models used by Siemens \gls{yolo}(section \ref{subsec:yolo}), while also the factors affecting their performances.
 
-\subsection{Overall Performance of Models}
+\section{Overall Performance of Models}
 
 The table \ref{tab:overall model accuracy} and the bar chart \ref{fig:bar chart models accruacy} represents the overall accuracy performance of each model, which gives an initial overview of how these models compare in terms of how they classify anomalies correctly.
 
@@ -32,9 +32,9 @@ The chart \ref{fig:bar chart models accruacy} provides a graphical representatio
     \label{fig:bar chart models accruacy}
 \end{figure}
 
-\subsection{Model-wise breakdown of results}
+\section{Model-wise breakdown of results}
 
-\paragraph*{PatchCore : }
+\subsection*{PatchCore}
 
 \begin{figure}[H]
     \centering
@@ -105,7 +105,9 @@ In the third configuration, layer2, layer3, layer4 was used of the backbone \tex
     \label{fig:patchcore config3 confusion matrix}
 \end{figure}
 
-\paragraph*{\gls{yolo} : }Two different model sizes of \gls{yolo}v8 \cite{Ultralytics2024} were evaluated for this experiment: \gls{yolo}v8-M(medium) and \gls{yolo}v8-L(large). Both the models were trained for 200 epochs on the training dataset.
+\subsection*{\gls{yolo}}
+
+Two different model sizes of \gls{yolo}v8 \cite{Ultralytics2024} were evaluated for this experiment: \gls{yolo}v8-M(medium) and \gls{yolo}v8-L(large). Both the models were trained for 200 epochs on the training dataset.
 
 The \textbf{\gls{yolo}v8-L} model which is larger in size and more complex, reached accuracy of 95\% after 200 epochs. The model's high accuracy could be due to its increase in the depth and number of parameters, which allows it to capture more detailed and complex patterns in the dataset. Also it being a supervised model, having access to all the labels while training helps it to learn better and fit the model well to the data.
 
@@ -157,11 +159,13 @@ The confusion matrix in figure \ref{fig:yolov8m confusion matrix} shows almost s
 
 %However, YOLOv8-M offers significant advantages in terms of speed and computational efficiency. Despite having fewer layers, YOLOv8-M achieves strong results, making it a good option for scenarios where real-time inference is necessary or where computational resources are limited. The slight trade-off in accuracy is reasonable given the gains in efficiency, making YOLOv8-M ideal for environments where fast processing is prioritized over achieving the highest possible accuracy.
 
-\paragraph*{\gls{dfm} : }
+\subsection*{\gls{dfm}}
 
 In this section, we will look into the results obtained from various experiments using \gls{dfm}. \gls{dfm} is explained in the section \ref{subsec:dfm}, and in our experiments, we evaluated \gls{dfm} performance using various backbones, their layers, and pooling techniques to explore the robustness and accuracy of the model. Below the results are divided based on the backbone used. 
 
-\textbf{ResNet50} : Here we used ResNet50's layer4 for feature extraction along with \gls{nll} as the scoring type. This gave us the \gls{auroc} score of 0.6309 and F1-score of 0.6689, with an overall accuracy of 50.7\% which is not very good as can be seen from the table \ref{tab:dfm resnet results}, its basically doing random guessing. The low F1-score suggests that while the model was good at detecting anomalies, it struggled with precision due to the high number of false positives. These findings suggests that using features extracted from higher layers like layer4, may have led the model to focus on more abstract, high-level features which are less effective at determining anomalies from normal samples.
+\subsubsection*{ResNet50}
+
+Here we used ResNet50's layer4 for feature extraction along with \gls{nll} as the scoring type. This gave us the \gls{auroc} score of 0.6309 and F1-score of 0.6689, with an overall accuracy of 50.7\% which is not very good as can be seen from the table \ref{tab:dfm resnet results}, its basically doing random guessing. The low F1-score suggests that while the model was good at detecting anomalies, it struggled with precision due to the high number of false positives. These findings suggests that using features extracted from higher layers like layer4, may have led the model to focus on more abstract, high-level features which are less effective at determining anomalies from normal samples.
 
 \begin{table}[ht!]
     \centering
@@ -179,7 +183,7 @@ In this section, we will look into the results obtained from various experiments
 
 Another configuration which we tried was using a different variant of ResNet50 called Wide-ResNet50-2 and performing feature extraction using the layer2, while keeping the \gls{pca} level at 0.97 and using \gls{nll} score type. This configuration resulted in slight improvement in both the accuracy and \gls{auroc} score of 60\% and 0.6382 respectively. The precision improved to 0.5556, while the recall stayed at 1.0, resulting in an F1-score of 0.7143 as shown in the table \ref{tab:dfm resnet results}. Along with that, we also performed similar experiment by keeping the backbone and layer same, but changing the \gls{pca} level to 0.995 and scoring type to \gls{fre}. This resulted in much better compared to when we used scoring type as \gls{nll}, where accuracy increased by about 2\% to 62.12\% while seeing a drop in \gls{auroc} to 0.5795. The recall stayed the same at 1.0, but a slight increase in precision was observed to 0.5681, therefore increasing the F1-score to 0.7254. This improvement in both precision and F1-score shows that lower-level features from layer2 were more effective at capturing variations between normal and anomalous images. Finally, with seeing better result with \gls{fre} scoring type, we experimented with one more layer of the same backbone, the layer here used was layer3, with this we again saw slight improvement across all the metrics, the accuracy came out to be 62.86\% which is a small incremental update, while with \gls{auroc} score we saw an improvement of about 25\% when compared to Wide-ResNet50-2 (layer2, \gls{fre}) of the table \ref{tab:dfm resnet results}, and saw a rise of about 14\% when compared with Wide-ResNet50-2 (layer2, \gls{nll}).Other layers were also tried for both the ResNet50 and Wide-ResNet50-2 backbone, but all of them resulted in the model just random guessing the predictions i.e. the accuracy was 50\%.
 
-\textbf{Densenet} : 
+\subsubsection*{Densenet}
 
 Next, we conducted experiments using different DenseNet backbones. Firstly, we used DenseNet121, which extracted features from the features.norm5 layer and the \gls{fre} score type. This configuration improved the models performance further, with an \gls{auroc} score of 0.7309 and an accuracy of 61.43\%. The model reached a precision of 0.5645 and a recall of 1.0, giving an F1-score of 0.7216. These improved scores suggests that the DenseNet architecture, which relies on dense connections and feature reuse, contributed to improved feature representations for anomaly detection. Table \ref{tab:dfm densenet results} shows the results of different backbones of DenseNet.
 
@@ -215,7 +219,7 @@ After getting good results with the configuration explained above, we thought of
 % In discussions explain also the difference between scoring type fre and nll
 % In discussion also discuss why was the recall for most part 1.0
 
-\paragraph*{\gls{dfkde} : }
+\subsection*{\gls{dfkde}}
 
 Here we discuss the results obtained for the model \gls{dfkde}. It combines the power of \gls{dl} with statistical methods like \gls{pca} and \gls{kde}. The model first extracts robust features using a pretrained deep neural network, then reducing their dimensionality by using \gls{pca}, and finally applying \gls{kde} to model the distribution of normal data. Two backbones were tested in this experiments namely ResNet18 and Wide-ResNet50. The overview of the results for different configurations in the form of bar chart is shown in the figure \ref{fig:dfkde model results}.
 
@@ -226,7 +230,7 @@ Here we discuss the results obtained for the model \gls{dfkde}. It combines the 
     \label{fig:dfkde model results}
 \end{figure}
 
-\textbf{ResNet18} : 
+\subsubsection*{ResNet18}
 
 For the first experiment with ResNet18 backbone, we use the feature extraction layer1. This configuration aims at capturing the lower level basic features, and its trained with a maximum of 3000 training points to fit the \gls{kde} model.
 
@@ -258,7 +262,7 @@ Next for the fourth experiment, to examine the effects of increasing the number 
 
 In table \ref{tab:dfkde resnet18 results}, we can see that the model reached an \gls{auroc} score of 0.7310, with an accuracy of 68.57\% which is lower than the third experiment, and with precision and recall of 0.6182 and 0.9714 respectively, leading to an F1-score of 0.7556.The performance was slightly worse than configuration 3 where layer3 with 3000 max training points were used. This indicates that the number of training points may be less important than the layer from which the features are extracted, at least beyond a threshold.
 
-\textbf{Wide-ResNet50} :
+\subsubsection*{Wide-ResNet50}
 
 The second backbone we experimented with was Wide-ResNet50-2, which is a wider version of the standard ResNet50 architecture. In this experiments features were extracted using the layer2 of the backbone. This configuration was chosen seeing as the middle layer performed better for the ResNet18 backbone experiments, and with the wider architecture which can capture more detailed feature representations, which could possibly improve the anomaly detection performance.
 
@@ -276,7 +280,7 @@ The second backbone we experimented with was Wide-ResNet50-2, which is a wider v
 
 This configuration showed improved performance in \gls{auroc} score and precision as can be seen from the table \ref{tab:dfkde wide-resnet50 results} of 0.7725 and 0.6344 respectively. The accuracy was 67.86\%, and the recall fell to 0.8429, resulting in the F1-score of 0.7239. The wider architecture and mid-level features from the layer2 did help the model capture more subtle patterns in the data, which resulted in higher \gls{auroc} score when compared to ResNet18 experiments. The precision also slightly improved, indicating that the model was comparatively more accurate in detecting true anomalies. However, the lowest recall value of all the experiments combined from resNet18 and Wide-ResNet50 indicates that the model became slightly less sensitive to anomalies, likely as a result of the increase in specificity brought by the wider backbone.
 
-\paragraph*{FastFlow : }
+\subsection*{FastFlow}
 
 For this experiment, we used FastFlow model with ResNet18, Wide-ResNet50-2, \gls{deit}, \gls{cait} as backbones for feature extraction. An overview of all the result is shown in the form of bar chart in the figure \ref{fig:fastflow model results}. The best performing configuration in terms of accuracy was the one where \gls{deit} architecture was used for feature extraction achieving 66.87\%. Below we will discuss all the experiments and their results in detail, grouped based on the backbones being used. Here all the models were trained for 50 epochs except for when callbacks functionality is used, then its trained until a condition is met.
 
@@ -287,7 +291,7 @@ For this experiment, we used FastFlow model with ResNet18, Wide-ResNet50-2, \gls
     \label{fig:fastflow model results}
 \end{figure}
 
-\textbf{ResNet18} : 
+\subsubsection*{ResNet18}
 
 For the first experiment, we have used ResNet18 as backbone for feature extraction. This configuration achieved an \gls{auroc} score of 0.9199, which is quite good and it demonstrates the models effectiveness in distinguishing normal images from abnormal ones on training and testing dataset. But, the overall accuracy on the unseen custom dataset is as good as random guessing equating to 51.88\%, reflecting imbalanced classification performance, as shown in the table \ref{tab:fastflow resnet18}. The recall of 1.0 shows that the model was able to detect all anomalous instances. However, the precision was low, at 0.5096, giving an F1 score of 0.6751. 
 
@@ -304,7 +308,7 @@ For the first experiment, we have used ResNet18 as backbone for feature extracti
 
 From the confusion matrix results shows that out of 80 normal samples, only 3 were correctly classified, while 77 were misclassified as abnormal. This significant misclassification of normal samples can be due to simplicity of the ResNet18 architecture, which might lack the depth required to correctly capture subtle differences between normal and anomalous features. Due to this, the model’s ability to generalize across the dataset declined, showing its bias toward identifying anomalies, but at the cost of higher false positives.
 
-\textbf{Wide-ResNet50} :
+\subsubsection*{Wide-ResNet50}
 
 For the second experiment, we used Wide-ResNet50-2 backbone for feature extraction. Along with that we employed callback mechanism, here we used early stopping, which monitors the image\_AUROC while training and when it stays the same for 5 consecutive epochs then the training stops and those weights are saved. As can be seen in the table \ref{tab:fastflow wideresnet50}, the \gls{auroc} score dropped slightly to 0.9041, but again achieving 1.0 recall, indicating it was able to classify all the anomalous images correctly. However, the accuracy remained was 50\%, which means the model effectively didn't learn anything and is just making random guesses. The precision was 0.5, resulting in an F1-score of 0.666.
 
@@ -326,7 +330,7 @@ Looking at the above results we decided to see the effect on the FastFlow model 
 
 The results of confusion matrix showed improvement as well, the number of correctly classified normal samples increased to 13, however 67 normal samples still misclassified as abnormal. This suggests that extended training helps the model better differentiate between normal and anomalous samples. This performance improvement can also be due to the backbone's ability to capture more better features over a longer training period, refining the normalizing flow process and providing a more detailed understanding of normality in the dataset. Further increase in epochs didn't show much improvement here on.
 
-\textbf{\gls{deit}\_base} : 
+\subsubsection*{\gls{deit}\_base}
 
 For the fourth experiment, the "\gls{deit} Base Distilled Patch16\_384" backbone was used for feature extraction, and the model was trained for 50 epochs. This configuration resulted in an \gls{auroc} of 0.8787, which is slightly lower than the previous experiments. But despite that, the model achieved the highest accuracy so far for the FastFlow model, at 66.88\%. With a precision and recall of 0.6015, and 1.0 respectively, resulting in an F1 score of 0.7512 which is also the highest in all the experiments, as shown in the table \ref{tab:fastflow deit-base}.
 
@@ -343,7 +347,7 @@ For the fourth experiment, the "\gls{deit} Base Distilled Patch16\_384" backbone
 
 The confusion matrix results shows that 27 normal images were correctly classified, with 53 being misclassified as abnormal, reflecting its improved performance in detecting normal images compared to earlier configurations. The transformer-based \gls{deit} backbone most likely contributed to these results, as its global attention mechanism allows the model to capture more contextual information across images. However, the slight drop in \gls{auroc} suggests that, while the model is capable of extracting features from normal samples, it might struggle more with identifying anomalies, which can be more subtle and context-dependent.
 
-\textbf{\gls{cait}} :
+\subsubsection*{\gls{cait}}
 
 For the fifth and final experiment, the "CaiT-M48" backbone was used and trained for 50 epochs. As can be seen from the table \ref{tab:fastflow cait}, this model achieved the highest image AUROC across all configurations, at 0.9223. The accuracy was 60.63\% which is about 9\% lower than the configuration with \gls{deit} as backbone, with a precision of 0.5594 and an F1 score of 0.7175.
 
@@ -360,7 +364,7 @@ For the fifth and final experiment, the "CaiT-M48" backbone was used and trained
 
 The confusion matrix results showed that 17 normal images were correctly classified, while 63 were misclassified as abnormal. Despite no improvement in accuracy over the \gls{deit} configuration results, the \gls{cait} backbone performed better at maintaining a balance between precision and recall.
 
-\paragraph*{EfficientAD : }
+\subsection*{EfficientAD : }
 
 EfficientAD is a novel approach to visual anomaly detection, specifically developed to operate at millisecond-level latencies. This model was introduced as a lightweight alternative to existing anomaly detection architectures. EfficientAD is built on a \gls{s-t} framework, where the teacher model learns representations from a more complex and larger model while the student attempts to mimic the teachers performance using fewer resources.
 
@@ -374,8 +378,6 @@ EfficientAD is a novel approach to visual anomaly detection, specifically develo
 While the EfficientAD model claims to outperform existing models, such as PatchCore\cite{roth2022totalrecallindustrialanomaly}, as given in the paper \cite{batzner2024efficientadaccuratevisualanomaly}, the experimental results conducted in this study suggest otherwise. The performance of EfficientAD was found to be suboptimal when evaluated on unseen data, as can be seen in the diagram \ref{fig:efficientad model results}. This section will discuss the results of different configurations in detail.
 
 This experiments were carried out using three different configurations of the EfficientAD model. there are two sizes available for the model, which are EfficientAD\_S(small) and EfficientAD\_M(medium). For the first two configurations the model size was constant, but in the second configuration a callback mechanism was added. The Performance metrics used are same as the rest of the models namely \gls{auroc}, accuracy, precision, recall and F1-score. Also, confusion matrices were also generated to provide visual insights into the classification performance of the model.
-
-\textbf{EfficientAD-S} : 
 
 In the first configuration, the base model (EfficientAdModelSize.S) was used without callbacks as shown in the table \ref{tab:efficientad results}. This gave the \gls{auroc} of 0.7244. However, the model's accuracy was only 51.87\% which clearly highlights its struggles in correctly classifying the majority of images. More specifically, out of 80 normal images, only 4 were correctly classified, with the remaining 76 being classified as abnormal i.e. false positives. But on the other hand, the model performed quite well in detecting abnormal instances, with 79 out of 80 correctly classified as abnormal, resulting in a recall of 0.9875. But the precision is quite low at 0.5097, showing the imbalance between the true positives and false positives. The resulting F1-score was 0.6723, indicating a tendency towards recall, with the model detecting most anomalies but at the cost of misclassifying a large number of normal images as abnormal. Here all the models were trained for 50 epochs except for when callbacks functionality is used, then its trained until a condition is met.
 
@@ -412,7 +414,7 @@ In the third and final configuration, the larger variant of the model (Efficient
 
 %\subsection{Performance on FC images}
 
-\subsection{Discussion}
+%\subsection{Discussion}
 
 %5.2 The Case for Unsupervised Models: Patchcore's Robustness
 

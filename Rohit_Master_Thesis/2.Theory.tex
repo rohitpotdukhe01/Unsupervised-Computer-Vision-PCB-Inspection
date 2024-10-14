@@ -1,10 +1,10 @@
-\section{Theoretical Background}
+\chapter{Theoretical Background}
 
-\subsection{Related Works}
+\section{Related Works}
 
 The domain of Image Classification has experienced tremendous development over the last few decades, propelled by the increase in computational capabilities, large amounts of available data, and the development of sophisticated algorithms. This section provides an overview of the major advancements in the field of Image Classification, especially for its applications in industrial environments, such as electronics manufacturing. We will also explore the increasing significance of anomaly detection, emphasizing the transition from conventional supervised learning approaches to modern unsupervised learning methods.
 
-\subsubsection{Evolution of Image Classification Techniques}
+\subsection{Evolution of Image Classification Techniques}
 
 Image Classification is a critical task in the field of \gls{cv}, with numerous applications ranging from medical diagnostics to autonomous driving. Early image classification algorithms mainly relied on manual feature extraction, which involves domain experts designing these features, which could be used to differentiate between classes of images. These features were subsequently inputted into traditional machine learning algorithms like \glspl{svm} or \gls{k-nn} for classification \cite{LeCun2015}. Nevertheless, these techniques were limited by their dependence on handcrafted features, which could not effectively reflect intricate changes observed in real-world scenarios.
 
@@ -12,7 +12,7 @@ Subsequently, the introduction of \glspl{cnn} was a significant milestone in thi
 
 Among these, the work on the introduction of ResNet by \cite{he2016deep} was highly significant as it addressed the issues of vanishing gradients that tormented earlier deep networks \cite{simonyan2015deepconvolutionalnetworkslargescale} \cite{7298594}. ResNet made it possible to train much deeper networks by incorporating residual connections, resulting in substantial improvement in accuracy over various image classification benchmarks. Thus \glspl{cnn} were firmly established as the leading approach for tasks like image classification.
 
-\subsubsection{Applications of Image Classification in Industrial Settings}
+\subsection{Applications of Image Classification in Industrial Settings}
 
 In the industrial sector, special attention is given to image classification applications in quality control processes, particularly in the context of automated visual inspection. Traditionally, the visual inspection process was carried out manually, where we had to rely on the experience of quality inspectors to ensure product quality. As a result of the varying levels of expertise among inspectors and the limitations of human abilities, this approach exhibits low efficiency, low accuracy, and inadequate real-time performance on a large-scale manufacturing process \cite{Gong_2020}.
 
@@ -20,7 +20,7 @@ With the rise of \gls{dl}, automated visual inspection systems are developed usi
 
 Although \gls{cnn}-based models such as \gls{yolo} have demonstrated their effectiveness in most industrial applications, they do have certain limitations. One of the major obstacle is the requirement for a large labeled dataset to properly train such models. In many industrial applications, such as PCB inspection, defects are rare, and gathering labeled instances in large enough quantities for training purposes may become prohibitively expensive. In such instances, the labeling process is typically very labor- and knowledge-intensive, resulting in high costs and time consumption\cite{FINK2020103678}.
 
-\subsubsection{Anomaly Detection in Electronics Manufacturing}
+\subsection{Anomaly Detection in Electronics Manufacturing}
 
 Due to the lack of labeled data, supervised learning methods are not feasible in certain scenarios. As a result, there has been a growing interest in exploring unsupervised learning methods for anomaly detection. Anomaly detection is the process of identifying patterns in data that deviate from expected behavior. This makes it an suitable solution in industrial applications for identifying defects where normal instances are well represented but anomalies are rare and diverse \cite{10.1145/1541880.1541882}.
 
@@ -62,9 +62,9 @@ Another increasingly popular method is the \glspl{gan}\cite{goodfellow2014genera
 
 %Machine Learning is a subdomain of Artificial Intelligence that encompasses various techniques able to automatically discover patterns in data and use those patterns to predict future data[1].
 
-\subsection{Supervised Image Processing}
+\section{Supervised Image Processing}
 
-\subsubsection{Artificial Neural Networks (ANNs)}
+\subsection{Artificial Neural Networks (ANNs)}
 
 \gls{ann} are computational processing systems that are inspired by how biological nervous systems such as the human brain functions. \gls{ann} mainly consists of numerous interconnected computational nodes, known as neurons, which are intertwined in a distributed manner to collectively learn from te input and optimize the final output \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
@@ -77,13 +77,13 @@ Another increasingly popular method is the \glspl{gan}\cite{goodfellow2014genera
 
 The figure \ref{fig:ann architecture} shows the basic structure of a \gls{ann}. Input data will be loaded in the form of multidimensional vector into the input layer, then it will be distributed into the hidden layer. Then hidden layers will make decisions based on previous layer and evaluate how a stochastic change improves the final output, this process is know as learning. When multiple hidden layers are stacked next each other it is known as \gls{dl} \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-\subsubsection{Convolutional Neural Networks (CNNs)}
+\subsection{Convolutional Neural Networks (CNNs)}
 
 \glspl{cnn}\cite{726791} is an extended version of \gls{ann} which is primarily used for feature extraction from a grid-like matrix dataset \cite{GeeksforGeeks2024}. \glspl{cnn} is similar to traditional \gls{ann} in terms of that they consists of neurons that self-optimize through learning. Each neuron will receive input and perform operations like scalar product followed by a non-linear function, which is the basis of many \gls{ann}. The only significant difference between \glspl{cnn} and traditional \gls{ann} is that \glspl{cnn} are mainly used on images in the field of pattern recognition. This enables the encoding of image-specific features into the architecture, making it more suitable for image-focused tasks while also reducing the parameters required for model configuration \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 The term \glspl{cnn} indicates that the network uses a mathematical operation called \textbf{convolution}. \glspl{cnn} are neural networks that in the place of general matrix multiplication uses convolution in at least one of the layers \cite{Goodfellow-et-al-2016}.
 
-\paragraph*{\gls{cnn} Architecture :}
+\subsubsection*{\gls{cnn} Architecture :}
 
 Basic \gls{cnn} architecture consists of three types of layers, they are \textbf{convolutional layers}, \textbf{pooling layers}, and \textbf{fully connected layers}. When these layers are stacked together, then a \gls{cnn} architecture is formed. Figure \ref{fig:cnn architecture} shows \gls{cnn} architecture for MNIST\cite{6296535} classification.
 
@@ -107,7 +107,7 @@ The functionality of \gls{cnn} architecture shown above can be broken down basic
 
 By using this simple transformation technique, \glspl{cnn} can transform the original input layer by layer, by using convolutional and downsampling techniques producing class scores for classification and regression purposes \cite{oshea2015introductionconvolutionalneuralnetworks}. Lets look at the main components of the \gls{cnn} architecture in detail.
 
-\paragraph*{Convolutional Layer :}
+\subsubsection*{Convolutional Layer :}
 
 Convolutional layer plays important role in the \glspl{cnn} functionality. The layers parameters concentrate on the use of learnable \textbf{kernels}. These kernels are the set of learnable parameters.
 
@@ -150,7 +150,7 @@ Here the V denotes the input volume size(height$\times$width$\times$depth), R de
 
 Despite these optimizations, models can still be huge while using high dimensionality input like images. To further reduce the number of parameters significantly within the convolutional layer \textbf{parameter sharing} is used. It works on the assumption that if a feature from one spatial region is useful for computation, then its likely to be useful in another region as well \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-\paragraph*{Pooling layer :}
+\subsubsection*{Pooling layer :}
 
 The pooling layers reduces the dimensionality of the feature representation, thus reducing the number of parameters and computational complexity of the model. Pooling layer operates on each activation map in the input, and reduces its dimensionality using the 'Max' function. Max-pooling layers is one of the most common types of pooling used in \glspl{cnn}. It selects the maximum activity value of all neurons for the representation for the particular region and extract the most essential feature from the input feature map \cite{Zhao2024}. A $2\times2$ kernels is applied with a stride of 2 across the spatial dimensions of the input reduces the activation map by $75\%$ of the original size, while preserving the depth volume of the feature map \cite{oshea2015introductionconvolutionalneuralnetworks}. 
 
@@ -170,11 +170,11 @@ Average pooling computes the arithmetic mean of all the elements within the regi
     \label{fig:average pooling}
 \end{figure}
 
-\paragraph*{Fully-Connected Layer :}
+\subsubsection*{Fully-Connected Layer :}
 
 The fully-connected layer contains neurons which are directly connected to the neurons in the two neighboring layers, with no connections to any neurons within itself. It is similar to the way neurons are arranged in traditional \gls{ann} as can be seen in the figure \ref{fig:ann architecture} \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-\paragraph*{Activation Function :}
+\subsubsection*{Activation Function :}
 
 Activation functions plays a crucial role in neural networks, strengthening the network's representational and learning capabilities, by learning the abstract features through nonlinear transformation \cite{dubey2022activationfunctionsdeeplearning}. With the introduction of the activation functions, the neural network can approximate any nonlinear function, making it applicable to a wide range of nonlinear models \cite{Zhao2024}. Some of the activation functions common properties are:
 
@@ -288,7 +288,7 @@ Deep Convolutional neural networks has led to numerous advancements in image cla
     \label{fig:residual block}
 \end{figure}
 
-\paragraph*{Residual Learning :}
+\subsubsection*{Residual Learning :}
 
 As mentioned above instead of expecting stacked layers to approximate mapping function H(x), where x denotes the inputs to the first of these stacked layer. The layers are explicitly let to approximate a residual function $F(x) := H(x) - x$. The original function then becomes $F(x) + x$. This makes the learning process much easier, although it's expected that both forms can asymptotically approximate the desired functions \cite{he2016deep}.
 
@@ -298,7 +298,7 @@ $ y = F(x, \left\{ W_{i}\right\}) + x$.
 
 Here x, and y represents the input and output vectors of the considered layers, The function $F(x, \left\{ W_{i}\right\})$  represents the residual mapping to be learned. The operation $F + x$ is performed by a \textbf{shortcut connection} also known as skip connection, and element-wise addition as shown in figure \ref{fig:residual block}. This shortcut connections doesn't introduce any extra parameters or computational complexity, except for the minor element-wise addition. This ensures a fair comparison between plain and residual networks  which have the same number of parameters, width, depth, and computational cost \cite{he2016deep}.
 
-\paragraph*{Network Architecture :}
+\subsubsection*{Network Architecture :}
 
 \begin{figure}[H]
     \centering
@@ -311,11 +311,11 @@ As can be seen in the figure \ref{fig:resnet architecture} two models are descri
 
 Based on the plain network, short connections are added which transforms the network into its counterpart residual version. Identity shortcuts are used for matching input-output dimensions(solid line shortcuts in figure \ref{fig:resnet architecture}). For when dimensions increases(dotted line shortcuts in figure \ref{fig:resnet architecture}), either the shortcut performs identity mapping, with zero-padding, or projection shortcuts($1\times1$ convolutions) are used \cite{he2016deep}.
 
-\paragraph*{Performance :}
+\subsubsection*{Performance :}
 
 The 18-layer and 34-layer \gls{resnet} shows that the deeper 34-layer \gls{resnet} performs better than the 18-layer \gls{resnet} by 2.8\%. Also the 34-layer \gls{resnet} demonstrates a considerable reduction in training error and shows good generalization to the validation data. This shows that the degradation problem is well tackled in this setting leading to accuracy gains from increased depth. Compared to the plain network(figure \ref{fig:resnet architecture}, middle), the 34-layer \gls{resnet} reduced the top-1 error by $3.5\%$, this verifies the efficacy of residual learning on very deep networks. It was also observed that 18-layer plain networks are more accurate, but the 18-layer \gls{resnet} converges faster \cite{he2016deep}.
 
-\paragraph*{Deeper Bottleneck Architectures :}
+\subsubsection*{Deeper Bottleneck Architectures :}
 
 To scale the networks to 50, 101, and 152 layers, a bottleneck design is used, where the building blocks are modified as bottleneck layers, in which the residual function is stacked with 3 layers($1\times1$, $3\times3$, $1\times1$ convolutions). The $1\times1$ are responsible for dimensions reduction filled by restoration, which creates a bottleneck in the $3\times3$ layer with smaller input and output dimensions \cite{he2016deep}.
 
@@ -325,7 +325,7 @@ To scale the networks to 50, 101, and 152 layers, a bottleneck design is used, w
 
 The 50/101/152-layer \glspl{resnet} show significantly higher accuracy compared to the 34-layer versions. No degradation problem is observed, due to which high accuracy can be achieved \cite{he2016deep}.
 
-\subsubsection{You Only Look Once (YOLO)}
+\subsection{You Only Look Once (YOLO)}
 \label{subsec:yolo}
 
 The human visual system operates with amazing speed and accuracy, which helps us perform complex tasks like driving with minimal conscious thought. Similarly, fast and accurate algorithms for object detection could facilitate computers to drive a car without the need of specialized sensors, assistive devices to provide real-time scene information to human users, this could pave the way the way for better responsive robotic systems. The object detection algorithms before \gls{yolo} used classifiers and repurposed them to detect objects by evaluating it across different locations and scale it in a test image. These methods are quite slow and complex to optimize \cite{redmon2016you}.
@@ -340,7 +340,7 @@ The human visual system operates with amazing speed and accuracy, which helps us
 \end{figure}
 
 
-\paragraph*{ How \gls{yolo} works :}
+\subsubsection*{ How \gls{yolo} works :}
 
 As stated before \gls{yolo} unifies the separate components of object detection into a single neural network. This network uses features from the complete image for the prediction of all bounding boxes across all classes at the same time. \gls{yolo} enables training from start to finish and achieves real-time speeds, all while ensuring a high level of average precision. \gls{yolo} divides the input image into an $S\times S$ grid. Each grid cell is responsible for detecting an object whose center falls into that grid cell. Every grid cell predicts bounding boxes and its confidence scores. This score reflects models confidence in the box containing an object, as well as how accurate the predicted box is. If object is detected then the confidence score should be equal to \gls{iou} between the ground truth and the predicted box, else if no object is detected then the confidence score should be zero. At the test time the conditional class probabilities and the box confidence predictions are multiplied to get the final detection as shown in the figure \ref{fig:yolo model} \cite{redmon2016you}.
 
@@ -351,13 +351,13 @@ As stated before \gls{yolo} unifies the separate components of object detection 
     \label{fig:yolo model}
 \end{figure}
 
-\paragraph*{Limitations of \gls{yolo}v1 :} 
+\subsubsection*{Limitations of \gls{yolo}v1 :} 
 
 \gls{yolo} imposes significant spatial constraints on predictions of bounding box by allowing each grid cell to predict only one class and two bounding boxes. This reduces the model's ability to predict multiple nearby objects, like small objects that can appear in a group like flocks of birds \cite{redmon2016you}.
 
 \gls{yolo} struggles when it comes to generalizing objects in new or unsual aspect ratios or configurations. Lastly, \gls{yolo}'s loss function doesn't differentiate between small and large bounding boxes. A small error in large box doesn't have much impact, but a small error in small box affects the \gls{iou}. The main cause of this problem is the \gls{yolo}'s incorrect localization \cite{redmon2016you}.
 
-\subsubsection*{\gls{yolo}'s versions: }
+\subsection*{\gls{yolo}'s versions: }
 
 \textbf{\gls{yolo}v2}\cite{redmon2017yolo9000}, also known as YOLO9000. It integrated several existing techniques of that time. The entire object detection architecture was converted into a full convolutional network which helps achieve high accuracy and speed. Later the high-resolution and low-resolution features are combined, and an anchor-based prediction method was adopted. Due to it's simple input and output  formats, \gls{yolo}v2 remains one of the mainly used object detection methods in maintenance and development of various industrial settings, particularly on low-end devices which has verly limited computing capabilities \cite{wang2024yolov1}.
 
@@ -367,11 +367,11 @@ As stated before \gls{yolo} unifies the separate components of object detection 
 
 There are now many more such \gls{yolo} versions with incremental updates such as \gls{yolo}v5 \cite{yolov5}, \gls{yolo}v8 \cite{Ultralytics2024} which is used in the current solution at Siemens as mentioned in section \ref{subsec:current solution at siemens} and latest being \gls{yolo}v10 \cite{Ultralytics2024v10}.
 
-\subsection{Unsupervised Image Representation}
+\section{Unsupervised Image Representation}
 
-\subsubsection{Anomaly Detection in Unsupervised Learning}
+\subsection{Anomaly Detection in Unsupervised Learning}
 
-\subsubsection{PatchCore}
+\subsection{PatchCore}
 \label{subsec:patchcore}
 
 PatchCore is a state-of-the-art approach developed for efficient detection of anomalies in industrial settings, especially in cases when there is a lack of defective samples or they are undefined. This approach has been specifically tailored to tackle the challenges of the cold-start problem in which models are exclusively trained on non-defective(nominal) images. PatchCore excels by utilizing a memory bank of nominal patch-features, together with techniques like locally aware patch features, and coreset subsampling which are explained below \cite{roth2022totalrecallindustrialanomaly}. Figure \ref{fig:patchcore architecture} shows the overview of the PatchCore model.
@@ -383,28 +383,28 @@ PatchCore is a state-of-the-art approach developed for efficient detection of an
     \label{fig:patchcore architecture}
 \end{figure}
 
-\paragraph*{Locally Aware Patch Features :} 
+\subsubsection*{Locally Aware Patch Features :} 
 The key advancement of PatchCore is the utilization of locally aware patch-features. Contrary to traditional approaches that utlizes global image features, PatchCore targets local patches of the image. It extracts the mid-level features that captures the contextual and spacial relationships within these patches. By maintaining the local awareness, the model is able to preserve important details that might get lost when replying on the generalized global features \cite{roth2022totalrecallindustrialanomaly}.
 
 The locally aware features are derived from the intermediate layers of a pre-trained \gls{cnn}, namely WideResNet-50 \cite{zagoruyko2017wideresidualnetworks}. The focus on mid-level features lets PatchCore avoid the pitfalls of over-generalization and ImageNet class bias inherent, which are common problems when relying on deeper, high-level features. The outcome is a more nuanced and contextually rich representation of the nominal data, which is essential for identifying subtle anomalies that could otherwise go unnoticed \cite{roth2022totalrecallindustrialanomaly}.
 
-\paragraph*{Memory Bank and Coreset Subsampling :}
+\subsubsection*{Memory Bank and Coreset Subsampling :}
 
 PatchCores memory bank is build using these locally aware patch-features, serving as a repository of nominal patch-features, which are then used to compare against test images. however, in real-time industrial applications, a task of handling a large memory bank can be computationally expensive. In order to mitigate this issue, PatchCore uses coreset subsampling, a method that reduces the memory bank size by selecting the most representative features without compromising the model's performance \cite{roth2022totalrecallindustrialanomaly}.
 
 Coreset subsampling employs a greedy selection algorithm, which ensures that the patches retained in the memory bank are the ones that most accurately represent the overall distribution of the nominal data. The decrease in memory bank size is essential for achieving faster inference times, also making PatchCore both accurate and highly efficient \cite{roth2022totalrecallindustrialanomaly}.
 
-\paragraph*{Anomaly Detection and Localization :}
+\subsubsection*{Anomaly Detection and Localization :}
 
 During testing, PatchCore does a comparison between the patch features of a test image and the features stored in the memory bank. The Euclidean distance metric is used to compare each patch in the test image with the nearest patch in the memory bank. If any patch shows a significant deviation from the stored nominal patches, the image is flagged as anomalous. The anomaly score which serves as a robust measure for anomaly detection, is determined by calculating the maximum distance observed across all patches \cite{roth2022totalrecallindustrialanomaly}.
 
 For the purpose of localization of anomalies, PatchCore extends this approach by creating a detailed segmentation map. A score is assigned to each patch in the test image depending on its proximity to the nearest nominal patch. These scores are subsequently mapped back to the original image, resulting in a localization map that precisely highlights the areas where the anomalies occur \cite{roth2022totalrecallindustrialanomaly}. This functionality is especially essential in industrial settings, where the ability to not only detect anomalies but also accurately determine their exact positions for quality control and remediation.
 
-\paragraph*{Performance and Applications :}
+\subsubsection*{Performance and Applications :}
 
 PatchCore has been rigorously tested across multiple benchmark datasets, such as MVTec AD dataset \cite{8954181}, where it delivered exceptional performance, achieving an \gls{auroc} of up to 99.6\%. This result marks a significant improvement over existing methods, effectively reducing detection error rates by half. Due to its ability to maintain high accuracy with minimal training data, PatchCore is especially well-suited for industrial settings where it can be difficult to gather large number of defective samples \cite{roth2022totalrecallindustrialanomaly}.
 
-\subsubsection{Deep Feature Modeling (DFM)}
+\subsection{Deep Feature Modeling (DFM)}
 \label{subsec:dfm}
 
 \gls{dfm} is an efficient method for anomaly detection, by utilizing \gls{dl} to extract feature representations and to model the distribution of normal data. This method excels in situations where the anomalies are rare and not well-defined, making it highly valuable for a range of industrial applications \cite{ahuja2019probabilisticmodelingdeepfeatures}.
@@ -413,30 +413,30 @@ The key concept of \gls{dfm} involves utilizing \gls{dnn} high-dimensional featu
 
 \gls{dfm} is based on the notion that the normal data can be well represented in a lower dimensional feature space, while the anomalies stands out as outliers in this space. By modeling the distribution of normal data features, \gls{dfm} can accurately identify points that deviates from the norm as anomalies \cite{ahuja2019probabilisticmodelingdeepfeatures}.
 
-\paragraph*{Feature Extraction and Representation :}
+\subsubsection*{Feature Extraction and Representation :}
 
 In \gls{dfm}, a \gls{dnn} most often a \gls{cnn} is used to extract features from the input data. These features are usually extracted from the intermediate layers of the network, which capture varying levels of abstraction, ranging from low-level edges and textures to more complex semantic information. The models performance can be greatly influenced by the choice of network architecture and the specific layer from which features are extracted \cite{8954181}.
 
 These features are then utilized to create a feature representation space. In this space, it is expected that the normal data points will cluster together, whereas anomalies should appear distant from these clusters. To enhance visualization and anomaly detection\cite{ahuja2019probabilisticmodelingdeepfeatures}, the dimensionality of this feature space is often reduced using methods like \gls{pca}\cite{Bishop2006} or \gls{t-sne}\cite{JMLR:v9:vandermaaten08a}.
 
-\paragraph*{Density Estimation and Anomaly Scoring :}
+\subsubsection*{Density Estimation and Anomaly Scoring :}
 
 \gls{dfm} uses density estimation methods to model the distribution of normal data after constructing the feature representation space during training process. Two commonly used methods for this purpose are \gls{gmm} or \gls{kde}, which are used to estimate the probability density function of normal data. The idea here is that the areas in the feature space that have a high density of normal data, whereas regions with a low concentration indicates possible anomalies \cite{ahuja2019probabilisticmodelingdeepfeatures}.
 
 A likelihood-based anomaly score is assigned to each new data point based on its deviation from the modeled distribution. Anomalies are identified by flagging points that has a low likelihood under the modeled distribution. This method is highly effective because it doesn't require labeled data for anomalies, making it well-suited for unsupervised learning situations where only normal data is accessible during training \cite{ahuja2019probabilisticmodelingdeepfeatures}.
 
-\paragraph*{Anomaly Detection and Evaluation :}
+\subsubsection*{Anomaly Detection and Evaluation :}
 
 During the testing phase, the trained model is given new data points to extract their feature representations. Which are then evaluated against the density model to calculate an anomaly score. Again, anomalies are identified as points for which the model assigns low likelihood \cite{ahuja2019probabilisticmodelingdeepfeatures}.
 
 \gls{dfm} has been extensively tested on several benchmark datasets, proving its effectiveness in detecting anomalies across various domains. The evaluation of the model's performance is conducted using metrics such as the \gls{auroc}, \gls{aupr}, and accuracy. \gls{dfm} demonstrated competitive results with \gls{auroc} score of about 98\%, outperforming traditional methods for anomaly detection \cite{ahuja2019probabilisticmodelingdeepfeatures}. 
 
-\subsubsection{EfficientAD}
+\subsection{EfficientAD}
 \label{subsec:efficientad}
 
 EfficientAD is an effective anomaly detection model for real-world computer vision application with a focus on computational efficiency and a lightweight feature extractor that can process an image in under a millisecond using a modern GPU. EfficientAD employs a \gls{s-t} approach to detect anomalous features. It establishes new standards for detecting and localizing the anomalies, coupled with its low error rate, this makes EffienctAD economical option for real-world applications \cite{batzner2024efficientadaccuratevisualanomaly}.
 
-\paragraph*{Core Concept :}
+\subsubsection*{Core Concept :}
 
 EffientAD sets new benchmarks for both the accuracy of anomaly detection and the speed of inference. In order to detect anomalous features, a \gls{s-t} approach is used, where the student network is trained to predict features computed by pre-trained teacher network on normal training images. EffienctAD introduces training loss that prevents the student network from imitating the teacher network beyond the normal images. This loss enables to use the efficient network architecture for both the student and the teacher, while improving the anomaly detection \cite{batzner2024efficientadaccuratevisualanomaly}. The components of EfficientAD can be divided into three main components:
 
@@ -446,7 +446,7 @@ EffientAD sets new benchmarks for both the accuracy of anomaly detection and the
 
 3. Autoencoder for Logical Anomaly Detection,
 
-\paragraph*{Efficient Patch Description Network (PDN) :}
+\subsubsection*{Efficient Patch Description Network (PDN) :}
 
 \begin{figure}[ht!]
     \centering
@@ -459,13 +459,13 @@ Recent anomaly detection methods often employs deep pretrained networks for feat
 
 To overcome the large feature maps size, high computational costs and memory requirement problems, \gls{pdn} performs early stage downsampling by strided average-pooling layers after the first and second convolutional layers as shown in figure \ref{fig:pdn architecture}. To generate expressive features, \gls{pdn} is trained by distilling a deep pretrained classification network into it. \gls{pdn} trained in images from ImageNet by reducing the mean squared difference between its output and the features extracted from the pretrained network. Besides higher efficiency, this has another benefit that the features generated by \gls{pdn} only depends on local pixels. avoiding long-range dependencies in other methods. This ensures that an anomaly detected in one area of the image can't activate anomalous feature vectors in other distant areas, which can compromise the localization of anomalies \cite{batzner2024efficientadaccuratevisualanomaly}.
 
-\paragraph*{Lightweight Student-Teacher model :}
+\subsubsection*{Lightweight Student-Teacher model :}
 
 For anomalous feature vectors detection, EfficientAD uses a \gls{s-t} approach, with teacher being the \gls{pdn}. The student network uses the teachers architecture as well to maintain low overall latency. EfficientAD model introduces a training loss  which substantially improves the anomaly detection without affecting the test time computational requirements. The goal is to provide the student with enough data so that it can mimic the teacher on normal images, while avoiding generalization on anomalous images. Therefore the student's loss is restricted to the most relevant parts of an image i.e. the patches where the student mimics the teacher the least.A hard feature loss is proposed, which primarily uses the output elements with the highest loss for the purpose of backpropagation \cite{batzner2024efficientadaccuratevisualanomaly}.
 
 Apart form hard feature loss, EfficientAD adds a loss penalty during training that further hinders the student's ability from imitating the teacher on images that are not included in the normal training images. The teacher network is either pretrained on image classification dataset, or is a distilled version of a pretrained network, but student is only trained on the applications normal images. To hinder the student's ability to generalize its imitation of the teacher to out-of-distribution images, a penalty in terms of using images from the teacher's pretraining during the training of student is proposed \cite{batzner2024efficientadaccuratevisualanomaly}.
 
-\paragraph*{Autoencoder for Logical Anomaly Detection :}
+\subsubsection*{Autoencoder for Logical Anomaly Detection :}
 
 For learning logical anomalies of the training images and detecting any violations of these constraints, EfficientAD uses autoencoder on training images. Figure \ref{fig:EfficientAD pipeline} illustrates the anomaly detection pipeline for EfficientAD. It consists of \gls{s-t} pair and an autoencoder. The autoencoder is trained to predict teacher's output. A standard convolutional autoencoder is used, that consists of strided convolutions in the encoder and bilinear upsampling in the decoder \cite{batzner2024efficientadaccuratevisualanomaly}.
 
@@ -480,16 +480,16 @@ Usually for both the logical anomalies as well as normal images, the autoencoder
 
 The student learns the systematic reconstruction errors of the autoencoder on normal images, but it doesn't learn the reconstruction errors for anomalies as they are not part of the training set. This makes the difference between the student's and the autoencoder's output suitable for computing the anomaly map, which is calculated as squared difference between the two outputs and then averaging across all channels. EfficientAD produces two anomaly maps, the one generated by autoencoder-student pair is called global anomaly map and the one generated by \gls{s-t} pair is called local anomaly map as seen in the figure \ref{fig:EfficientAD pipeline}. Then these two maps are normalized to similar scale and then averaged to generate the combined anomaly map, and its maximum value is used as image-level anomaly score \cite{batzner2024efficientadaccuratevisualanomaly}.
 
-\paragraph*{Performance :}
+\subsubsection*{Performance :}
 
 EfficientAD achieves an impressive image-level \gls{auroc} score of $99.8\%$ on MVTec AD dataset\cite{8954181} with early stopping enabled. For the overall anomaly detection performance, EfficientAD achieves very strong image-level detection and pixel-level localization performance with a highest score of $98.1$ for VisA\cite{zou2022spotthedifferenceselfsupervisedpretraininganomaly} dataset. The computational cost of EfficientAD was measured using the metrics latency and throughput, with the EfficientAD showing latency of $2.2ms$ and throughput of 614 $img/s$ \cite{batzner2024efficientadaccuratevisualanomaly}.
 
-\subsubsection{FastFlow}
+\subsection{FastFlow}
 \label{subsec:fastflow}
 
 Most existing representation-based moethods uses a deep convolutional neural network to extract normal image features and are then characterized this distribution through non-parametric distribution estimation methods. But these methods fails to map features effectively to a tractable base distribution and ignore the relationship between the local and global features which are essential for anomaly detection. Therefore, FastFlow is proposed to mitigate these problems. FastFlow is an unsupervised anomaly detection and localization model which is built with 2D normalization flows as its probability distribution estimator. Experimental findings shows that FastFlow outperforms previous state-of-the-art methods in terms of both accuracy and inference efficiency. It achieves 99.4\% AUC in anomaly detection \cite{yu2021fastflowunsupervisedanomalydetection}.
 
-\paragraph*{Core Concept :}
+\subsubsection*{Core Concept :}
 
 Earlier unsupervised approaches used non-parametric methods while recents ones started using normalization flow to model the distribution of features for normal images. However these one-dimensional normalization flow models  requires the flattening of the two-dimensional input feature into a one-dimensional vector to estimate the distribution which destroys the positional relationship of 2D image and limits the ability of flow model. These models also used sliding window approach to extract features from a large number image patches and detect anomalies for each patch, this led to high inference complexity. Therefore to address the above problems FastFlow which extends the normalizing flow to two-dimensional space by using fully connected neural networks as the subnet which can maintain the relative position of the space, and supports end-to-end inference of the whole image. This improves the anomaly detection performances and gives the detection and localization results at once for the whole image to improve inference efficiency \cite{yu2021fastflowunsupervisedanomalydetection}.
 
@@ -508,15 +508,15 @@ The FastFlow pipeline consists of two main components, they are:
 
 2. 2D Normalization Flow
 
-\paragraph*{Feature Extractor :}
+\subsubsection*{Feature Extractor :}
 
 First step in the whole pipeline is to extract representative features from input image using either ResNet as explained in section \ref{subsec:ResNet} or \gls{vit}. In \glspl{vit} as feature extractor, features from only one layer are extracted because of its capability to capture the relationship between local patches and global features. In case of ResNet, features are taken from directly the last layer in the first three blocks, and then these features are inputted into three corresponding FastFlow model \cite{yu2021fastflowunsupervisedanomalydetection}. 
 
-\paragraph*{2D Normalization Flow :}
+\subsubsection*{2D Normalization Flow :}
 
 The 2D flow function is used to project the image features into the hidden variable using a bijective invertible mapping. At the time of inference, the features of anomalous images should be out of distribution and therefore will have lower likelihoods than normal images. This likelihood can be use as the anomaly score. Secifically, the sum of 2D probabilities of each channel is done to obtain the final probability map, and then its upsampled to the input image resolution using bilinear interpolation. In order to convert the original normalization flow into a 2D format, an alternate $3\times3$ and $1\times1$ convolutional layers are used in the default subnet as shown in the figure\ref{fig:fastflow pipeline} to retain the spatial information in the flow model and the loIn the feature extraction stage, the features are extracted using \gls{dnn} as the backbone, such as ResNet[mention reference], which was pre-trained on ImageNet\cite{5206848} dataset \cite{10208786}., CIFAR-10\cite{krizhevsky2009learning}, BTAD\cite{Mishra_2021} datasets. For MVTec AD dataset, the FastFlow model was compared with many state-of-the-art models with two metrics image-level \gls{auc} and pixel-level \gls{auc}. FastFlow demonstrates exceptional performance in anomaly detection, achieving an 99.4 image-level \gls{auc}, and 98.5 pixel-level \gls{auc}, surpassing all the other models. In case of CIFAR-10 dataset, FastFlow achieves an \gls{auc} 66.7 which is the best performing model when compared with others. For the BTAD dataset, FastFlow again surpasses all the compared models and achieves a pixel-level \gls{auc} of 97.0 \cite{yu2021fastflowunsupervisedanomalydetection}.
 
-\subsubsection{Deep Feature Kernel Density Estimation (DFKDE)}
+\subsection{Deep Feature Kernel Density Estimation (DFKDE)}
 \label{subsec:dfkde}
 
 \gls{dfkde} is a fast one-class anomaly detection model. It consists of two stages:

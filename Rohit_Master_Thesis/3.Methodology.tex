@@ -1,8 +1,8 @@
-\section{Methods}
+\chapter{Methods}
 
 This section provides an outline of the actual experimental procedures and processes carried out to conduct the research study. It includes datasets, the process of training and testing the model, and metrics used to evaluate the method's performance.
 
-\subsection{Dataset}
+\section{Dataset}
 The dataset provided by Siemens consists of images of Solder joints on a \gls{pcb}. It has a total of 6014 images, each of $512 \times $512 dimensions, divided into \gls{fc} and \gls{ng}. The \gls{fc} class contains images without defects, while the \gls{ng} class contains images with a variety of defects. The images are of two types, one is colored image as shown in middle of figure\ref{fig:dataset-FC}, and other is heat image which are the red ones in figure\ref{fig:dataset-FC}. This variation of images makes it suitable for evaluating variety of images a model can be used for. The dataset is split into training and testing sets using an 80-20 split. A separate set of 160 images is also reserved for testing, finding accuracy and visualizing classification and segmentation results.
 
 \begin{figure}[ht!]
@@ -58,11 +58,11 @@ The table~\ref{tab:dataset-distribution} provides a detailed breakdown of the da
     \label{tab:dataset-distribution}
 \end{table}
 
-\subsection{Experiment}
+\section{Experiment}
 
 Experiments were carried out using models mentioned in the [Theory section]. All the models belongs to Anomaly detection and are part of a deep learning library which has a collection of state-of-the-art anomaly detection algorithms call Anomalib. There are multiple steps taken in this experiment and they will be explained below.
 
-\subsubsection{Data Loading}
+\subsection{Data Loading}
 
 To load and preprocess our dataset, we use Anomalib dataloader by importing \textbf{Folder} from \textbf{Data} class which is specifically designed for handling our custom dataset, allowing for efficient data management and preprocessing. We create a Folder datamodule and configure several parameters as described below.
 
@@ -87,7 +87,7 @@ To load and preprocess our dataset, we use Anomalib dataloader by importing \tex
 
 Model loading is carried out by importing Here each model is configured with a specific backbone, which serves as a feature extraction component. 
 
-\subsubsection{Model Training or Inferencing}
+\subsection{Model Training or Inferencing}
 \label{subsec:Model Training}
 
 The training takes place in two steps here, first is loading the model, second is the training part, which are explained below.
@@ -116,13 +116,13 @@ The key components of training/inferencing configuration are:
 
 After providing these training configuration to the engine class, then we can call the \textbf{fit} function to start with the training or inferencing. Here we provide the model and the datamodule components. Here the \textbf{Normal} directory is used which is the anomaly free images. After the training/inferencing is finished, the next step is to perform testing which is explained in below section.
 
-\subsubsection{Testing}
+\subsection{Testing}
 
 After the training/inferencing is finished, we can move ahead to next critical step i.e. to evaluate the model's performance. For this the \textbf{test} function from the engine class is used, and similar to fit function we again need to pass the model and the datamodule components. Here the \textbf{Abnormal} directory is used which has the anomalous images. 
 
 After the testing is finished, its results are displayed which have two of the metrics mentioned in section \ref{subsec:Evaluation Metrics} \gls{auroc} and F1-Score.
 
-\subsubsection{Model Exporting}
+\subsection{Model Exporting}
 \label{subsec:Model Exporting}
 
 Exporting a trained model is a very important task, as then the model can be deployed in real-world applications. This involves converting the trained model into a format optimized for efficient inference on various hardwares, like \glspl{cpu}, \glspl{gpu} etc. Thus the model can be incorporated into production environments, operating at scale by processing new data and identifying anomalies in real-time.
@@ -137,14 +137,14 @@ The export process is initialized by setting the desired export format via the \
 
 \textbf{3. 'model.xml'} this file stores the models architecture. It contains the structure of neural network, including layers, the connections between them etc.
 
-\subsection{Inference}
+\section{Inference}
 \label{subsec:Inference}
 
 In the inference phase the model is utilized to make predictions on new and unseen data. This section documents the approaches for achieving inference using a trained model, mainly focusing on two tasks: \textbf{'Image Classification'} and \textbf{'Image Segmentation'}. Both the tasks are crucial in assessing the effectiveness of the model in detecting and localizing anomalies in solder joints on \glspl{pcb}.
 
 Firstly the trained model is loaded using the \textbf{'OpenVINOInferencer'} or \textbf{'TorchInferencer'} class which can enable efficient inference on \glspl{cpu} or \glspl{gpu} respectively. Here we will be using OpenVINOInferencer, by providing the model and metadata paths of the trained model as explained in the section \ref{subsec:Model Exporting}. Once we are done with creating the \textbf{'Inferencer'} object, then we can move on to performing image classification and segmentation as described below.
 
-\subsubsection{Image Classification}
+\subsection{Image Classification}
 \label{subsec:Image Classification}
 
 Image Classification is an important task within \gls{cv} because it helps in identifying and recognizing the object present in an image. It involves labelling input images based on the likelihood of it being anomalous or not \cite{FANG2020100980}.
@@ -160,7 +160,7 @@ As mentioned in section \ref{subsec:Inference}, after creating the inference obj
 
 The figure \ref{fig:Image classification on NG image} shows the result of image classification, where it gives three images as an output, one is the input image, second one shows the predicted heat map which shows where could be the possible anomaly, and the third gives the prediction label and the score.
 
-\subsubsection{Image Segmentation}
+\subsection{Image Segmentation}
 %\subsubsection{Metrics Calculation}
 
 Image segmentation is a method of analyzing images at the pixel level. It involves utilizing multiple techniques to label each pixel as part of a particular class or instance\cite{IBM2024}. So using image segmentation we can we can point where the model has predicted the anomaly to be as shown in the figure \ref{fig:Image Segmentation on NG image}.
@@ -172,17 +172,17 @@ Image segmentation is a method of analyzing images at the pixel level. It involv
     \label{fig:Image Segmentation on NG image}
 \end{figure}
 
-\subsection{Evaluation Metrics}
+\section{Evaluation Metrics}
 \label{subsec:Evaluation Metrics}
 
 Evaluation metrics play a crucial role in assessing the performance of a machine learning model. These metrics aid in quantifying the model's ability to differentiate between anomalous and normal images, offering valuable insights into the model's effectiveness and areas that can be improved. This section outlines the primary evaluation metrics utilized in this thesis: AUROC, Accuracy, Recall, Precision, F1-Score, and Confusion Matrix.
 
-\subsubsection*{Area Under the Receiver-Operating Curve (AUROC)}
+\subsection*{Area Under the Receiver-Operating Curve (AUROC)}
 \label{subsec:AUROC}
 
 The \gls{auroc} measures the ability of a classification model to differentiate across different classes. It has been particularly useful in measuring trade-offs of the \gls{tpr} (sensitivity) versus the \gls{fpr} (1-specificity) across different threshold settings. A higher \gls{auroc} value indicates better model performance, with a value of 1 representing a perfect model and a value of 0.5 indicating a model that performs no better than random chance\cite{FAWCETT2006861}. For quality control applications, this is extremely important because, missing an anomaly can possibly have severe consequences for a manufacturing process. %Write how its calculated in anomalib if possible
 
-\subsubsection*{Accuracy}
+\subsection*{Accuracy}
 \label{subsec:Accuracy}
 
 Accuracy is the rate of correct predictions made by the model. It is often assessed by using an unseen dataset that was never utilized throughout the learning process, like the custom test set mentioned in the table \ref{tab:dataset-distribution}.\cite{Kohavi1998}. It is expressed as: 
@@ -194,7 +194,7 @@ Accuracy is the rate of correct predictions made by the model. It is often asses
 
 where \gls{tp}, \gls{tn}, \gls{fp}, and \gls{fn} are True Positives, True Negatives, False Positives, and False Negatives, respectively. It gives an overall view of the performance of the model.
 
-\subsubsection*{Recall}
+\subsection*{Recall}
 \label{subsec:Recall}
 
 Recall, also known as sensitivity, refers to the ratio of accurately predicted positive cases to the total number of actual positive cases \cite{powers2020evaluationprecisionrecallfmeasure}. It is expressed as:
@@ -206,7 +206,7 @@ Recall, also known as sensitivity, refers to the ratio of accurately predicted p
 
 A higher Recall value means that the model is good in detecting most anomalies, but it doesn't take into account the number of \gls{fp}.
 
-\subsubsection*{Precision}
+\subsection*{Precision}
 \label{subsec:Precision}
 
 Precision, also known as confidence, refers to the proportion of accurately predicted positive cases that are actually correct \cite{powers2020evaluationprecisionrecallfmeasure}. It is expressed as:
@@ -218,7 +218,7 @@ Precision, also known as confidence, refers to the proportion of accurately pred
 
 This metric is very important where the cost of false positives is high, because it indicates how well the model can prevent incorrectly labelling normal cases as anomalies. 
 
-\subsubsection*{F1-Score}
+\subsection*{F1-Score}
 \label{subsec:F1-Score}
 
 The F1-score is a metric that achieves a balance between precision and recall. The calculation involves taking the harmonic mean of precision and recall. The F1-score is a valuable metric for achieving a trade-off between high precision and recall. It effectively penalizes extreme negative values of either component \cite{Walker2024}. It is expressed as:
@@ -229,7 +229,7 @@ The F1-score is a metric that achieves a balance between precision and recall. T
 
 It makes this metric valuable since it evaluates the ability of a model to detect anomalies(Recall) and  its precision identifying true positives without an excessive number of false positive. 
 
-\subsubsection*{Confusion Matrix}
+\subsection*{Confusion Matrix}
 \label{subsec:Confusion Matrix}
 
 Confusion Matrix is a matrix which simply shows the predicted and the actual classifications made by the model \cite{Kohavi1998}. It is basically a table containing the \gls{tp}, \gls{tn}, \gls{fp}, and \gls{fn} values. Subsequently, a Confusion Matrix can help to explain what kinds of errors a model makes so that improvements can be made specifically within the same area.
