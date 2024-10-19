@@ -2,7 +2,7 @@
 
 \section{Related Works}
 
-The domain of Image Classification has experienced tremendous development over the last few decades, propelled by the increase in computational capabilities, large amounts of available data, and the development of sophisticated algorithms. This section provides an overview of the major advancements in the field of Image Classification, especially for its applications in industrial environments, such as electronics manufacturing. We will also explore the increasing significance of anomaly detection, emphasizing the transition from conventional supervised learning approaches to modern unsupervised learning methods.
+Image Classification has experienced tremendous development over the last few decades, propelled by the increase in computational capabilities, large amounts of available data, and the development of sophisticated algorithms. This section provides an overview of the major advancements in the field of Image Classification, especially for its applications in industrial environments, such as electronics manufacturing. We will also explore the increasing significance of anomaly detection, emphasizing the transition from conventional supervised learning approaches to modern unsupervised learning methods.
 
 \subsection{Evolution of Image Classification Techniques}
 
@@ -10,7 +10,7 @@ Image Classification is a critical task in the field of \gls{cv}, with numerous 
 
 Subsequently, the introduction of \glspl{cnn} was a significant milestone in this field. They have introduced the concept of feature learning, whereby the network learns to extract relevant features from the raw image data by using numerous layers of convolutional filters \cite{NIPS2012_c399862d}. This groundbreaking study in \cite{NIPS2012_c399862d} on AlexNet architecture delivered exceptional results on the ImageNet dataset for image classification. This success triggered various research into network architectures that are deeper and more complex, such as VGGNet \cite{simonyan2015deepconvolutionalnetworkslargescale}, GoogLeNet \cite{7298594}, and ResNet \cite{he2016deep}.
 
-Among these, the work on the introduction of ResNet by \cite{he2016deep} was highly significant as it addressed the issues of vanishing gradients that tormented earlier deep networks \cite{simonyan2015deepconvolutionalnetworkslargescale} \cite{7298594}. ResNet made it possible to train much deeper networks by incorporating residual connections, resulting in substantial improvement in accuracy over various image classification benchmarks. Thus \glspl{cnn} were firmly established as the leading approach for tasks like image classification.
+Among these, the work on the introduction of ResNet by \cite{he2016deep} was highly significant as it addressed the issues of vanishing gradients that tormented earlier deep networks \cite{simonyan2015deepconvolutionalnetworkslargescale} \cite{7298594}. ResNet made it possible to train much deeper networks by incorporating residual connections, resulting in substantial improvement in accuracy over various image classification benchmarks. Thus, \glspl{cnn} were firmly established as the leading approach for tasks like image classification.
 
 \subsection{Applications of Image Classification in Industrial Settings}
 
@@ -276,12 +276,12 @@ f(x) =
     \label{fig:leaky relu function curve}
 \end{figure}
 
-\subsubsection{ResNet}
+\subsection{ResNet}
 \label{subsec:ResNet}
 
 Deep Convolutional neural networks has led to numerous advancements in image classification. The depth of the network plays a crucial role in this achievement, but deeper networks still faces a critical problem of \textbf{degradation}. The degradation problem occurs when deeper neural networks starts to converge: with increasing network depth the accuracy gets saturated and then rapidly declines. This is caused by increase in number of layers which results in higher training error. To address this degradation problem a deep residual learning framework was proposed. In this framework, instead of relying on each stacked layer to directly match a specific underlying mapping, the layers are designed to fit a residual mapping \cite{he2016deep}.
 
-\begin{figure}[!ht]
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=1.2\linewidth]{Rohit_Master_Thesis//Images/residual_block.pdf}
     \caption{A residual block \cite{he2016deep}}
@@ -325,6 +325,57 @@ To scale the networks to 50, 101, and 152 layers, a bottleneck design is used, w
 
 The 50/101/152-layer \glspl{resnet} show significantly higher accuracy compared to the 34-layer versions. No degradation problem is observed, due to which high accuracy can be achieved \cite{he2016deep}.
 
+\subsection{Vision Transformer}
+
+Transformers introduced by \cite{vaswani2017attention} has become the go to model in \gls{nlp} related tasks. Transformer's computational efficiency and scalability allows for exceptional model training with over 100B parameters. However, when it comes to \gls{cv}, convolutional architectures like ResNet\cite{he2016deep} are still dominant. Therefore inspired by the success of transformers in \gls{nlp}, standard transformer was directly applied to images, with minimal modifications. For this images were split into patches, then the transformer was given the linear embeddings of these patches as input. These images patches are treated the same way as token(words) as in \gls{nlp} tasks, and the training is carried in supervised fashion \cite{dosovitskiy2020image}.
+
+\subsubsection*{Architecture :}
+
+An overview of the architecture of the model is shown in the figure \ref{fig:vit architecture}. The standard transformer takes 1D sequence of token embeddings as input.To process 2D images, firstly the image is reshaped into flattened 2D patches, these is called the patch embeddings \cite{dosovitskiy2020image}. 
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/vit_architecture.pdf}
+    \caption{This is the proposed \gls{vit} architecture. Here an image is split into patches of fixed size, each of them is then linearly embedded, with that positional embedding is added, and then the resulting sequence is given as input to a standard transformer encoder. To perform classification, a "classification token" is added to the sequence \cite{dosovitskiy2020image}.}
+    \label{fig:vit architecture}
+\end{figure}
+
+Similar to BERT's [class] token, a learnable classification token is prepended to the sequence of the patch embeddings. Its output from the transformer encoder is used as image representation for classification. During both training and fine-tuning, a classification head is attached to this output, which consists of a \gls{mlp} with one hidden layer during pre-training and a single linear layer at fine-tuning time. Positional embeddings are also added to the patch embeddings for retaining the positional information. The transformer encoder, as seen at the right side of the figure \ref{fig:vit architecture}, has alternating layers of \gls{msa} and \gls{mlp} blocks. Each block also includes \gls{ln}, and residual connections, these are applied before each block and after each block respectively. The \gls{mlp} consists of two layers with a GELU activation function. These layers processes the sequence of patch embeddings and the [class] token \cite{dosovitskiy2020image}.
+
+\subsection{Data-efficient image Transformers (DeiT)}
+
+\gls{deit} was introduced in the paper \cite{pmlr-v139-touvron21a}, which unlike \gls{vit}\cite{dosovitskiy2020image} doesn't need large-scale training, and uses only Imagenet as training set, and also need fewer computational resources. \gls{deit} introduced a token-based distillation strategy to distill information into the model \cite{pmlr-v139-touvron21a}.
+
+\subsubsection*{Distillation strategy :}
+
+For a teacher model a strong image classifier is used, it can be either a \gls{cnn} or a mixture of classifiers. One of the key innovation in \gls{deit} is the introduction of "distillation token". This procedure is shown in the figure \ref{fig:deit distillation token}, this distillation token is used similar to the class token which is added to the initial embeddings. It interacts with other tokens using the self-attention. The distillation token embedding is output by the network after the last layer, and it is optimized by using the distillation component of the loss. This distillation embedding helps the model to learn from the output of the teacher, which remains complimentary to the class embedding \cite{pmlr-v139-touvron21a}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Rohit_Master_Thesis//Images/deit_distillation_token.pdf}
+    \caption{\gls{deit} distillation procedure\cite{pmlr-v139-touvron21a}.}
+    \label{fig:deit distillation token}
+\end{figure}
+
+\subsection{Class-Attention in Image Transformers (CaiT)}
+
+\gls{cait} is vision transformer type, it makes two main modifications to the original \gls{vit} architecture. Firstly, a new layer scaling method termed as LayerScale is used, which adds a learnable diagonal matrix at the output of each residual block. This matrix is initialized close to 0, which improves the training dynamics. Secondly, class-attention layers are also introduced. This creates an architecture in which the transformer layers which involves self-attentiom between the patches are separated from the class-attention layers, which are devoted to extract the content of the processed patches into a single vector, so it can be linear classifiers input \cite{touvron2021going}. 
+
+\subsubsection*{Architecture :}
+
+The \gls{cait} consists of two processing stages as can be seen in the figure \ref{fig:cait architecture}.
+
+\paragraph{Self-Attention Stage :} In this stage, the CLS class token is inserted later in the transformer. This resolves the inconsistency of the first layers of the transformer, which are then entirely used for performing self-attention between patches only \cite{touvron2021going}. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Rohit_Master_Thesis//Images/cait_architecture.pdf}
+    \caption{In this figure, the original \gls{vit} is on the left, here the CLS token is inserted with patch embeddings. This is counterproductive, as the same weights are used for two different purposes. In the middle architecture, the author shows that inserting the CLS token later on improves performance. And further in the \gls{cait} architecture(right), the patch embeddings are frozen when inserting CLS tocken to save computational resources. So the last part of the network, usually the last 2 layers are fully focused on summarizing the information to will be given as an input to the linear classifier \cite{touvron2021going}.}
+    \label{fig:cait architecture}
+\end{figure}
+
+\paragraph{Class-Attention Stage :} It is a set of layers which compiles the patch embeddings into a class embedding CLS that is then given to a linear classifier. Here only the class embeddings are updated. But the main difference is that, within \gls{cait} architecture, the information is not copied from class embedding to the patch embeddings during the forward pass.
+
 \subsection{You Only Look Once (YOLO)}
 \label{subsec:yolo}
 
@@ -367,7 +418,7 @@ As stated before \gls{yolo} unifies the separate components of object detection 
 
 There are now many more such \gls{yolo} versions with incremental updates such as \gls{yolo}v5 \cite{yolov5}, \gls{yolo}v8 \cite{Ultralytics2024} which is used in the current solution at Siemens as mentioned in section \ref{subsec:current solution at siemens} and latest being \gls{yolo}v10 \cite{Ultralytics2024v10}.
 
-\section{Unsupervised Image Representation}
+\section{Unsupervised Image Processing}
 
 \subsection{Anomaly Detection in Unsupervised Learning}
 
