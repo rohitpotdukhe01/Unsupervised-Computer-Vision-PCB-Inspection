@@ -1,4 +1,21 @@
-  \section{Summary}
+\section{Summary}
 
-A summary must be included in a master's thesis, as formulated in \cite{FPOMathematik10} Section 34(6).
+%A summary must be included in a master's thesis, as formulated in \cite{FPOMathematik10} Section 34(6).
 
+%The thesis is structured into seven key chapters, they are as mentioned below,
+
+\begin{itemize}
+    \item \textbf{Chapter 1: Introduction:} In this chapter, the motivation for improving the efficiency of solder joint inspection in \gls{pcb} manufacturing is introduced. This discussion highlights the limitations of current inspection methods, including manual examination and supervised learning, are discussed, establishing the need for unsupervised learning as a viable alternative to reduce dependency on labeled data.
+
+    \item \textbf{Chapter 2: Theoretical Background:} This chapter lays out the theoretical knowledge required to understand the research. It covers the concepts of supervised and unsupervised image processing, highlighting the advantages of using unsupervised learning for anomaly detection. It also introduces relevant models and techniques, such as convolutional neural networks (CNNs), PatchCore, EfficientAD, etc., used in supervised and unsupervised approaches.
+
+    \item \textbf{Chapter 3: Methods:} The methodology chapter describes the dataset used in this study, which consists of images of solder joints that are either normal or defective. The experimental setup includes training various unsupervised models from the Anomalib library, such as PatchCore, \gls{dfm}, and EfficientAD. The processes for hyperparameter tuning, data preparation, and model evaluation are outlined, along with the metrics used for evaluating model performance.
+
+    \item \textbf{Chapter 4: Results:} This chapter presents the results obtained from evaluating the performance of the different unsupervised models on our dataset. PatchCore emerged as the best-performing model. Comparative analysis of \gls{dfm}, EfficientAD, and other models is also provided, highlighting the strengths and weaknesses of each model in anomaly detection.
+
+    \item \textbf{Chapter 5: Discussion:} The discussion chapter explores the implications of the results, emphasizing the scalability and efficiency of unsupervised methods for anomaly detection in \gls{pcb} manufacturing. Challenges faced during the research, such as the long training times of some models, are also addressed.
+
+    \item \textbf{Chapter 6: Future Works:} This chapter discusses the potential future directions for this research. Suggestions include exploring the use of Vision Transformers for enhanced anomaly detection and optimizing current methods to further reduce training times and improve accuracy. This chapter also highlights the broader applicability of unsupervised learning techniques in other defect detection tasks.
+
+    \item \textbf{Chapter 7: Conclusion:} The conclusion summarizes the key findings, highlighting the benefits of using unsupervised learning for anomaly detection in \gls{pcb} manufacturing. It also highlights how unsupervised models can make the inspection process more scalable and reduce the dependence on manual labeling. This chapter concludes by discussing future research opportunities, including the integration of advanced models like Vision Transformers.
+\end{itemize}

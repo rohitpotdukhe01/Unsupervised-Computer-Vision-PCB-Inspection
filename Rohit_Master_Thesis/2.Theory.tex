@@ -63,6 +63,9 @@ Another increasingly popular method is the \glspl{gan}\cite{goodfellow2014genera
 %Machine Learning is a subdomain of Artificial Intelligence that encompasses various techniques able to automatically discover patterns in data and use those patterns to predict future data[1].
 
 \section{Supervised Image Processing}
+\label{sec:supervised}
+
+Supervised image processing is a subset of \gls{ml} where a model is trained using labeled dataset. Labeled dataset means that each image in that dataset is tagged with its correct output label or category. With this approach, the model can learn to map inputs to specific outputs \cite{geeksforgeeks-sup-unsup}.
 
 \subsection{Artificial Neural Networks (ANNs)}
 
@@ -420,7 +423,11 @@ There are now many more such \gls{yolo} versions with incremental updates such a
 
 \section{Unsupervised Image Processing}
 
-\subsection{Anomaly Detection in Unsupervised Learning}
+Unsupervised image processing is also part of \gls{ml}, but unlike the supervised learning we saw in section \ref{sec:supervised}, it doesn't required any labeled data. Instead, it focuses on clustering similar data points, discovering patterns and relationships, or detecting anomalies without explicitly telling it where the defect is \cite{geeksforgeeks-sup-unsup}. This approach is beneficial when labeled data is scarce or expensive to obtain.
+
+Below we will discuss and understand the unsupervised models we used in our experiments.
+
+%\subsection{Anomaly Detection in Unsupervised Learning}
 
 \subsection{PatchCore}
 \label{subsec:patchcore}
