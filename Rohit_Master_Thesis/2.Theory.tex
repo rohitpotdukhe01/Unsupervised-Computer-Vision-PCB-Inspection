@@ -2,33 +2,33 @@
 
 \section{Related Works}
 
-Image Classification has experienced tremendous development over the last few decades, propelled by the increase in computational capabilities, large amounts of available data, and the development of sophisticated algorithms. This section provides an overview of the major advancements in the field of Image Classification, especially for its applications in industrial environments, such as electronics manufacturing. We will also explore the increasing significance of anomaly detection, emphasizing the transition from conventional supervised learning approaches to modern unsupervised learning methods.
+Image Classification has experienced significant growth over the last few decades, driven by increased computational capabilities, large amounts of available data, and the development of sophisticated algorithms. This section provides an overview of the major advancements in Image Classification, especially for its applications in industrial environments, such as electronics manufacturing. We will also explore the increasing significance of anomaly detection, emphasizing the transition from conventional supervised learning approaches to modern unsupervised learning methods.
 
 \subsection{Evolution of Image Classification Techniques}
 
 Image Classification is a critical task in the field of \gls{cv}, with numerous applications ranging from medical diagnostics to autonomous driving. Early image classification algorithms mainly relied on manual feature extraction, which involves domain experts designing these features, which could be used to differentiate between classes of images. These features were subsequently inputted into traditional machine learning algorithms like \glspl{svm} or \gls{k-nn} for classification \cite{LeCun2015}. Nevertheless, these techniques were limited by their dependence on handcrafted features, which could not effectively reflect intricate changes observed in real-world scenarios.
 
-Subsequently, the introduction of \glspl{cnn} was a significant milestone in this field. They have introduced the concept of feature learning, whereby the network learns to extract relevant features from the raw image data by using numerous layers of convolutional filters \cite{NIPS2012_c399862d}. This groundbreaking study in \cite{NIPS2012_c399862d} on AlexNet architecture delivered exceptional results on the ImageNet dataset for image classification. This success triggered various research into network architectures that are deeper and more complex, such as VGGNet \cite{simonyan2015deepconvolutionalnetworkslargescale}, GoogLeNet \cite{7298594}, and ResNet \cite{he2016deep}.
+Subsequently, the introduction of \glspl{cnn} was a significant milestone in this field. They have introduced the concept of feature learning, whereby the network learns to extract relevant features from the raw image data using numerous layers of convolutional filters \cite{NIPS2012_c399862d}. This groundbreaking study in \cite{NIPS2012_c399862d} on AlexNet architecture delivered exceptional results on the ImageNet dataset for image classification. This success triggered various research into network architectures that are deeper and more complex, such as VGGNet \cite{simonyan2015deepconvolutionalnetworkslargescale}, GoogLeNet \cite{7298594}, and ResNet \cite{he2016deep}.
 
 Among these, the work on the introduction of ResNet by \cite{he2016deep} was highly significant as it addressed the issues of vanishing gradients that tormented earlier deep networks \cite{simonyan2015deepconvolutionalnetworkslargescale} \cite{7298594}. ResNet made it possible to train much deeper networks by incorporating residual connections, resulting in substantial improvement in accuracy over various image classification benchmarks. Thus, \glspl{cnn} were firmly established as the leading approach for tasks like image classification.
 
 \subsection{Applications of Image Classification in Industrial Settings}
 
-In the industrial sector, special attention is given to image classification applications in quality control processes, particularly in the context of automated visual inspection. Traditionally, the visual inspection process was carried out manually, where we had to rely on the experience of quality inspectors to ensure product quality. As a result of the varying levels of expertise among inspectors and the limitations of human abilities, this approach exhibits low efficiency, low accuracy, and inadequate real-time performance on a large-scale manufacturing process \cite{Gong_2020}.
+In the industrial sector, special attention is given to image classification applications in quality control processes, particularly in automated visual inspection. Traditionally, the visual inspection process was carried out manually, where we had to rely on the experience of quality inspectors to ensure product quality. As a result of the varying levels of expertise among inspectors and the limitations of human abilities, this approach exhibits low efficiency, low accuracy, and inadequate real-time performance on a large-scale manufacturing process \cite{Gong_2020}.
 
-With the rise of \gls{dl}, automated visual inspection systems are developed using \glspl{cnn} for defect detection in real-time. One of the most notable models in industrial applications is \gls{yolo} which is used for real-time object detection and has gained popularity in tasks requiring rapid image processing. The design of \gls{yolo} enables it to perform object detection in a single iteration over the network, rendering it highly efficient in cases where speed is critical. For example, during the PCB manufacturing process, \gls{yolo} can rapidly identify solder joints that do not meet quality standards. This offers a significant decrease in inspection times as compared to traditional manual techniques \cite{redmon2016you}.
+With the rise of \gls{dl}, automated visual inspection systems are developed using \glspl{cnn} for real-time defect detection. One of the most notable models in industrial applications is \gls{yolo}, which is used for real-time object detection and has gained popularity in tasks requiring rapid image processing. The design of \gls{yolo} enables it to perform object detection in a single iteration over the network, rendering it highly efficient in cases where speed is critical. For example, during the PCB manufacturing process, \gls{yolo} can rapidly identify solder joints that do not meet quality standards. This offers a significant decrease in inspection times compared to traditional manual techniques \cite{redmon2016you}.
 
-Although \gls{cnn}-based models such as \gls{yolo} have demonstrated their effectiveness in most industrial applications, they do have certain limitations. One of the major obstacle is the requirement for a large labeled dataset to properly train such models. In many industrial applications, such as PCB inspection, defects are rare, and gathering labeled instances in large enough quantities for training purposes may become prohibitively expensive. In such instances, the labeling process is typically very labor- and knowledge-intensive, resulting in high costs and time consumption\cite{FINK2020103678}.
+Although \gls{cnn}-based models such as \gls{yolo} have demonstrated their effectiveness in most industrial applications, they have certain limitations. One major obstacle is the requirement for a large labeled dataset to train such models properly. In many industrial applications, such as PCB inspection, defects are rare, and gathering labeled instances in large enough quantities for training purposes may become prohibitively expensive. In such instances, the labeling process is typically labor- and knowledge-intensive, resulting in high costs and time consumption\cite{FINK2020103678}.
 
 \subsection{Anomaly Detection in Electronics Manufacturing}
 
-Due to the lack of labeled data, supervised learning methods are not feasible in certain scenarios. As a result, there has been a growing interest in exploring unsupervised learning methods for anomaly detection. Anomaly detection is the process of identifying patterns in data that deviate from expected behavior. This makes it an suitable solution in industrial applications for identifying defects where normal instances are well represented but anomalies are rare and diverse \cite{10.1145/1541880.1541882}.
+In certain scenarios, due to the lack of labeled data, supervised learning methods are not feasible. As a result, there has been a growing interest in exploring unsupervised learning methods for anomaly detection. Anomaly detection refers to finding patterns in data that deviate from expected behavior. This makes it a suitable solution in industrial applications for identifying defects where normal instances are well represented, but anomalies are rare and diverse \cite{10.1145/1541880.1541882}.
 
-In electronics manufacturing, anomaly detection plays an important role for tasks like solder joint inspection. Traditional techniques are based on models like probabilistic and distance-based. These techniques, are effective when dealing with simpler anomaly patterns but often faces difficulties when dealing with complex and high-dimensional data, as explained by \cite{PIMENTEL2014215}. This article points to the limitation of these methods because they reply on predefined thresholds and basic data assumptions, that fails to generalize on wide variety of anomalies.
+In electronics manufacturing, anomaly detection is essential for tasks like solder joint inspection. Traditional techniques are based on probabilistic and distance-based models. These techniques are effective when dealing with simpler anomaly patterns but often face difficulties when dealing with complex and high-dimensional data, as explained by \cite{PIMENTEL2014215}. This article points to the limitation of these methods because they rely on predefined thresholds and basic data assumptions that fail to generalize on a wide variety of anomalies.
 
-Further expanding on this foundation, recent advancements in \gls{dl} introduced more sophisticated methods, particularly by employing autoencoders\cite{bank2021autoencoders}. Neural networks, namely \glspl{vae}\cite{Kingma_2019}, provides substantial improvements in presenting complex data distributions. These autoencoders learns compression and reconstruction of inputs through training on normal operational data, thereby building a model of 'normality' that allows it to find those anomalous instances with higher reconstruction errors indicating a deviation from the normal\cite{bank2021autoencoders}. This approach improves the detection of complex patterns of defects to help maintain the integrity of products produced in the manufacturing processes. Other variants of autoencoders, such \gls{vae}, deep autoencoders, has been investigated for anomaly detection and has shown promising results \cite{Kingma_2019}.
+Further expanding on this foundation, recent advancements in \gls{dl} introduced more sophisticated methods, particularly by employing autoencoders\cite{bank2021autoencoders}. Neural networks, namely \glspl{vae}\cite{Kingma_2019}, provide substantial improvements in presenting complex data distributions. These autoencoders learn compression and reconstruction of inputs through training on normal operational data, thereby building a model of 'normality' that allows it to find those anomalous instances with higher reconstruction errors indicating a deviation from the normal\cite{bank2021autoencoders}. This approach improves the detection of complex patterns of defects to help maintain the integrity of products produced in the manufacturing processes. Other variants of autoencoders, such \gls{vae}, deep autoencoders, have been investigated for anomaly detection and have shown promising results \cite{Kingma_2019}.
 
-Another increasingly popular method is the \glspl{gan}\cite{goodfellow2014generativeadversarialnetworks} for anomaly detection. \glspl{gan} is consisting of two networks, namely a generator and a discriminator, both are trained simultaneously. The generator tries to produce data that is indistinguishable from the real one, while a discriminator strives to differentiate between real and generated data. In the context of anomaly detection, the generator is trained to generate normal instances, while the discriminator learns to identify any deviations from this normal distribution as anomalies \cite{schlegl2017unsupervisedanomalydetectiongenerative}.
+Another increasingly popular method for anomaly detection is the \glspl{gan}\cite{goodfellow2014generativeadversarialnetworks}. \glspl{gan} consists of two networks, namely a generator and a discriminator, both of which are trained in parallel. The generator tries to produce data that closely resembles the real one, whereas the discriminator strives to differentiate between real and generated data. In anomaly detection, the generator is trained to generate normal instances, while the discriminator learns to identify deviations from this normal distribution as anomalies \cite{schlegl2017unsupervisedanomalydetectiongenerative}.
 
 %\subsubsection{Gaps in Current Research}
 
@@ -65,30 +65,30 @@ Another increasingly popular method is the \glspl{gan}\cite{goodfellow2014genera
 \section{Supervised Image Processing}
 \label{sec:supervised}
 
-Supervised image processing is a subset of \gls{ml} where a model is trained using labeled dataset. Labeled dataset means that each image in that dataset is tagged with its correct output label or category. With this approach, the model can learn to map inputs to specific outputs \cite{geeksforgeeks-sup-unsup}.
+Supervised image processing is a subset of \gls{ml} where a model is trained using a labeled dataset. Labeled dataset means that each image in that dataset is tagged with its correct output label or category. With this approach, the model can learn to map inputs to specific outputs \cite{geeksforgeeks-sup-unsup}.
 
 \subsection{Artificial Neural Networks (ANNs)}
 
-\gls{ann} are computational processing systems that are inspired by how biological nervous systems such as the human brain functions. \gls{ann} mainly consists of numerous interconnected computational nodes, known as neurons, which are intertwined in a distributed manner to collectively learn from te input and optimize the final output \cite{oshea2015introductionconvolutionalneuralnetworks}.
+\gls{ann} are computational processing systems inspired by how biological nervous systems like the human brain function. \gls{ann} mainly consists of numerous interconnected computational nodes, known as neurons, which are intertwined in a distributed fashion to collectively learn from the input and optimize the final output \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Images/ann_architecture.pdf}
-    \caption{\gls{ann} is a three-layer \gls{fnn} consisting of an input layer, a hidden layer, and an output layer \cite{oshea2015introductionconvolutionalneuralnetworks}.}
+    \caption{\gls{ann} is a three-layer \gls{fnn} made up of an input, a hidden, and an output layer \cite{oshea2015introductionconvolutionalneuralnetworks}.}
     \label{fig:ann architecture}
 \end{figure}
 
-The figure \ref{fig:ann architecture} shows the basic structure of a \gls{ann}. Input data will be loaded in the form of multidimensional vector into the input layer, then it will be distributed into the hidden layer. Then hidden layers will make decisions based on previous layer and evaluate how a stochastic change improves the final output, this process is know as learning. When multiple hidden layers are stacked next each other it is known as \gls{dl} \cite{oshea2015introductionconvolutionalneuralnetworks}.
+Figure \ref{fig:ann architecture} shows the basic structure of a \gls{ann}. Input data will be loaded as a multidimensional vector into the input layer. Then, it will be distributed into the hidden layer. Then, hidden layers will make decisions based on the previous layer and evaluate how a stochastic change improves the final output, this process is known as learning. When multiple hidden layers are stacked next to each other, it is known as \gls{dl} \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 \subsection{Convolutional Neural Networks (CNNs)}
 
-\glspl{cnn}\cite{726791} is an extended version of \gls{ann} which is primarily used for feature extraction from a grid-like matrix dataset \cite{GeeksforGeeks2024}. \glspl{cnn} is similar to traditional \gls{ann} in terms of that they consists of neurons that self-optimize through learning. Each neuron will receive input and perform operations like scalar product followed by a non-linear function, which is the basis of many \gls{ann}. The only significant difference between \glspl{cnn} and traditional \gls{ann} is that \glspl{cnn} are mainly used on images in the field of pattern recognition. This enables the encoding of image-specific features into the architecture, making it more suitable for image-focused tasks while also reducing the parameters required for model configuration \cite{oshea2015introductionconvolutionalneuralnetworks}.
+\glspl{cnn}\cite{726791} is an extended version of \gls{ann}, which is primarily used for feature extraction from a grid-like matrix dataset \cite{GeeksforGeeks2024}. \glspl{cnn} is similar to traditional \gls{ann} as they consist of neurons that self-optimize through learning. Each neuron will receive input and perform operations like scalar product followed by a non-linear function, which is the basis of many \gls{ann}. The only significant difference between \glspl{cnn} and traditional \gls{ann} is that \glspl{cnn} are mainly used on images in the field of pattern recognition. This enables the encoding of image-specific features into the architecture, making it more suitable for image-focused tasks while reducing the parameters required for model configuration \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-The term \glspl{cnn} indicates that the network uses a mathematical operation called \textbf{convolution}. \glspl{cnn} are neural networks that in the place of general matrix multiplication uses convolution in at least one of the layers \cite{Goodfellow-et-al-2016}.
+The term \glspl{cnn} indicates that the network uses a mathematical operation called \textbf{convolution}. \glspl{cnn} are neural networks that, in place of general matrix multiplication, use convolution in at least one of the layers \cite{Goodfellow-et-al-2016}.
 
 \subsubsection*{\gls{cnn} Architecture :}
 
-Basic \gls{cnn} architecture consists of three types of layers, they are \textbf{convolutional layers}, \textbf{pooling layers}, and \textbf{fully connected layers}. When these layers are stacked together, then a \gls{cnn} architecture is formed. Figure \ref{fig:cnn architecture} shows \gls{cnn} architecture for MNIST\cite{6296535} classification.
+Basic \gls{cnn} architecture consists of three types of layers they are \textbf{convolutional layers}, \textbf{pooling layers}, and \textbf{fully connected layers}. A \gls{cnn} architecture is formed when these layers are stacked together. Figure \ref{fig:cnn architecture} shows \gls{cnn} architecture for MNIST\cite{6296535} classification.
 
 
 \begin{figure}[ht!]
@@ -98,23 +98,23 @@ Basic \gls{cnn} architecture consists of three types of layers, they are \textbf
     \label{fig:cnn architecture}
 \end{figure}
 
-The functionality of \gls{cnn} architecture shown above can be broken down basically into four key areas.
+The functionality of \gls{cnn} architecture shown in the above figure can be broken down into four key areas.
 
 1. Similar to other types of \gls{ann}, the input layer holds the images pixel values \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-2. Convolutional layer will determine the output of neurons that are linked to local regions of input by calculating the scalar product of their weights and the corresponding input volume region. The \gls{relu} aims to apply an 'elementwise' activation function like sigmoid to the output generated by the preceding's layer's activation \cite{oshea2015introductionconvolutionalneuralnetworks}.
+2. The convolutional layer will determine the output of neurons linked to local input regions by calculating the scalar product of their weights and the corresponding input volume region. The \gls{relu} aims to apply an 'elementwise' activation function like sigmoid to the output generated by the preceding layer's activation \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-3. The pooling layer will perform downsampling along the spatial dimensions of the input, this further reduces the number of parameters in the activation \cite{oshea2015introductionconvolutionalneuralnetworks}.
+3. The pooling layer will perform downsampling along the spatial dimensions of the input. This further reduces the number of parameters in the activation \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-4. The fully connected layers will then perform the same functions as that in a standard \gls{ann}, aiming to produce class scores from the activations, for classification purposes. To improve performance, it's also recommended to use \gls{relu} between these layers \cite{oshea2015introductionconvolutionalneuralnetworks}. 
+4. The fully connected layers will then perform the same functions as that in a standard \gls{ann}, aiming to produce class scores from the activations for classification purposes. To improve performance, it is also recommended to use \gls{relu} between these layers \cite{oshea2015introductionconvolutionalneuralnetworks}. 
 
-By using this simple transformation technique, \glspl{cnn} can transform the original input layer by layer, by using convolutional and downsampling techniques producing class scores for classification and regression purposes \cite{oshea2015introductionconvolutionalneuralnetworks}. Lets look at the main components of the \gls{cnn} architecture in detail.
+By using this simple transformation technique, \glspl{cnn} can transform the original input layer by layer by using convolutional and downsampling techniques, producing class scores for classification and regression purposes \cite{oshea2015introductionconvolutionalneuralnetworks}. Let's look at the main components of the \gls{cnn} architecture in detail.
 
 \subsubsection*{Convolutional Layer :}
 
-Convolutional layer plays important role in the \glspl{cnn} functionality. The layers parameters concentrate on the use of learnable \textbf{kernels}. These kernels are the set of learnable parameters.
+The convolutional layer plays an essential role in the \glspl{cnn} functionality. The layer's parameters concentrate on using learnable \textbf{kernels}. These kernels are the set of learnable parameters.
 
-These kernels are usually small in spatial dimensions, however spreads entirely along the depth of the input. Upon the data entering a convolutional layer, it convolves each filter across the spatial dimensions of the input to generate a 2D activation map as shown in figure \ref{fig:convolutional layer} \cite{oshea2015introductionconvolutionalneuralnetworks}.
+These kernels are usually small in spatial dimensions but spread entirely along the input depth. Upon the data entering a convolutional layer, it convolves each filter across the spatial dimensions of the input to generate a 2D activation map as shown in figure \ref{fig:convolutional layer} \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 %\begin{figure}
 %    \centering
@@ -130,34 +130,34 @@ These kernels are usually small in spatial dimensions, however spreads entirely 
     \label{fig:convolutional layer}
 \end{figure}
 
-As the kernel glides through the input, it calculates the scalar product for each value in that kernel. Through this the network will learn kernels that activates upon they detect a specific feature at a given spatial position of the input. These are commonly referred to as activations. Each kernel will have a corresponding activation map, which will be stacked along the depth dimension to form complete output volume from the convolutional layer \cite{oshea2015introductionconvolutionalneuralnetworks}.
+As the kernel glides through the input, it calculates the scalar product for each value in that kernel. Through this, the network will learn kernels that activate upon they detect a specific feature at a given spatial position of the input. These are commonly referred to as activations. Each kernel will have a corresponding activation map, stacked along the depth dimension to form a complete output volume from the convolutional layer \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-To mitigate the problem of \gls{ann} where the models gets too big to train effectively due to the full-connected nature of standard \gls{ann} neurons, each neuron in a convolutional layer is connected only to a small region of the input, known as \textbf{receptive field}. The connectivity depth is almost always equal to the input depth \cite{oshea2015introductionconvolutionalneuralnetworks}. To understand this, lets consider an example, if the network receives an input image measuring $64\times64\times3$(representing an RGB image), with the receptive field being of the size $6\times6$, each neuron will have a total of 108 weights with in the convolutional layer($6\times6\times3$, with 3 representing the amount of connectivity across the depth of the volume). Whereas a standard neuron in other forms of \gls{ann} would have $12,288$ weights each \cite{oshea2015introductionconvolutionalneuralnetworks}.
+To mitigate the problem of \gls{ann} where the models get too big to train effectively due to the full-connected nature of standard \gls{ann} neurons, each neuron in a convolutional layer is connected only to a small region of the input, known as \textbf{receptive field}. The connectivity depth is almost always equal to the input depth \cite{oshea2015introductionconvolutionalneuralnetworks}. To understand this, let's consider an example: if the network receives an input image measuring $64\times64\times3$(representing an RGB image), with the receptive field being of the size $6\times6$, each neuron will have a total of 108 weights within the convolutional layer($6\times6\times3$, with 3 representing the amount of connectivity across the depth of the volume). Whereas a standard neuron in other forms of \gls{ann} would have $12,288$ weights each \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-By optimizing its output convolutional layers can also significantly reduce the complexity of the model. These are optimized by three hyperparameters: depth, stride, and setting zero-padding.
+Optimizing its output convolutional layers can also significantly reduce the complexity of the model. Three hyperparameters—depth, stride, and setting zero-padding—optimize these layers.
 
 The \textbf{depth} of the output volume can be set manually using the number of neurons within the convolutional layer corresponding to the same region in the input. Although reducing this hyperparameter can significantly reduce the total number of neurons of the network, it can also significantly reduce the model's pattern recognition capabilities \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 
-\textbf{Stride} is the number of rows and columns that the receptive field will move across the input's spatial dimension \cite{Zhao2024}. For example, with stride set to 1, then the significantly overlapping receptive field will produce very large activations, while a larger value of stride will reduce overlapping and produce an output of lower spatial dimensions \cite{oshea2015introductionconvolutionalneuralnetworks}.
+\textbf{Stride} is the number of rows and columns the receptive field will move across the input's spatial dimension \cite{Zhao2024}. For example, with stride set to 1, then the significantly overlapping receptive field will produce extensive activations. At the same time, a larger value of stride will reduce overlapping and produce an output of lower spatial dimensions \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-\textbf{Zero-Padding} is a simple process of padding the border of the input with zeros, it's an effective way to enhance control of the dimentionality of the output volumes \cite{oshea2015introductionconvolutionalneuralnetworks}.
+\textbf{Zero-Padding} is a simple process of padding the border of the input with zeros. It is an effective way to enhance control of the dimensionality of the output volumes \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-We can calculate the spatial dimensionality of convolutional layers output by using the following formula: 
+We can calculate the spatial dimensionality of convolutional layer output by using the following formula: 
 
 \[
     \frac{(V - R) + 2Z}{S + 1}
 \]
 
-Here the V denotes the input volume size(height$\times$width$\times$depth), R denotes the receptive field size, Z denotes the zero-padding set, and S denotes the stride. If the result from the above formula is not a whole integer then the stride has been set incorrectly, and the neurons wont be able to fit across the given input \cite{oshea2015introductionconvolutionalneuralnetworks}.
+Here, V denotes the input volume size(height$\times$width$\times$depth), R denotes the receptive field size, Z denotes the zero-padding set, and S denotes the stride. If the result from the above formula is not a whole integer, then the stride has been set incorrectly, and the neurons cannot fit across the given input \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-Despite these optimizations, models can still be huge while using high dimensionality input like images. To further reduce the number of parameters significantly within the convolutional layer \textbf{parameter sharing} is used. It works on the assumption that if a feature from one spatial region is useful for computation, then its likely to be useful in another region as well \cite{oshea2015introductionconvolutionalneuralnetworks}.
+Despite these optimizations, models can still be huge using high-dimensional input like images. To further reduce the number of parameters significantly within the convolutional layer, \textbf{parameter sharing} is used. It works on the assumption that if a feature from one spatial region is useful for computation, then it is likely to be useful in another region as well \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 \subsubsection*{Pooling layer :}
 
-The pooling layers reduces the dimensionality of the feature representation, thus reducing the number of parameters and computational complexity of the model. Pooling layer operates on each activation map in the input, and reduces its dimensionality using the 'Max' function. Max-pooling layers is one of the most common types of pooling used in \glspl{cnn}. It selects the maximum activity value of all neurons for the representation for the particular region and extract the most essential feature from the input feature map \cite{Zhao2024}. A $2\times2$ kernels is applied with a stride of 2 across the spatial dimensions of the input reduces the activation map by $75\%$ of the original size, while preserving the depth volume of the feature map \cite{oshea2015introductionconvolutionalneuralnetworks}. 
+The pooling layers help reduce the dimensionality of the feature representation, thus reducing the number of parameters and computational complexity of the model. The pooling layer operates on each activation map in the input and reduces its dimensionality using the 'Max' function. Max-pooling layer is one of the most common types of pooling used in \glspl{cnn}. It selects the maximum activity value of all neurons to represent the particular region and extracts the most essential feature from the input feature map \cite{Zhao2024}. A $2\times2$ kernel is applied with a stride of 2 across the spatial dimensions of the input, reducing the activation map by $75\%$ of the original size while preserving the depth volume of the feature map \cite{oshea2015introductionconvolutionalneuralnetworks}. 
 
-Average pooling computes the arithmetic mean of all the elements within the region, resulting in the mean value of the local response from the extracted feature mapping \cite{Zhao2024}. The figure \ref{fig:max pooling} shows max pooling operation where the maximum value is used, and figure \ref{fig:average pooling} shows the average pooling operation, which performs the average operation to get the value.
+Average pooling computes the arithmetic mean of all the elements within the region, resulting in the mean value of the local response from the extracted feature mapping \cite{Zhao2024}. Figure \ref{fig:max pooling} shows the max pooling operation where the maximum value is used, and figure \ref{fig:average pooling} shows the average pooling operation, which performs the average operation to get the value.
 
 \begin{figure}[H]
     \centering
@@ -175,31 +175,31 @@ Average pooling computes the arithmetic mean of all the elements within the regi
 
 \subsubsection*{Fully-Connected Layer :}
 
-The fully-connected layer contains neurons which are directly connected to the neurons in the two neighboring layers, with no connections to any neurons within itself. It is similar to the way neurons are arranged in traditional \gls{ann} as can be seen in the figure \ref{fig:ann architecture} \cite{oshea2015introductionconvolutionalneuralnetworks}.
+The fully connected layer contains neurons directly connected to the neurons in the two neighboring layers, with no connections to any neurons within itself. It is similar to the way neurons are arranged in traditional \gls{ann} as can be seen in the figure \ref{fig:ann architecture} \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
 \subsubsection*{Activation Function :}
 
-Activation functions plays a crucial role in neural networks, strengthening the network's representational and learning capabilities, by learning the abstract features through nonlinear transformation \cite{dubey2022activationfunctionsdeeplearning}. With the introduction of the activation functions, the neural network can approximate any nonlinear function, making it applicable to a wide range of nonlinear models \cite{Zhao2024}. Some of the activation functions common properties are:
+Activation functions are essential to neural networks, strengthening the network's representational and learning capabilities by learning the abstract features through nonlinear transformation \cite{dubey2022activationfunctionsdeeplearning}. With activation functions, the neural network can approximate any nonlinear function, making it applicable to a wide range of nonlinear models \cite{Zhao2024}. Some of the activation functions common properties are:
 
 1. It should add the nonlinear curvature in the optimization landscape to enhance training convergence of the network;
 
-2. It shouldn't significantly increase the computational complexity of the model;
+2. It should not significantly increase the computational complexity of the model;
 
-3. During training it shouldn't hamper the gradient flow;
+3. During training, it should not hamper the gradient flow;
 
 4. It should preserve the data distribution and facilitate better network training \cite{dubey2022activationfunctionsdeeplearning}.
 
-Here we will look at the most common and widely used activation functions, including Sigmoid, Tanh, Softmax, \gls{relu}, and Leaky \gls{relu}.
+Here, we will look at the most common and widely used activation functions, including Sigmoid, Tanh, Softmax, \gls{relu}, and Leaky \gls{relu}.
 
 \textbf{1. Sigmoid Activation Function :}
 
-The Sigmoid function, or the logistic function, ranges from 0 to 1. As can be seen from the figure \ref{fig:sigmoid tanh function curve}, sigmoid can be used to normalize the output, as well as probability-based predictions \cite{Zhao2024}. The following is the sigmoid functions mathematical formula :
+The Sigmoid function, or the logistic function, ranges from 0 to 1. As seen from the figure \ref{fig:sigmoid tanh function curve}, sigmoid can be used to normalize the output and probability-based predictions \cite{Zhao2024}. The following is the sigmoid functions mathematical formula :
 
 \[ 
     f(x) = \frac{1}{1 + e^{-x}}
 \]
 
-Figure \ref{fig:sigmoid tanh function curve} shows that the sigmoid gradient is smooth, preventing output values from jumping. Nevertheless, there are many problems with using Sigmoid, like when the activation is near 0 or 1 the chances of vanishing gradient are high. There is also slow gradient descent's convergence due to non-zero-centered output. Finally, due to sigmoid functions exponential operation, the computation time of the model increases as well \cite{Zhao2024}.
+Figure \ref{fig:sigmoid tanh function curve} shows that the sigmoid gradient is smooth, preventing output values from jumping. Nevertheless, Sigmoid has many problems; for example, the chances of the vanishing gradient are high when the activation is near 0 or 1. There is also slow gradient descent convergence due to non-zero-centered output. Finally, due to the sigmoid function's exponential operation, the computation time of the model increases as well \cite{Zhao2024}.
 
 
 \begin{figure}[!ht]
@@ -211,23 +211,23 @@ Figure \ref{fig:sigmoid tanh function curve} shows that the sigmoid gradient is 
 
 \textbf{2. Tanh Activation Function :}
 
-The hyperbolic tangent activation function(HTAF), or tanh, compresses the input vector in the range of -1 to 1, and also offers a zero-centered output. The below formula and the figure \ref{fig:sigmoid tanh function curve} shows the tanh curve and mathematical representation:
+The hyperbolic tangent activation function(HTAF), or tanh, compresses the input vector in the range of -1 to 1 and offers a zero-centered output. The below formula and the figure \ref{fig:sigmoid tanh function curve} shows the tanh curve and mathematical representation:
 
 \[
     f(x) = \frac{2}{1 + e^{-2x}} - 1
 \]
 
-From the figure \ref{fig:sigmoid tanh function curve} we can see that tanh and sigmoid function are relatively similar S-shaped curves. Tanh and Sigmoid have the following relationship:
+From the figure \ref{fig:sigmoid tanh function curve}, we can see that tanh and sigmoid function are relatively similar S-shaped curves. Tanh and Sigmoid have the following relationship:
 
 \[
     Tanh(x) = 2Sigmoid(2x) - 1
 \]
 
-In practice tanh is used more than sigmoid as it solves sigmoid function not centering the output to zero problem. However, like sigmoid, tanh also suffers from vanishing gradient problem for extreme input values \cite{Zhao2024}.
+In practice, tanh is used more than sigmoid as it solves the sigmoid function, not centering the output to zero problems. However, like sigmoid, tanh also suffers from vanishing gradient problems for extreme input values \cite{Zhao2024}.
 
 \textbf{3. Softmax Activation Function :}
 
-Softmax activation function is used for multi-class classification problems. It compresses the input vectors into probabilities in the range of 0 to 1, all of which sum up to 1. In K classification task, the generated probabilities can be used to represent each category, with larger value indicating higher probability that it belongs to that particular category \cite{Zhao2024}. Figure \ref{fig:softmax function curve} shows the softmax function curve, and the below formula shows how softmax is formulated mathematically:
+A softmax activation function is used in multi-class classification problems. It compresses the input vectors into probabilities from 0 to 1, all of which sum up to 1. In the K classification task, the generated probabilities can represent each category, with the larger value indicating the higher probability that it belongs to that particular category \cite{Zhao2024}. Figure \ref{fig:softmax function curve} shows the softmax function curve, and the below formula shows how softmax is formulated mathematically:
 
 \[
     f(x) = \frac{e^{x_i}}{\sum_{j=1}^{k} e^{x_j}}
@@ -240,11 +240,11 @@ Softmax activation function is used for multi-class classification problems. It 
     \label{fig:softmax function curve}
 \end{figure}
 
-When the softmax function encounters negative input value, the gradient becomes zero, therefore the weights for activation in that region will not update throughout backpropagation, resulting in a dead neuron that never activated \cite{Zhao2024}.
+The gradient becomes zero when the softmax function encounters a negative input value. Therefore, the weights for activation in that region will not update throughout backpropagation, resulting in a dead neuron that never activated \cite{Zhao2024}.
 
 \textbf{4. ReLU Activation Function :}
 
-ReLU, or Rectified Linear Unit is a segmented linear function, as shown in the figure \ref{fig:relu function curve}. It is a fast, simple activation function which is essentially a ramp function given by the following formula:
+ReLU, or Rectified Linear Unit, is a segmented linear function, as shown in figure \ref{fig:relu function curve}. It is a fast, simple activation function which is essentially a ramp function given by the following formula:
 
 \[
     f(x) = max(0,x)
@@ -258,11 +258,11 @@ ReLU, or Rectified Linear Unit is a segmented linear function, as shown in the f
     \label{fig:relu function curve}
 \end{figure}
 
-When the input is positive, the derivative is 1, which improves the vanishing gradient problem and also speeds up the gradient descent convergence. Its also faster than sigmoid and tanh functions, due to ReLU function only has linear relationships. But this function suffers from dying ReLU problem, which is when the input is negative, the gradient will be exactly zero and the neurons will most likely die during training \cite{Zhao2024}.
+For positive input, the derivative is 1, which improves the vanishing gradient problem and speeds up the gradient descent convergence. It is also faster than the sigmoid and tanh functions because the ReLU function only has linear relationships. However, this function suffers from a dying ReLU problem, which is when the input is negative, the gradient will be precisely zero, and the neurons will most likely die during training \cite{Zhao2024}.
 
 \textbf{5. Leaky ReLU Activation Function :}
 
-Leaky ReLU addresses the dying ReLU problem to some extent by introducing very small linear components for negative inputs to solve zero gradients assostiated with negatives, and extending the range of ReLU. Although Leaky ReLU has all the features of ReLU, in practice its not always the case that Leaky ReLU is better than ReLU \cite{Zhao2024}. Below is the mathematical formulation of Leaky ReLU and figure \ref{fig:leaky relu function curve} shows its function curve.
+Leaky ReLU addresses the dying ReLU problem to some extent by introducing very small linear components for negative inputs to solve zero gradients associated with negatives and extending the range of ReLU. Although Leaky ReLU has all the features of ReLU, in practice, it is not always the case that Leaky ReLU is better than ReLU \cite{Zhao2024}. Below is the mathematical formulation of Leaky ReLU, and figure \ref{fig:leaky relu function curve} shows its function curve.
 
 \[
 f(x) =
@@ -282,7 +282,7 @@ f(x) =
 \subsection{ResNet}
 \label{subsec:ResNet}
 
-Deep Convolutional neural networks has led to numerous advancements in image classification. The depth of the network plays a crucial role in this achievement, but deeper networks still faces a critical problem of \textbf{degradation}. The degradation problem occurs when deeper neural networks starts to converge: with increasing network depth the accuracy gets saturated and then rapidly declines. This is caused by increase in number of layers which results in higher training error. To address this degradation problem a deep residual learning framework was proposed. In this framework, instead of relying on each stacked layer to directly match a specific underlying mapping, the layers are designed to fit a residual mapping \cite{he2016deep}.
+Deep Convolutional neural networks have led to numerous advancements in image classification. The network's depth plays a crucial role in this achievement, but deeper networks still face a critical problem of \textbf{degradation}. The degradation problem occurs when deeper neural networks start to converge: with increasing network depth, the accuracy gets saturated and then rapidly declines. This is caused by an increase in number of layers, which results in higher training errors. To address this degradation problem, a deep residual learning framework was proposed. In this framework, instead of relying on each stacked layer to directly match a specific underlying mapping, the layers are designed to fit a residual mapping \cite{he2016deep}.
 
 \begin{figure}[ht!]
     \centering
@@ -293,13 +293,13 @@ Deep Convolutional neural networks has led to numerous advancements in image cla
 
 \subsubsection*{Residual Learning :}
 
-As mentioned above instead of expecting stacked layers to approximate mapping function H(x), where x denotes the inputs to the first of these stacked layer. The layers are explicitly let to approximate a residual function $F(x) := H(x) - x$. The original function then becomes $F(x) + x$. This makes the learning process much easier, although it's expected that both forms can asymptotically approximate the desired functions \cite{he2016deep}.
+As mentioned above, instead of expecting stacked layers to approximate mapping function H(x), where x denotes the inputs to the first of this stacked layer. The layers are explicitly let to approximate a residual function $F(x) := H(x) - x$. The original function then becomes $F(x) + x$. This makes the learning process much easier, although it is expected that both forms can asymptotically approximate the desired functions \cite{he2016deep}.
 
 The above mentioned residual learning is applied to every few stacked layers. The structure of a residual block is shown in the figure \ref{fig:residual block}. The basic building block can be defined for this approach as:
 
 $ y = F(x, \left\{ W_{i}\right\}) + x$.
 
-Here x, and y represents the input and output vectors of the considered layers, The function $F(x, \left\{ W_{i}\right\})$  represents the residual mapping to be learned. The operation $F + x$ is performed by a \textbf{shortcut connection} also known as skip connection, and element-wise addition as shown in figure \ref{fig:residual block}. This shortcut connections doesn't introduce any extra parameters or computational complexity, except for the minor element-wise addition. This ensures a fair comparison between plain and residual networks  which have the same number of parameters, width, depth, and computational cost \cite{he2016deep}.
+Here, the input and output vectors are represented by x and y of the considered layers; the function $F(x, \left\{ W_{i}\right\})$  is the residual mapping that needs to be learned. The operation $F + x$ is carried out by a \textbf{shortcut connection}, also known as skip connection, and element-wise addition as shown in figure \ref{fig:residual block}. This shortcut connection does not introduce any extra parameters or computational complexity except for the minor element-wise addition. This ensures a fair comparison between plain and residual networks, which have the same number of parameters, width, depth, and computational cost \cite{he2016deep}.
 
 \subsubsection*{Network Architecture :}
 
@@ -310,48 +310,48 @@ Here x, and y represents the input and output vectors of the considered layers, 
     \label{fig:resnet architecture}
 \end{figure}
 
-As can be seen in the figure \ref{fig:resnet architecture} two models are described. The plain baseline network(figure \ref{fig:resnet architecture}, middle) draws inspiration from the philosophy of VGG nets\cite{simonyan2015deepconvolutionalnetworkslargescale} (Figure \ref{fig:resnet architecture}, left), which mostly uses $3\times3$ filters. It maintains the time complexity per layer by doubling the number of filters when feature map size is halved. Downsampling is performed by convolutional layer with stride 2, the network ends with global average pooling layer followed by a 1000-way fully connected layer with softmax \cite{he2016deep}.
+Two models are described in the figure \ref{fig:resnet architecture}. The plain baseline network(figure \ref{fig:resnet architecture}, middle) draws inspiration from the philosophy of VGG nets\cite{simonyan2015deepconvolutionalnetworkslargescale} (Figure \ref{fig:resnet architecture}, left), which mainly uses $3\times3$ filters. It maintains the time complexity per layer by doubling the number of filters when the feature map size is halved. Downsampling is performed by convolutional layer with stride 2. The network finishes with a global average pooling layer followed by a 1000-way fully connected layer with softmax \cite{he2016deep}.
 
-Based on the plain network, short connections are added which transforms the network into its counterpart residual version. Identity shortcuts are used for matching input-output dimensions(solid line shortcuts in figure \ref{fig:resnet architecture}). For when dimensions increases(dotted line shortcuts in figure \ref{fig:resnet architecture}), either the shortcut performs identity mapping, with zero-padding, or projection shortcuts($1\times1$ convolutions) are used \cite{he2016deep}.
+Short connections are added based on the plain network, which transforms the network into its counterpart residual version. Identity shortcuts match input-output dimensions(solid line shortcuts in figure \ref{fig:resnet architecture}). For when dimensions increase (dotted line shortcuts in figure \ref{fig:resnet architecture}), either the shortcut performs identity mapping, with zero-padding, or projection shortcuts($1\times1$ convolutions) are used \cite{he2016deep}.
 
 \subsubsection*{Performance :}
 
-The 18-layer and 34-layer \gls{resnet} shows that the deeper 34-layer \gls{resnet} performs better than the 18-layer \gls{resnet} by 2.8\%. Also the 34-layer \gls{resnet} demonstrates a considerable reduction in training error and shows good generalization to the validation data. This shows that the degradation problem is well tackled in this setting leading to accuracy gains from increased depth. Compared to the plain network(figure \ref{fig:resnet architecture}, middle), the 34-layer \gls{resnet} reduced the top-1 error by $3.5\%$, this verifies the efficacy of residual learning on very deep networks. It was also observed that 18-layer plain networks are more accurate, but the 18-layer \gls{resnet} converges faster \cite{he2016deep}.
+The 18-layer and 34-layer \gls{resnet} show that the deeper 34-layer \gls{resnet} performs better than the 18-layer \gls{resnet} by 2.8\%. Also, the 34-layer \gls{resnet} significantly reduces training error and shows good generalization to the validation data. This shows that the degradation problem is well tackled in this setting, leading to accuracy gains from increased depth. Compared to the plain network(figure \ref{fig:resnet architecture}, middle), the 34-layer \gls{resnet} reduced the top-1 error by $3.5\%$; this verifies the efficacy of residual learning on very deep networks. It was also observed that 18-layer plain networks are more accurate, but the 18-layer \gls{resnet} converges faster \cite{he2016deep}.
 
 \subsubsection*{Deeper Bottleneck Architectures :}
 
-To scale the networks to 50, 101, and 152 layers, a bottleneck design is used, where the building blocks are modified as bottleneck layers, in which the residual function is stacked with 3 layers($1\times1$, $3\times3$, $1\times1$ convolutions). The $1\times1$ are responsible for dimensions reduction filled by restoration, which creates a bottleneck in the $3\times3$ layer with smaller input and output dimensions \cite{he2016deep}.
+To scale the networks to 50, 101, and 152 layers, a bottleneck design is used, where the building blocks are modified as bottleneck layers, in which the residual function is stacked with three layers($1\times1$, $3\times3$, $1\times1$ convolutions). The $1\times1$ are responsible for dimensions reduction filled by restoration, which creates a bottleneck in the $3\times3$ layer with smaller input and output dimensions \cite{he2016deep}.
 
-\textbf{50-layer \gls{resnet}:} In this architecture each 2-layer block in a 34-layer network is replaced with a 3-layered bottleneck block, which results in a 50-layer \gls{resnet} \cite{he2016deep}.
+\textbf{50-layer \gls{resnet}:} In this architecture, each 2-layer block in a 34-layer network is replaced with a 3-layered bottleneck block, which results in a 50-layer \gls{resnet} \cite{he2016deep}.
 
-\textbf{101-layer \& 152-layer \glspl{resnet}:} 3-layer blocks are used for the construction of 101-layer and 152-layer \glspl{resnet}. Even when the depth is increased a lot the 152-layer \gls{resnet} still has lower complexity than VGG-16/19 networks \cite{he2016deep}.
+\textbf{101-layer \& 152-layer \glspl{resnet}:} 3-layer blocks are used for the construction of 101-layer and 152-layer \glspl{resnet}. Even when the depth significantly increases, the 152-layer \gls{resnet} still has lower complexity than VGG-16/19 networks \cite{he2016deep}.
 
 The 50/101/152-layer \glspl{resnet} show significantly higher accuracy compared to the 34-layer versions. No degradation problem is observed, due to which high accuracy can be achieved \cite{he2016deep}.
 
 \subsection{Vision Transformer}
 
-Transformers introduced by \cite{vaswani2017attention} has become the go to model in \gls{nlp} related tasks. Transformer's computational efficiency and scalability allows for exceptional model training with over 100B parameters. However, when it comes to \gls{cv}, convolutional architectures like ResNet\cite{he2016deep} are still dominant. Therefore inspired by the success of transformers in \gls{nlp}, standard transformer was directly applied to images, with minimal modifications. For this images were split into patches, then the transformer was given the linear embeddings of these patches as input. These images patches are treated the same way as token(words) as in \gls{nlp} tasks, and the training is carried in supervised fashion \cite{dosovitskiy2020image}.
+Transformers introduced by \cite{vaswani2017attention} has become the go-to model in \gls{nlp} related tasks. Transformer's computational efficiency and scalability allow for exceptional model training with over 100B parameters. However, when it comes to \gls{cv}, convolutional architectures like ResNet\cite{he2016deep} are still dominant. Therefore, inspired by the success of transformers in \gls{nlp}, the standard transformer was directly applied to images with minimal modifications. For this, images were split into patches, and then the transformer was given the linear embeddings of these patches as input. These image patches are treated the same way as a token(words) as in \gls{nlp} tasks, and the training is carried out in a supervised fashion \cite{dosovitskiy2020image}.
 
 \subsubsection*{Architecture :}
 
-An overview of the architecture of the model is shown in the figure \ref{fig:vit architecture}. The standard transformer takes 1D sequence of token embeddings as input.To process 2D images, firstly the image is reshaped into flattened 2D patches, these is called the patch embeddings \cite{dosovitskiy2020image}. 
+Figure \ref{fig:vit architecture} shows an overview of the model's architecture. The standard transformer takes a 1D sequence of token embeddings as input. To process 2D images, firstly, the image is reshaped into flattened 2D patches called the patch embeddings \cite{dosovitskiy2020image}. 
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/vit_architecture.pdf}
-    \caption{This is the proposed \gls{vit} architecture. Here an image is split into patches of fixed size, each of them is then linearly embedded, with that positional embedding is added, and then the resulting sequence is given as input to a standard transformer encoder. To perform classification, a "classification token" is added to the sequence \cite{dosovitskiy2020image}.}
+    \caption{This is the proposed \gls{vit} architecture. Here, an image is split into fixed-sized patches, each of them is then linearly embedded, with that positional embedding is added, and then the resulting sequence is given as input to a standard transformer encoder. A "classification token" is added to the sequence to perform classification \cite{dosovitskiy2020image}.}
     \label{fig:vit architecture}
 \end{figure}
 
-Similar to BERT's [class] token, a learnable classification token is prepended to the sequence of the patch embeddings. Its output from the transformer encoder is used as image representation for classification. During both training and fine-tuning, a classification head is attached to this output, which consists of a \gls{mlp} with one hidden layer during pre-training and a single linear layer at fine-tuning time. Positional embeddings are also added to the patch embeddings for retaining the positional information. The transformer encoder, as seen at the right side of the figure \ref{fig:vit architecture}, has alternating layers of \gls{msa} and \gls{mlp} blocks. Each block also includes \gls{ln}, and residual connections, these are applied before each block and after each block respectively. The \gls{mlp} consists of two layers with a GELU activation function. These layers processes the sequence of patch embeddings and the [class] token \cite{dosovitskiy2020image}.
+Similar to BERT's [class] token, a learnable classification token is prepended to the sequence of the patch embeddings. Its output from the transformer encoder is used as image representation for classification. During both training and fine-tuning, a classification head is attached to this output, which consists of a \gls{mlp} with one hidden layer during pre-training and a single linear layer at fine-tuning time. To keep the positional information, positional embeddings are added along with the patch embeddings. The transformer encoder, as seen on the right side of the figure \ref{fig:vit architecture}, has alternating layers of \gls{msa} and \gls{mlp} blocks. Each block also includes \gls{ln}, and residual connections, these are applied before each block and after each block respectively. The \gls{mlp} consists of two layers with a GELU activation function. These layers process the sequence of patch embeddings and the [class] token \cite{dosovitskiy2020image}.
 
 \subsection{Data-efficient image Transformers (DeiT)}
 
-\gls{deit} was introduced in the paper \cite{pmlr-v139-touvron21a}, which unlike \gls{vit}\cite{dosovitskiy2020image} doesn't need large-scale training, and uses only Imagenet as training set, and also need fewer computational resources. \gls{deit} introduced a token-based distillation strategy to distill information into the model \cite{pmlr-v139-touvron21a}.
+\gls{deit} was introduced in the paper \cite{pmlr-v139-touvron21a}, which, unlike \gls{vit}\cite{dosovitskiy2020image} does not need large-scale training and uses only Imagenet as a training set, and also need fewer computational resources. \gls{deit} introduced a token-based distillation strategy to distill information into the model \cite{pmlr-v139-touvron21a}.
 
 \subsubsection*{Distillation strategy :}
 
-For a teacher model a strong image classifier is used, it can be either a \gls{cnn} or a mixture of classifiers. One of the key innovation in \gls{deit} is the introduction of "distillation token". This procedure is shown in the figure \ref{fig:deit distillation token}, this distillation token is used similar to the class token which is added to the initial embeddings. It interacts with other tokens using the self-attention. The distillation token embedding is output by the network after the last layer, and it is optimized by using the distillation component of the loss. This distillation embedding helps the model to learn from the output of the teacher, which remains complimentary to the class embedding \cite{pmlr-v139-touvron21a}.
+For a teacher model, a strong image classifier is used, it can be either a \gls{cnn} or a mixture of classifiers. One key innovation in \gls{deit} is the introduction of a "distillation token". This procedure is shown in figure \ref{fig:deit distillation token}. This distillation token is used similarly to the class token, which is added to the initial embeddings. It interacts with other tokens using the self-attention. The distillation token embedding is output by the network after the last layer and optimized by using the distillation component of the loss. This distillation embedding helps the model learn from the teacher's output, which remains complimentary to the class embedding \cite{pmlr-v139-touvron21a}.
 
 \begin{figure}[ht!]
     \centering
@@ -362,41 +362,41 @@ For a teacher model a strong image classifier is used, it can be either a \gls{c
 
 \subsection{Class-Attention in Image Transformers (CaiT)}
 
-\gls{cait} is vision transformer type, it makes two main modifications to the original \gls{vit} architecture. Firstly, a new layer scaling method termed as LayerScale is used, which adds a learnable diagonal matrix at the output of each residual block. This matrix is initialized close to 0, which improves the training dynamics. Secondly, class-attention layers are also introduced. This creates an architecture in which the transformer layers which involves self-attentiom between the patches are separated from the class-attention layers, which are devoted to extract the content of the processed patches into a single vector, so it can be linear classifiers input \cite{touvron2021going}. 
+\gls{cait} is a vision transformer type. It makes two main modifications to the original \gls{vit} architecture. Firstly, a new layer scaling method termed LayerScale is used, which adds a learnable diagonal matrix at the output of each residual block. This matrix is initialized close to 0, which improves the training dynamics. Secondly, class-attention layers are also introduced. This creates an architecture in which the transformer layers, which involve self-attention between the patches, are separated from the class-attention layers, which are devoted to extracting the content of the processed patches into a single vector, so it can be linear classifiers input \cite{touvron2021going}. 
 
 \subsubsection*{Architecture :}
 
-The \gls{cait} consists of two processing stages as can be seen in the figure \ref{fig:cait architecture}.
+The \gls{cait} consists of two processing stages, as seen in the figure \ref{fig:cait architecture}.
 
 \paragraph{Self-Attention Stage :} In this stage, the CLS class token is inserted later in the transformer. This resolves the inconsistency of the first layers of the transformer, which are then entirely used for performing self-attention between patches only \cite{touvron2021going}. 
 
 \begin{figure}
     \centering
     \includegraphics[width=0.75\linewidth]{Rohit_Master_Thesis//Images/cait_architecture.pdf}
-    \caption{In this figure, the original \gls{vit} is on the left, here the CLS token is inserted with patch embeddings. This is counterproductive, as the same weights are used for two different purposes. In the middle architecture, the author shows that inserting the CLS token later on improves performance. And further in the \gls{cait} architecture(right), the patch embeddings are frozen when inserting CLS tocken to save computational resources. So the last part of the network, usually the last 2 layers are fully focused on summarizing the information to will be given as an input to the linear classifier \cite{touvron2021going}.}
+    \caption{In this figure, the original \gls{vit} is on the left, here the CLS token is inserted with patch embeddings. This is counterproductive, as the same weights are used for two purposes. In the middle architecture, the author shows that inserting the CLS token later on improves performance. Moreover, further in the \gls{cait} architecture(right), the patch embeddings are frozen when inserting a CLS token to save computational resources. So the last part of the network, usually the last two layers, is fully focused on summarizing the information that will be given as an input to the linear classifier \cite{touvron2021going}.}
     \label{fig:cait architecture}
 \end{figure}
 
-\paragraph{Class-Attention Stage :} It is a set of layers which compiles the patch embeddings into a class embedding CLS that is then given to a linear classifier. Here only the class embeddings are updated. But the main difference is that, within \gls{cait} architecture, the information is not copied from class embedding to the patch embeddings during the forward pass.
+\paragraph{Class-Attention Stage :} A set of layers compiles the patch embeddings into a class embedding CLS that is then given to a linear classifier. Here, only the class embeddings are updated. However, the main difference is that, within \gls{cait} architecture, the information is not copied from class embedding to the patch embeddings during the forward pass.
 
 \subsection{You Only Look Once (YOLO)}
 \label{subsec:yolo}
 
-The human visual system operates with amazing speed and accuracy, which helps us perform complex tasks like driving with minimal conscious thought. Similarly, fast and accurate algorithms for object detection could facilitate computers to drive a car without the need of specialized sensors, assistive devices to provide real-time scene information to human users, this could pave the way the way for better responsive robotic systems. The object detection algorithms before \gls{yolo} used classifiers and repurposed them to detect objects by evaluating it across different locations and scale it in a test image. These methods are quite slow and complex to optimize \cite{redmon2016you}.
+The human visual system operates with amazing speed and accuracy, which helps us perform complex tasks like driving with minimal conscious thought. Similarly, fast and accurate algorithms for object detection could facilitate computers driving a car without the need for specialized sensors and assistive devices to provide real-time scene information to human users. This could pave the way for better responsive robotic systems. The object detection algorithms before \gls{yolo} used classifiers and repurposed them to detect objects by evaluating them across different locations and scaling them in a test image. These methods are relatively slow and complex to optimize \cite{redmon2016you}.
 
-\gls{yolo} approaches the object detection by treating it as a single regression problem, directly mapping image pixels to bounding box coordinates and class probabilities. That means, you only look once \gls{yolo} at an image to predict and present what the object is and what its location. As shown in the figure \ref{fig:yolo system}, a single \gls{cnn} can predict multiple bounding boxes and at the same time their class probabilities. It's trained on full images and focuses on optimizing detection performance directly \cite{redmon2016you}.
+\gls{yolo} approaches object detection by treating it as a single regression problem, where it directly mapping image pixels to bounding box coordinates and class probabilities. That means you only look once \gls{yolo} at an image to predict and present what the object is and what its location is. As shown in the figure \ref{fig:yolo system}, a single \gls{cnn} can predict multiple bounding boxes and, at the same time, their class probabilities. It is trained on full images and focuses on optimizing detection performance directly \cite{redmon2016you}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/yolo_system.pdf}
-    \caption{\gls{yolo} Detection System: \gls{yolo} makes the image processing very simple. It first resizes the image, followed by running a single \gls{cnn} on image, and then finally giving thresholding value to the detections based on model's confidence \cite{redmon2016you}.}
+    \caption{\gls{yolo} Detection System: \gls{yolo} makes the image processing very simple. It first resizes the image, then runs a single \gls{cnn} on an image, and then gives thresholding value to the detections based on the model's confidence \cite{redmon2016you}.}
     \label{fig:yolo system}
 \end{figure}
 
 
 \subsubsection*{ How \gls{yolo} works :}
 
-As stated before \gls{yolo} unifies the separate components of object detection into a single neural network. This network uses features from the complete image for the prediction of all bounding boxes across all classes at the same time. \gls{yolo} enables training from start to finish and achieves real-time speeds, all while ensuring a high level of average precision. \gls{yolo} divides the input image into an $S\times S$ grid. Each grid cell is responsible for detecting an object whose center falls into that grid cell. Every grid cell predicts bounding boxes and its confidence scores. This score reflects models confidence in the box containing an object, as well as how accurate the predicted box is. If object is detected then the confidence score should be equal to \gls{iou} between the ground truth and the predicted box, else if no object is detected then the confidence score should be zero. At the test time the conditional class probabilities and the box confidence predictions are multiplied to get the final detection as shown in the figure \ref{fig:yolo model} \cite{redmon2016you}.
+As stated, \gls{yolo} unifies the separate object detection components into a single neural network. This network uses features from the complete image to predict all bounding boxes across all classes simultaneously. \gls{yolo} enables training from start to finish and achieves real-time speeds, all while ensuring a high level of average precision. \gls{yolo} divides the input image into an $S\times S$ grid. Every grid cell is responsible for detecting an object whose center falls into that grid cell. Every grid cell predicts bounding boxes and its confidence scores. This score reflects the model's confidence in the box containing an object and how accurate the predicted box is. If the object is detected, the confidence score should be equal to \gls{iou} between the ground truth and the predicted box; if no object is detected, the confidence score should be zero. At the test time, the conditional class probabilities and the box confidence predictions are multiplied to get the final detection as shown in the figure \ref{fig:yolo model} \cite{redmon2016you}.
 
 \begin{figure}[H]
     \centering
@@ -407,9 +407,9 @@ As stated before \gls{yolo} unifies the separate components of object detection 
 
 \subsubsection*{Limitations of \gls{yolo}v1 :} 
 
-\gls{yolo} imposes significant spatial constraints on predictions of bounding box by allowing each grid cell to predict only one class and two bounding boxes. This reduces the model's ability to predict multiple nearby objects, like small objects that can appear in a group like flocks of birds \cite{redmon2016you}.
+\gls{yolo} imposes significant spatial constraints on bounding box predictions by allowing each grid cell to predict only one class and two bounding boxes. This reduces the model's ability to predict multiple nearby objects, like small objects that can appear in a group like flocks of birds \cite{redmon2016you}.
 
-\gls{yolo} struggles when it comes to generalizing objects in new or unsual aspect ratios or configurations. Lastly, \gls{yolo}'s loss function doesn't differentiate between small and large bounding boxes. A small error in large box doesn't have much impact, but a small error in small box affects the \gls{iou}. The main cause of this problem is the \gls{yolo}'s incorrect localization \cite{redmon2016you}.
+\gls{yolo} struggles when generalizing objects in new or unusual aspect ratios or configurations. Lastly, \gls{yolo}'s loss function does not differentiate between small and large bounding boxes. A small error in a large box does not have much impact, but a small error in a small box affects the \gls{iou}. The leading cause of this problem is the \gls{yolo}'s incorrect localization \cite{redmon2016you}.
 
 \subsection*{\gls{yolo}'s versions: }
 
