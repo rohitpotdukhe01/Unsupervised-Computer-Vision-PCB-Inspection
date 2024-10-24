@@ -1,9 +1,9 @@
 \chapter{Methods}
 
-This section provides an outline of the actual experimental procedures and processes carried out to conduct the research study. It includes datasets, the process of training and testing the model, and metrics used to evaluate the method's performance.
+This section outlines the experimental procedures and processes carried out to conduct the research study. It includes datasets, the process of training and testing the model, and metrics used to evaluate the method's performance.
 
 \section{Dataset}
-The dataset provided by Siemens consists of images of Solder joints on a \gls{pcb}. It has a total of 6014 images, each of $512 \times $512 dimensions, divided into \gls{fc} and \gls{ng}. The \gls{fc} class contains images without defects, while the \gls{ng} class contains images with a variety of defects. The images are of two types, one is colored image as shown in middle of figure\ref{fig:dataset-FC}, and other is heat image which are the red ones in figure\ref{fig:dataset-FC}. This variation of images makes it suitable for evaluating variety of images a model can be used for. The dataset is split into training and testing sets using an 80-20 split. A separate set of 160 images is also reserved for testing, finding accuracy and visualizing classification and segmentation results.
+The dataset provided by Siemens consists of images of Solder joints on a \gls{pcb}. It has a total of 6014 images, each of $512 \times $512 dimensions, divided into \gls{fc} and \gls{ng}. The \gls{fc} class contains images without defects, while the \gls{ng} class contains images with various defects. The images are of two types, one is a colored image, as shown in the middle of figure\ref{fig:dataset-FC}, and the other is a heat image, which is the red one in figure\ref{fig:dataset-FC}. This variation of images makes it suitable for evaluating various images for which a model can be used. The dataset is split into training and testing sets using an 80-20 split. A separate set of 160 images is also reserved for testing, finding accuracy, and visualizing classification and segmentation results.
 
 \begin{figure}[ht!]
     \centering  
@@ -37,7 +37,7 @@ The dataset provided by Siemens consists of images of Solder joints on a \gls{pc
     \label{fig:dataset-FC}
 \end{figure}
 
-As can be seen in the figure \ref{fig:dataset-NG}, and figure \ref{fig:dataset-FC} finding a defect without expertise can be challenging and time-consuming.
+As can be seen in figure \ref{fig:dataset-NG} and figure \ref{fig:dataset-FC}, finding a defect without expertise can be challenging and time-consuming.
 
 The table~\ref{tab:dataset-distribution} provides a detailed breakdown of the dataset distribution across subsets:
 
@@ -60,61 +60,58 @@ The table~\ref{tab:dataset-distribution} provides a detailed breakdown of the da
 
 \section{Experiment}
 
-Experiments were carried out using models mentioned in the [Theory section]. All the models belongs to Anomaly detection and are part of a deep learning library which has a collection of state-of-the-art anomaly detection algorithms call Anomalib. There are multiple steps taken in this experiment and they will be explained below.
+Experiments were carried out using models mentioned in the [Theory section]. All the models belong to Anomaly detection and are part of a deep learning library which has a collection of state-of-the-art anomaly detection algorithms called Anomalib. There are multiple steps taken in this experiment and they will be explained below.
 
 \subsection{Data Loading}
 
-To load and preprocess our dataset, we use Anomalib dataloader by importing \textbf{Folder} from \textbf{Data} class which is specifically designed for handling our custom dataset, allowing for efficient data management and preprocessing. We create a Folder datamodule and configure several parameters as described below.
+To load and preprocess our dataset, we use Anomalib dataloader by importing \textbf{Folder} from \textbf{Data} class, specifically designed for handling our custom dataset, allowing for efficient data management and preprocessing. We create a Folder datamodule and configure several parameters as described below.
 
-\textbf{Name :} It is designated as the dataset configuration identifier, reflecting the specific dataset used for the particular experiment.
+\textbf{Name :} It is designated as the dataset configuration identifier, reflecting the specific dataset used for the experiment.
 
 \textbf{Root Directory :} It points to the directory containing the organized dataset folders.
 
-\textbf{Normal \& Abnormal Directories :} Models mostly requires anomalous free images for training which in our case is \gls{fc}, and anomalous images for testing(not used while training) which is \gls{ng}. So those are provided in these two fields.
+\textbf{Normal \& Abnormal Directories :} Models mostly require anomalous free images for training, which in our case is \gls{fc}, and anomalous images for testing(not used while training), which is \gls{ng}. So those are provided in these two fields.
 
-\textbf{Normal Split Ratio :} The datamodule employs a 0.2 split ratio for validation of normal images, which ensures a sufficient number of samples for model tuning and validation.
+\textbf{Normal Split Ratio :} The datamodule employs a 0.2 split ratio for validating normal images, which ensures a sufficient number of samples for model tuning and validation.
 
 \textbf{Image Size :} All images are resized to $256 \times 256$ pixels during preprocessing, balancing the need for detailed feature representation with computational efficiency.
 
-\textbf{Batch Size :} Both training and evaluation processes uses different batch sizes for different models explained in [chapter 2] to optimize \gls{gpu} memory usage while maintaining effective gradient updates.
+\textbf{Batch Size :} Both training and evaluation processes use different batch sizes for different models explained in [chapter 2] to optimize \gls{gpu} memory usage while maintaining effective gradient updates.
 
-\textbf{Task Type :} There are two types of tasks available, one is Classification and other one is Segmentation. For this thesis for all the model we have set the parameter to "CLASSIFICATION" and it directs the model to perform binary classification between the \gls{fc} and \gls{ng} categories.
+\textbf{Task Type :} There are two types of tasks available: classification and segmentation. For this thesis, for all the models, we have set the parameter to "CLASSIFICATION" and it directs the model to perform binary classification between the \gls{fc} and \gls{ng} categories.
 
-\textbf{Number of Workers :} Based on the \gls{gpu} and the model being used the number of workers varied between 0 to 8 for helping the computational resources to parallelize data loading.
+\textbf{Number of Workers :} Based on the \gls{gpu} and the model being used, the number of workers varied between 0 to 8 for helping the computational resources to parallelize data loading.
 
-
-%\subsubsection{Model Loading}
-
-Model loading is carried out by importing Here each model is configured with a specific backbone, which serves as a feature extraction component. 
+Model loading is carried out by importing. Here, each model is configured with a specific backbone, which serves as a feature extraction component. 
 
 \subsection{Model Training or Inferencing}
 \label{subsec:Model Training}
 
-The training takes place in two steps here, first is loading the model, second is the training part, which are explained below.
+The training takes place in two steps here: first is loading the model, and second is the training part, which is explained below.
 
-\textbf{Model Loading :} Firstly model of our choice is imported, the models used in this thesis are explained in [3nd section]. Each model is initialized with a specific backbone, such as '\gls{resnet}18', '\gls{resnet}50', 'Wide\gls{resnet}50' etc. These backbones are critical for feature extraction. The selection of backbone and the specific layers used for feature extraction are the key factors that influence the model's ability to detect anomalies.
+\textbf{Model Loading :} Firstly, the model of our choice is imported. The models used in this thesis are explained in \ref{sec:unsupervised image processing}. Each model is initialized with a specific backbone, such as '\gls{resnet}18', '\gls{resnet}50', 'Wide\gls{resnet}50' etc. These backbones are critical for feature extraction. The selection of the backbone and the specific layers used for feature extraction are the key factors that influence the model's ability to detect anomalies.
 
-\textbf{Model Training or Inferencing :} Once the model is loaded, next steps involves training or inferencing using the \textbf{Engine} class from Anomalib. Depending on the model we need to either train the model or just perform inferencing(extracting the features). The engine is configured to manage the complete process, ensuring that the model is trained effectively and can accurately infer from the data provided.
+\textbf{Model Training or Inferencing :} Once the model is loaded, the next steps involve training or inferencing using the \textbf{Engine} class from Anomalib. Depending on the model we need to either train the model or just perform inferencing(extracting the features). The engine is configured to manage the complete process, ensuring that the model is trained effectively and can accurately infer from the data provided.
 
 The key components of training/inferencing configuration are:
 
-\textbf{Thresholding :} Threshold value is used to determine the anomalous label for the calculated anomaly scores. There are two types of thresholding methods available, one is '\textbf{ManualThreshold}' where we have to set our own threshold value, this is beneficial in situations where there is a lack of appropriate representative validation data\cite{9897283}. Second one which we have used is '\textbf{F1AdaptiveThreshold}'. The algorithm optimizes the value of threshold to determine the optimal f1\_score and saves the calculated value of the adaptive threshold.\cite{Anomalib2024}
+\textbf{Thresholding :} A threshold value determines the anomalous label for the calculated anomaly scores. There are two types of thresholding methods available; one is '\textbf{ManualThreshold}' where we have to set our own threshold value; this is beneficial in situations where there is a lack of appropriate representative validation data\cite{9897283}. The second one we have used is '\textbf{F1AdaptiveThreshold}'. The algorithm optimizes the value of the threshold to determine the optimal f1\_score and saves the calculated value of the adaptive threshold.\cite{Anomalib2024}
 
-\textbf{Task Type :} The task is usually set to '\textbf{CLASSIFICATION}', which directs the model to categorize images into predefined classes (ex., normal, and anomalous). Depending on the requirements, task can also be configured to '\textbf{SEGMENTATION}' for pin point where the defect is there in the image.
+\textbf{Task Type :} The task is usually set to '\textbf{CLASSIFICATION}', which directs the model to categorize images into predefined classes (ex., normal and anomalous). Depending on the requirements, the task can also be configured to '\textbf{SEGMENTATION}' to pinpoint where the defect is there in the image.
 
-\textbf{Image Metrics :} The model's performance is evaluated by '\textbf{\gls{auroc}}' and '\textbf{F1Score}'. They are standard metrics used for assessing classification accuracy and balance between precision and recall. These metrics will be explained in detail in section \ref{subsec:Evaluation Metrics}.
+\textbf{Image Metrics :} The model's performance is evaluated by '\textbf{\gls{auroc}}' and '\textbf{F1Score}'. These are standard metrics used for assessing classification accuracy and balance between precision and recall. These metrics will be explained in section \ref{subsec:Evaluation Metrics}.
 
 \textbf{Accelerator :} Depending on the available resources, the engine can run on a \textbf{'\gls{gpu}'}, \textbf{'\gls{cpu}'}, \textbf{'\gls{tpu}'}, \textbf{'\gls{ipu}'}, also there is an \textbf{'auto'} which chooses the appropriate resource automatically based on the availability.
 
-\textbf{Devices :} This configuration allows for us to provide the engine the available number of devices(ex., \glspl{cpu}, \glspl{gpu}) to use during training and inference. The \textbf{'auto'} option sets the optimal devices automatically for the engine.
+\textbf{Devices :} This configuration allows us to provide the engine with the available number of devices(ex., \glspl{cpu}, \glspl{gpu}) to use during training and inference. The \textbf{'auto'} option sets the optimal devices automatically for the engine.
 
-\textbf{Validation Frequency :} This option is used for validating the model after every epoch \textbf{'check\_val\_every\_n\_epoch=1'}, ensuring that the performance metrices are tracked throughout the training process.
+\textbf{Validation Frequency :} After every epoch \textbf{'check\_val\_every\_n\_epoch=1'}, this option validates the model, ensuring that the performance metrics are tracked throughout the training process.
 
-\textbf{Max Epochs :} Depending on the model we are using it can either required to be trained or do inferencing on. When the model is performing inferencing at that time the \textbf{'max\_epochs'} parameter is always set to \textbf{1}. And for the models requiring training can be adjusted depending on the complexity of the model.%might need to add more info.
+\textbf{Max Epochs :} Depending on the model we are using, it can either required to be trained or do inferencing on. When the model performs inferencing at that time, the \textbf{'max\_epochs'} parameter is always set to \textbf{1}. Moreover, the models requiring training can be adjusted depending on the complexity of the model.%might need to add more info.
 
-\textbf{Validation Check Interval :} The parameter \textbf{'val\_chedck\_interval'} sets when the validation checks are performed, in our case its set to \textbf{1.0} meaning the validation checks are performed after every epoch.
+\textbf{Validation Check Interval :} The parameter \textbf{'val\_chedck\_interval'} sets when the validation checks are performed, in our case, it's set to \textbf{1.0}, meaning the validation checks are performed after every epoch.
 
-After providing these training configuration to the engine class, then we can call the \textbf{fit} function to start with the training or inferencing. Here we provide the model and the datamodule components. Here the \textbf{Normal} directory is used which is the anomaly free images. After the training/inferencing is finished, the next step is to perform testing which is explained in below section.
+After providing these training configurations to the engine class, we can call the \textbf{fit} function to start with the training or inferencing. Here, we provide the model and the datamodule components. Here, the \textbf{Normal} directory is used, which is the anomaly free images. After the training/inferencing is finished, the next step is to perform testing, which is explained in the section below.
 
 \subsection{Testing}
 
