@@ -155,9 +155,9 @@ Despite these optimizations, models can still be huge using high-dimensional inp
 
 \subsubsection*{Pooling layer :}
 
-The pooling layers help reduce the dimensionality of the feature representation, thus reducing the number of parameters and computational complexity of the model. The pooling layer operates on each activation map in the input and reduces its dimensionality using the 'Max' function. Max-pooling layer is one of the most common types of pooling used in \glspl{cnn}. It selects the maximum activity value of all neurons to represent the particular region and extracts the most essential feature from the input feature map \cite{Zhao2024}. A $2\times2$ kernel is applied with a stride of 2 across the spatial dimensions of the input, reducing the activation map by $75\%$ of the original size while preserving the depth volume of the feature map \cite{oshea2015introductionconvolutionalneuralnetworks}. 
+The pooling layers help reduce the dimensionality of the feature representation, thus reducing the number of parameters and computational complexity of the model. The pooling layer operates on each activation map in the input and reduces its dimensionality using the 'Max' function. \textbf{Max-pooling layer} is one of the most common types of pooling used in \glspl{cnn}. It selects the maximum activity value of all neurons to represent the particular region and extracts the most essential feature from the input feature map \cite{Zhao2024}. A $2\times2$ kernel is applied with a stride of 2 across the spatial dimensions of the input, reducing the activation map by $75\%$ of the original size while preserving the depth volume of the feature map \cite{oshea2015introductionconvolutionalneuralnetworks}. 
 
-Average pooling computes the arithmetic mean of all the elements within the region, resulting in the mean value of the local response from the extracted feature mapping \cite{Zhao2024}. Figure \ref{fig:max pooling} shows the max pooling operation where the maximum value is used, and figure \ref{fig:average pooling} shows the average pooling operation, which performs the average operation to get the value.
+\textbf{Average pooling} computes the arithmetic mean of all the elements within the region, resulting in the mean value of the local response from the extracted feature mapping \cite{Zhao2024}. Figure \ref{fig:max pooling} shows the max pooling operation where the maximum value is used, and figure \ref{fig:average pooling} shows the average pooling operation, which performs the average operation to get the value.
 
 \begin{figure}[H]
     \centering
@@ -202,9 +202,9 @@ The Sigmoid function, or the logistic function, ranges from 0 to 1. As seen from
 Figure \ref{fig:sigmoid tanh function curve} shows that the sigmoid gradient is smooth, preventing output values from jumping. Nevertheless, Sigmoid has many problems; for example, the chances of the vanishing gradient are high when the activation is near 0 or 1. There is also slow gradient descent convergence due to non-zero-centered output. Finally, due to the sigmoid function's exponential operation, the computation time of the model increases as well \cite{Zhao2024}.
 
 
-\begin{figure}[!ht]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/sigmoid_tanh_af.png}
+    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/sigmoid_tanh_af.png}
     \caption{Sigmoid and Tanh activation function curve \cite{Zhao2024}}
     \label{fig:sigmoid tanh function curve}
 \end{figure}
@@ -223,7 +223,7 @@ From the figure \ref{fig:sigmoid tanh function curve}, we can see that tanh and 
     Tanh(x) = 2Sigmoid(2x) - 1
 \]
 
-In practice, tanh is used more than sigmoid as it solves the sigmoid function, not centering the output to zero problems. However, like sigmoid, tanh also suffers from vanishing gradient problems for extreme input values \cite{Zhao2024}.
+In practice, tanh is used more than sigmoid as it solves the sigmoid functions problem of not centering the output to zero. However, like sigmoid, tanh also suffers from vanishing gradient problems for extreme input values \cite{Zhao2024}.
 
 \textbf{3. Softmax Activation Function :}
 
@@ -233,9 +233,9 @@ A softmax activation function is used in multi-class classification problems. It
     f(x) = \frac{e^{x_i}}{\sum_{j=1}^{k} e^{x_j}}
 \]
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\textwidth]{Rohit_Master_Thesis//Images/softmax.png}
+    \includegraphics[width=0.7\linewidth]{Rohit_Master_Thesis//Images/softmax.png}
     \caption{Softmax activation function curve \cite{Zhao2024}}
     \label{fig:softmax function curve}
 \end{figure}
@@ -251,9 +251,9 @@ ReLU, or Rectified Linear Unit, is a segmented linear function, as shown in figu
 \]
 
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/relu_af.png}
+    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/relu_af.png}
     \caption{ReLU function curve \cite{Zhao2024}}
     \label{fig:relu function curve}
 \end{figure}
@@ -272,9 +272,9 @@ f(x) =
 \end{cases}
 \]
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/leaky_relu_af.png}
+    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/leaky_relu_af.png}
     \caption{Leaky ReLU function curve \cite{Zhao2024}}
     \label{fig:leaky relu function curve}
 \end{figure}
@@ -303,6 +303,7 @@ Here, the input and output vectors are represented by x and y of the considered 
 
 \subsubsection*{Network Architecture :}
 
+\clearpage
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Rohit_Master_Thesis//Images/resnet_arch.pdf}
@@ -349,10 +350,6 @@ Similar to BERT's [class] token, a learnable classification token is prepended t
 
 \gls{deit} was introduced in the paper \cite{pmlr-v139-touvron21a}, which, unlike \gls{vit}\cite{dosovitskiy2020image} does not need large-scale training and uses only Imagenet as a training set, and also need fewer computational resources. \gls{deit} introduced a token-based distillation strategy to distill information into the model \cite{pmlr-v139-touvron21a}.
 
-\subsubsection*{Distillation strategy :}
-
-For a teacher model, a strong image classifier is used, it can be either a \gls{cnn} or a mixture of classifiers. One key innovation in \gls{deit} is the introduction of a "distillation token". This procedure is shown in figure \ref{fig:deit distillation token}. This distillation token is used similarly to the class token, which is added to the initial embeddings. It interacts with other tokens using the self-attention. The distillation token embedding is output by the network after the last layer and optimized by using the distillation component of the loss. This distillation embedding helps the model learn from the teacher's output, which remains complimentary to the class embedding \cite{pmlr-v139-touvron21a}.
-
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\linewidth]{Rohit_Master_Thesis//Images/deit_distillation_token.pdf}
@@ -360,9 +357,21 @@ For a teacher model, a strong image classifier is used, it can be either a \gls{
     \label{fig:deit distillation token}
 \end{figure}
 
+\subsubsection*{Distillation strategy :}
+
+For a teacher model, a strong image classifier is used, it can be either a \gls{cnn} or a mixture of classifiers. One key innovation in \gls{deit} is the introduction of a "distillation token". This procedure is shown in figure \ref{fig:deit distillation token}. This distillation token is used similarly to the class token, which is added to the initial embeddings. It interacts with other tokens using the self-attention. The distillation token embedding is output by the network after the last layer and optimized by using the distillation component of the loss. This distillation embedding helps the model learn from the teacher's output, which remains complimentary to the class embedding \cite{pmlr-v139-touvron21a}.
+
 \subsection{Class-Attention in Image Transformers (CaiT)}
 
-\gls{cait} is a vision transformer type. It makes two main modifications to the original \gls{vit} architecture. Firstly, a new layer scaling method termed LayerScale is used, which adds a learnable diagonal matrix at the output of each residual block. This matrix is initialized close to 0, which improves the training dynamics. Secondly, class-attention layers are also introduced. This creates an architecture in which the transformer layers, which involve self-attention between the patches, are separated from the class-attention layers, which are devoted to extracting the content of the processed patches into a single vector, so it can be linear classifiers input \cite{touvron2021going}. 
+\gls{cait} is a vision transformer type. It makes two main modifications to the original \gls{vit} architecture. Firstly, a new layer scaling method termed LayerScale is used, which adds a learnable diagonal matrix at the output of each residual block. This matrix is initialized close to 0, which improves the training dynamics. Secondly, class-attention layers are also introduced. This creates an architecture in which the transformer layers, which involve self-attention between the patches, are separated from the class-attention layers, which are devoted to extracting the content of the processed patches into a single vector, so it can be linear classifiers input \cite{touvron2021going}.
+
+\clearpage
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Rohit_Master_Thesis//Images/cait_architecture.pdf}
+    \caption{In this figure, the original \gls{vit} is on the left, here the CLS token is inserted with patch embeddings. This is counterproductive, as the same weights are used for two purposes. In the middle architecture, the author shows that inserting the CLS token later on improves performance. Moreover, further in the \gls{cait} architecture(right), the patch embeddings are frozen when inserting a CLS token to save computational resources. So the last part of the network, usually the last two layers, is fully focused on summarizing the information that will be given as an input to the linear classifier \cite{touvron2021going}.}
+    \label{fig:cait architecture}
+\end{figure}
 
 \subsubsection*{Architecture :}
 
@@ -370,23 +379,16 @@ The \gls{cait} consists of two processing stages, as seen in the figure \ref{fig
 
 \paragraph{Self-Attention Stage :} In this stage, the CLS class token is inserted later in the transformer. This resolves the inconsistency of the first layers of the transformer, which are then entirely used for performing self-attention between patches only \cite{touvron2021going}. 
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{Rohit_Master_Thesis//Images/cait_architecture.pdf}
-    \caption{In this figure, the original \gls{vit} is on the left, here the CLS token is inserted with patch embeddings. This is counterproductive, as the same weights are used for two purposes. In the middle architecture, the author shows that inserting the CLS token later on improves performance. Moreover, further in the \gls{cait} architecture(right), the patch embeddings are frozen when inserting a CLS token to save computational resources. So the last part of the network, usually the last two layers, is fully focused on summarizing the information that will be given as an input to the linear classifier \cite{touvron2021going}.}
-    \label{fig:cait architecture}
-\end{figure}
-
 \paragraph{Class-Attention Stage :} A set of layers compiles the patch embeddings into a class embedding CLS that is then given to a linear classifier. Here, only the class embeddings are updated. However, the main difference is that, within \gls{cait} architecture, the information is not copied from class embedding to the patch embeddings during the forward pass.
 
 \subsection{You Only Look Once (YOLO)}
 \label{subsec:yolo}
 
-The human visual system operates with amazing speed and accuracy, which helps us perform complex tasks like driving with minimal conscious thought. Similarly, fast and accurate algorithms for object detection could facilitate computers driving a car without the need for specialized sensors and assistive devices to provide real-time scene information to human users. This could pave the way for better responsive robotic systems. The object detection algorithms before \gls{yolo} used classifiers and repurposed them to detect objects by evaluating them across different locations and scaling them in a test image. These methods are relatively slow and complex to optimize \cite{redmon2016you}.
+The human visual system operates with amazing speed and accuracy, which helps us perform complex tasks like driving with minimal conscious thought. Similarly, fast and accurate algorithms for object detection could facilitate computers driving a car without the need for specialized sensors and assistive devices to provide real-time scene information to human users. This could pave the way for better responsive robotic systems. The object detection algorithms before \gls{yolo} used classifiers and repurposed them to detect objects by evaluating them across different locations and scaling them in a test image. These methods were relatively slow and complex to optimize \cite{redmon2016you}.
 
-\gls{yolo} approaches object detection by treating it as a single regression problem, where it directly mapping image pixels to bounding box coordinates and class probabilities. That means you only look once \gls{yolo} at an image to predict and present what the object is and what its location is. As shown in the figure \ref{fig:yolo system}, a single \gls{cnn} can predict multiple bounding boxes and, at the same time, their class probabilities. It is trained on full images and focuses on optimizing detection performance directly \cite{redmon2016you}.
+\gls{yolo} approaches object detection by treating it as a single regression problem, where it directly mapping image pixels to bounding box coordinates and class probabilities. That means you only look once (\gls{yolo}) at an image to predict and present what the object is and what its location is. As shown in the figure \ref{fig:yolo system}, a single \gls{cnn} can predict multiple bounding boxes and, at the same time, their class probabilities. It is trained on full images and focuses on optimizing detection performance directly \cite{redmon2016you}.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/yolo_system.pdf}
     \caption{\gls{yolo} Detection System: \gls{yolo} makes the image processing very simple. It first resizes the image, then runs a single \gls{cnn} on an image, and then gives thresholding value to the detections based on the model's confidence \cite{redmon2016you}.}
@@ -445,7 +447,7 @@ PatchCore is a state-of-the-art approach developed for the efficient detection o
 \subsubsection*{Locally Aware Patch Features :} 
 The key advancement of PatchCore is the utilization of locally aware patch features. Contrary to traditional approaches that utilize global image features, PatchCore targets local patches of the image. It extracts the mid-level features that capture the contextual and spatial relationships within these patches. By maintaining local awareness, the model can preserve important details that might get lost when replying on the generalized global features \cite{roth2022totalrecallindustrialanomaly}.
 
-The locally aware features are derived from the intermediate layers of a pre-trained \gls{cnn}, namely WideResNet-50 \cite{zagoruyko2017wideresidualnetworks}. Focusing on mid-level features lets PatchCore avoid the pitfalls of over-generalization and inherent ImageNet class bias, which are common problems when relying on deeper, high-level features. The outcome is a more nuanced and contextually rich representation of the nominal data, which is essential for identifying subtle anomalies that could otherwise go unnoticed \cite{roth2022totalrecallindustrialanomaly}.
+The locally aware features are derived from the intermediate layers of a pre-trained \gls{cnn} \cite{726791}, namely WideResNet-50 \cite{zagoruyko2017wideresidualnetworks}. Focusing on mid-level features lets PatchCore avoid the pitfalls of over-generalization and inherent ImageNet class bias, which are common problems when relying on deeper, high-level features. The outcome is a more nuanced and contextually rich representation of the nominal data, which is essential for identifying subtle anomalies that could otherwise go unnoticed \cite{roth2022totalrecallindustrialanomaly}.
 
 \subsubsection*{Memory Bank and Coreset Subsampling :}
 
