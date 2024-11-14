@@ -23,7 +23,7 @@ The table \ref{tab:overall model accuracy} and the bar chart \ref{fig:bar chart 
     \label{tab:overall model accuracy}
 \end{table}
 
-The chart \ref{fig:bar chart models accruacy} provides a graphical representation of the same data of each model's accuracy, where we can clearly visualize the performance of different models. As can be seen in table \ref{tab:overall model accuracy} and bar chart \ref{fig:bar chart models accruacy} the baseline model \gls{yolo}v8-L achieves the highest accuracy of 95\%, while the best performing unsupervised model is PatchCore closely following with an accuracy of 91.25\%, with only a 2.5\% difference in the accuracy of different size of baseline model \gls{yolo}v8-M. Other models, such as \gls{dfm}, \gls{dfkde}, FastFlow, and EfficientAD, show moderate performance. Here, none of the unsupervised anomaly detection models could overtake the supervised baseline model; one of the reasons for this is that the baseline model was trained in a supervised fashion, where it had access to all the labels of the image dataset. Whereas the anomaly detection models were not given any labels for the images, and while training, only anomaly free data was used, it had to figure out on its own which images were anomalous and which images were normal.
+The chart \ref{fig:bar chart models accruacy} provides a graphical representation of the same data of each model's accuracy, where we can clearly visualize the performance of different models. As can be seen in table \ref{tab:overall model accuracy} and bar chart \ref{fig:bar chart models accruacy} the baseline model \gls{yolo}v8-L achieves the highest accuracy of 95\%, while \textbf{the best performing unsupervised model is PatchCore closely following with an accuracy of 91.25\%, with only a 2.5\% difference in the accuracy of baseline model \gls{yolo}v8-M}. Other models, such as \gls{dfm}, \gls{dfkde}, FastFlow, and EfficientAD, show moderate performance. Here, none of the unsupervised anomaly detection models could overtake the supervised baseline model. One of the reasons for this is that the baseline model was trained in a supervised fashion, where it had access to all the labels of the image dataset. Whereas the anomaly detection models were not given any labels for the images, and while training, only anomaly free data was used, it had to figure out on its own which images were anomalous and which images were normal.
 
 \begin{figure}[ht!]
     \centering
@@ -39,7 +39,7 @@ The chart \ref{fig:bar chart models accruacy} provides a graphical representatio
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore heatmap.png}
-    \caption{PatchCore heatmap for the experiment where backbone "Wide Resnet50" and layers "2, 3" were used.}
+    \caption{PatchCore heatmap for the experiment where backbone "Wide Resnet50" and different layers were used.}
     \label{fig:patchcore heatmap}
 \end{figure}
 
@@ -78,7 +78,7 @@ The chart \ref{fig:bar chart models accruacy} provides a graphical representatio
 
 For this experiment, we employed PatchCore with \texttt{wide\_resnet50\_2} backbone as feature extraction for performing anomaly detection. Firstly, the model extracts feature representations from specific layers of the backbone and then compares the patch-level features of test images with those stored in a memory bank built from normal data. PatchCore uses \gls{k-nn} retrieval for detecting deviations from nominal behavior by calculating the anomaly score based on the distance between patches from the test image and their closest counterparts in the memory bank. This allows PatchCore to perform well when the labeled data is not abundantly available. This model is explained in more detail in \ref{subsec:patchcore}.
 
-For the first configuration, we have used backbone \texttt{wide\_resnet50\_2} with layer2 and layer3 as shown in the heatmap \ref{fig:patchcore heatmap}. This configuration achieves an \gls{auroc} score of 0.8816 and an overall accuracy of 83.75\%. The F1-score was relatively strong at 0.8571, suggesting that the model maintained a balance between precision and recall. The model had a precision of 0.7647, suggesting that sometimes the model classified normal data as anomalous, which resulted in moderate occurrence of false positives, as can be confirmed by the confusion matrix \ref{fig:patchcore config1 confusion matrix}. Whereas the high recall value of 0.975 indicates that the model was highly accurate in detecting almost all the anomalies as anomalies, with some false negatives, as can be seen in the \ref{fig:patchcore config1 confusion matrix}.
+For the first configuration, we have used backbone \texttt{wide\_resnet50\_2} with layer2 and layer3 as shown in the heatmap \ref{fig:patchcore heatmap}. This configuration achieves an \gls{auroc} score of 0.8816 and an overall accuracy of 83.75\%. The F1-score was relatively strong at 0.8571, suggesting that the model maintained a balance between precision and recall. The model had a precision of 0.7647, suggesting that sometimes the model classified normal data as anomalous, which resulted in moderate occurrence of false positives, as can be confirmed by the confusion matrix \ref{fig:patchcore config1 confusion matrix}. Whereas the high recall value of 0.975 indicates that the model was highly accurate in detecting almost all the anomalies as anomalies, with some false negatives, as can be seen in the figure \ref{fig:patchcore config1 confusion matrix}.
 
 \begin{figure}[ht!]
     \centering
@@ -104,6 +104,37 @@ In the third configuration, layer 2, layer 3, and layer 4 were used for the back
     \caption{Confusion matrix for the third configuration where backbone "Wide Resnet50" and layers "2, 3, 4" were used.}
     \label{fig:patchcore config3 confusion matrix}
 \end{figure}
+
+Now let's look at how the best performing configuration of PatchCore image classification results. When performing image classification
+
+\begin{figure}[ht!]
+    \centering  
+    \begin{minipage}{1\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{Rohit_Master_Thesis//Images/IC_NG.png} % Add your image file name here
+        %\caption{Caption for the first image.}
+    \end{minipage}
+    
+    %\vspace{5pt} % Adjust the space between images
+
+    \begin{minipage}{1\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{Rohit_Master_Thesis//Images/IC_FC.png} % Add your image file name here
+        %\caption{Caption for the second image.}
+    \end{minipage}
+    
+    %\vspace{10pt} % Adjust the space between images
+
+    \begin{minipage}{1\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{Rohit_Master_Thesis//Images/IC_NG2.png} % Add your image file name here
+        %\caption{Caption for the third image.}
+    \end{minipage}
+    
+    \caption{Results of image classification using second configuration.}
+    \label{fig:dataset-NG-vertical}
+\end{figure}
+
 
 \subsection*{\gls{yolo}}
 

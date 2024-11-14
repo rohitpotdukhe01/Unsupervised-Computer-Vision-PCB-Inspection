@@ -1,9 +1,9 @@
 \chapter{Methods}
 
-This section outlines the experimental procedures and processes carried out to conduct the research study. It includes datasets, the process of training and testing the model, and metrics used to evaluate the method's performance.
+This section outlines the experimental procedures and processes carried out to conduct the research study. It includes datasets, the process of training \& testing the model, and metrics used to evaluate the method's performance.
 
 \section{Dataset}
-The dataset provided by Siemens consists of images of Solder joints on a \gls{pcb}. It has a total of 6014 images, each of $512 \times $512 dimensions, divided into \gls{fc} and \gls{ng}. The \gls{fc} class contains images without defects, while the \gls{ng} class contains images with various defects. The images are of two types, one is a colored image, as shown in the middle of figure\ref{fig:dataset-FC}, and the other is a heat image, which is the red one in figure\ref{fig:dataset-FC}. This variation of images makes it suitable for evaluating various images for which a model can be used. The dataset is split into training and testing sets using an 80-20 split. A separate set of 160 images is also reserved for testing, finding accuracy, and visualizing classification and segmentation results.
+The dataset provided by Siemens consists of images of Solder joints on a \gls{pcb}. It has a total of 6014 images, each of $512 \times $512 dimensions, divided into \gls{fc} and \gls{ng}. The \gls{fc} class contains images without defects, while the \gls{ng} class contains images with various defects. The images are of two types, one is a colored image, as shown on the left of figures \ref{fig:dataset-NG} \& \ref{fig:dataset-FC}, and the other is a heat image, which is the red one on the right of the figures \ref{fig:dataset-NG} \& \ref{fig:dataset-FC}. This variation of images makes it suitable for evaluating various images for which a model can be used. The dataset is split into training and testing sets using an 80-20 split. A separate set of 160 images is also reserved for testing, finding accuracy, and visualizing classification and segmentation results.
 
 \begin{figure}[ht!]
     \centering  
@@ -25,13 +25,13 @@ The dataset provided by Siemens consists of images of Solder joints on a \gls{pc
     \centering
     \begin{minipage}{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Images/Val_FC_heat_BF2003054784_4796_144_2042_2042_Multi.jpg} % Add your image file name here
-        %\caption{An example of a defective tile.}
-    \end{minipage}   
-    \begin{minipage}{0.32\textwidth}
-        \centering
         \includegraphics[width=\textwidth]{Images/train_FC_BF2003015014_1174_42_2038_2038_Color.jpg} % Add your image file name here
         %\caption{An example of a defective piece of leather.}
+    \end{minipage}
+    \begin{minipage}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Val_FC_heat_BF2003054784_4796_144_2042_2042_Multi.jpg} % Add your image file name here
+        %\caption{An example of a defective tile.}
     \end{minipage}\hfill
     \caption{Examples of defect-free solder joints in the dataset.}
     \label{fig:dataset-FC}
@@ -60,13 +60,13 @@ The table~\ref{tab:dataset-distribution} provides a detailed breakdown of the da
 
 \section{Experiment}
 
-Experiments were carried out using models mentioned in the [Theory section]. All the models belong to Anomaly detection and are part of a deep learning library which has a collection of state-of-the-art anomaly detection algorithms called Anomalib. There are multiple steps taken in this experiment and they will be explained below.
+Experiments were carried out using models mentioned in the section \ref{sec:unsupervised image processing}. All the models belong to Anomaly detection and are part of a deep learning library which has a collection of state-of-the-art anomaly detection algorithms called Anomalib. There are multiple steps taken in this experiment and they will be explained below.
 
 \subsection{Data Loading}
 
 To load and preprocess our dataset, we use Anomalib dataloader by importing \textbf{Folder} from \textbf{Data} class, specifically designed for handling our custom dataset, allowing for efficient data management and preprocessing. We create a Folder datamodule and configure several parameters as described below.
 
-\textbf{Name :} It is designated as the dataset configuration identifier, reflecting the specific dataset used for the experiment.
+\textbf{Name :} It is the dataset configuration identifier, reflecting the specific dataset used for the experiment.
 
 \textbf{Root Directory :} It points to the directory containing the organized dataset folders.
 
@@ -76,13 +76,13 @@ To load and preprocess our dataset, we use Anomalib dataloader by importing \tex
 
 \textbf{Image Size :} All images are resized to $256 \times 256$ pixels during preprocessing, balancing the need for detailed feature representation with computational efficiency.
 
-\textbf{Batch Size :} Both training and evaluation processes use different batch sizes for different models explained in [chapter 2] to optimize \gls{gpu} memory usage while maintaining effective gradient updates.
+\textbf{Batch Size :} Both training and evaluation processes use different batch sizes for different models to optimize \gls{gpu} memory usage while maintaining effective gradient updates.
 
 \textbf{Task Type :} There are two types of tasks available: classification and segmentation. For this thesis, for all the models, we have set the parameter to "CLASSIFICATION" and it directs the model to perform binary classification between the \gls{fc} and \gls{ng} categories.
 
 \textbf{Number of Workers :} Based on the \gls{gpu} and the model being used, the number of workers varied between 0 to 8 for helping the computational resources to parallelize data loading.
 
-Model loading is carried out by importing. Here, each model is configured with a specific backbone, which serves as a feature extraction component. 
+%Model loading is carried out by importing. Here, each model is configured with a specific backbone, which serves as a feature extraction component. 
 
 \subsection{Model Training or Inferencing}
 \label{subsec:Model Training}
@@ -99,7 +99,7 @@ The key components of training/inferencing configuration are:
 
 \textbf{Task Type :} The task is usually set to '\textbf{CLASSIFICATION}', which directs the model to categorize images into predefined classes (ex., normal and anomalous). Depending on the requirements, the task can also be configured to '\textbf{SEGMENTATION}' to pinpoint where the defect is there in the image.
 
-\textbf{Image Metrics :} The model's performance is evaluated by '\textbf{\gls{auroc}}' and '\textbf{F1Score}'. These are standard metrics used for assessing classification accuracy and balance between precision and recall. These metrics will be explained in section \ref{subsec:Evaluation Metrics}.
+\textbf{Image Metrics :} The model's performance is evaluated by '\textbf{\gls{auroc}}' and '\textbf{F1Score}'. These are standard metrics used for assessing classification accuracy and balance between precision and recall. These metrics are explained in section \ref{subsec:Evaluation Metrics}.
 
 \textbf{Accelerator :} Depending on the available resources, the engine can run on a \textbf{'\gls{gpu}'}, \textbf{'\gls{cpu}'}, \textbf{'\gls{tpu}'}, \textbf{'\gls{ipu}'}, also there is an \textbf{'auto'} which chooses the appropriate resource automatically based on the availability.
 
@@ -109,7 +109,7 @@ The key components of training/inferencing configuration are:
 
 \textbf{Max Epochs :} Depending on the model we are using, it can either required to be trained or do inferencing on. When the model performs inferencing at that time, the \textbf{'max\_epochs'} parameter is always set to \textbf{1}. Moreover, the models requiring training can be adjusted depending on the complexity of the model.%might need to add more info.
 
-\textbf{Validation Check Interval :} The parameter \textbf{'val\_chedck\_interval'} sets when the validation checks are performed, in our case, it's set to \textbf{1.0}, meaning the validation checks are performed after every epoch.
+\textbf{Validation Check Interval :} The parameter \textbf{'val\_check\_interval'} sets when the validation checks are performed, in our case, it's set to \textbf{1.0}, meaning the validation checks are performed after every epoch.
 
 After providing these training configurations to the engine class, we can call the \textbf{fit} function to start with the training or inferencing. Here, we provide the model and the datamodule components. Here, the \textbf{Normal} directory is used, which is the anomaly free images. After the training/inferencing is finished, the next step is to perform testing, which is explained in the section below.
 
@@ -155,14 +155,14 @@ As mentioned in section \ref{subsec:Inference}, after creating the inference obj
     \label{fig:Image classification on NG image}
 \end{figure}
 
-Figure \ref{fig:Image classification on NG image} shows the result of image classification, where it gives three images as an output: one is the input image, the second one shows the predicted heat map, which shows where the possible anomaly and the third gives the prediction label and the score.
+Figure \ref{fig:Image classification on NG image} shows the result of image classification, where it gives three images as an output: first one is the input image, the second one shows the predicted heat map, which shows where the possible anomaly is and the third gives the prediction label and the score.
 
 \subsection{Image Segmentation}
 %\subsubsection{Metrics Calculation}
 
 Image segmentation is a method of analyzing images at the pixel level. It involves utilizing multiple techniques to label each pixel as part of a particular class or instance\cite{IBM2024}. So, using image segmentation, we can point where the model has predicted the anomaly to be as shown in the figure \ref{fig:Image Segmentation on NG image}.
 
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Images/anomalous_image_segmentation.jpg}
     \caption{Image Segmentation on NG image}
@@ -172,7 +172,7 @@ Image segmentation is a method of analyzing images at the pixel level. It involv
 \section{Evaluation Metrics}
 \label{subsec:Evaluation Metrics}
 
-Evaluation metrics play a crucial role in determining how well the performance of a \gls{ml} model. These metrics aid in quantifying the model's ability to differentiate between anomalous and normal images, offering valuable insights into the model's effectiveness and areas for improvement. This section outlines the primary evaluation metrics utilized in this thesis: AUROC, Accuracy, Recall, Precision, F1-Score, and Confusion Matrix.
+Evaluation metrics play a crucial role in determining how well the \gls{ml} models have performed. These metrics aid in quantifying the model's ability to differentiate between anomalous and normal images, offering valuable insights into the model's effectiveness and areas for improvement. This section outlines the primary evaluation metrics used in this thesis: \gls{auroc}, Accuracy, Recall, Precision, F1-Score, and Confusion Matrix.
 
 \subsection*{Area Under the Receiver-Operating Curve (AUROC)}
 \label{subsec:AUROC}
@@ -182,7 +182,7 @@ The \gls{auroc} measures the ability of a classification model to differentiate 
 \subsection*{Accuracy}
 \label{subsec:Accuracy}
 
-Accuracy is the rate of correct predictions made by the model. It is often assessed using an unseen dataset that was never utilized throughout the learning process, like the custom test set mentioned in the table \ref{tab:dataset-distribution}.\cite{Kohavi1998}. It is expressed as: 
+Accuracy is the rate of correct predictions made by the model. It is often assessed using an unseen dataset that was never utilized throughout the learning process\cite{Kohavi1998}, like the custom test set mentioned in the table \ref{tab:dataset-distribution}. It is expressed as: 
 
 \begin{equation}
     \text{Accuracy} = \frac{\text{\gls{tp}} + \text{\gls{tn}}}{\text{\gls{tp}} + \text{\gls{tn}} + \text{\gls{fp}} + \text{\gls{fn}}} \quad \text{\cite{Walker2024}}
