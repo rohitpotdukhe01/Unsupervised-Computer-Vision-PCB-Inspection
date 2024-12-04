@@ -177,107 +177,107 @@ The pooling layers help reduce the dimensionality of the feature representation,
 
 The fully connected layer contains neurons directly connected to the neurons in the two neighboring layers, with no connections to any neurons within itself. It is similar to the way neurons are arranged in traditional \gls{ann} as can be seen in the figure \ref{fig:ann architecture} \cite{oshea2015introductionconvolutionalneuralnetworks}.
 
-\subsubsection*{Activation Function :}
+%\subsubsection*{Activation Function :}
 
-Activation functions are essential to neural networks, strengthening the network's representational and learning capabilities by learning the abstract features through nonlinear transformation \cite{dubey2022activationfunctionsdeeplearning}. With activation functions, the neural network can approximate any nonlinear function, making it applicable to a wide range of nonlinear models \cite{Zhao2024}. Some of the activation functions common properties are:
+%Activation functions are essential to neural networks, strengthening the network's representational and learning capabilities by learning the abstract features through nonlinear transformation \cite{dubey2022activationfunctionsdeeplearning}. With activation functions, the neural network can approximate any nonlinear function, making it applicable to a wide range of nonlinear models \cite{Zhao2024}. Some of the activation functions common properties are:
 
-1. It should add the nonlinear curvature in the optimization landscape to enhance training convergence of the network;
+%1. It should add the nonlinear curvature in the optimization landscape to enhance training convergence of the network;
 
-2. It should not significantly increase the computational complexity of the model;
+%2. It should not significantly increase the computational complexity of the model;
 
-3. During training, it should not hamper the gradient flow;
+%3. During training, it should not hamper the gradient flow;
 
-4. It should preserve the data distribution and facilitate better network training \cite{dubey2022activationfunctionsdeeplearning}.
+%4. It should preserve the data distribution and facilitate better network training \cite{dubey2022activationfunctionsdeeplearning}.
 
-Here, we will look at the most common and widely used activation functions, including Sigmoid, Tanh, Softmax, \gls{relu}, and Leaky \gls{relu}.
+%Here, we will look at the most common and widely used activation functions, including Sigmoid, Tanh, Softmax, \gls{relu}, and Leaky \gls{relu}.
 
-\textbf{1. Sigmoid Activation Function :}
+%\textbf{1. Sigmoid Activation Function :}
 
-The Sigmoid function, or the logistic function, ranges from 0 to 1. As seen from the figure \ref{fig:sigmoid tanh function curve}, sigmoid can be used to normalize the output and probability-based predictions \cite{Zhao2024}. The following is the sigmoid functions mathematical formula :
+%The Sigmoid function, or the logistic function, ranges from 0 to 1. As seen from the figure \ref{fig:sigmoid tanh function curve}, sigmoid can be used to normalize the output and probability-based predictions \cite{Zhao2024}. The following is the sigmoid functions mathematical formula :
 
-\[ 
-    f(x) = \frac{1}{1 + e^{-x}}
-\]
+%\[ 
+%    f(x) = \frac{1}{1 + e^{-x}}
+%\]
 
-Figure \ref{fig:sigmoid tanh function curve} shows that the sigmoid gradient is smooth, preventing output values from jumping. Nevertheless, Sigmoid has many problems; for example, the chances of the vanishing gradient are high when the activation is near 0 or 1. There is also slow gradient descent convergence due to non-zero-centered output. Finally, due to the sigmoid function's exponential operation, the computation time of the model increases as well \cite{Zhao2024}.
-
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/sigmoid_tanh_af.png}
-    \caption{Sigmoid and Tanh activation function curve \cite{Zhao2024}}
-    \label{fig:sigmoid tanh function curve}
-\end{figure}
-
-\textbf{2. Tanh Activation Function :}
-
-The hyperbolic tangent activation function(HTAF), or tanh, compresses the input vector in the range of -1 to 1 and offers a zero-centered output. The below formula and the figure \ref{fig:sigmoid tanh function curve} shows the tanh curve and mathematical representation:
-
-\[
-    f(x) = \frac{2}{1 + e^{-2x}} - 1
-\]
-
-From the figure \ref{fig:sigmoid tanh function curve}, we can see that tanh and sigmoid function are relatively similar S-shaped curves. Tanh and Sigmoid have the following relationship:
-
-\[
-    Tanh(x) = 2Sigmoid(2x) - 1
-\]
-
-In practice, tanh is used more than sigmoid as it solves the sigmoid functions problem of not centering the output to zero. However, like sigmoid, tanh also suffers from vanishing gradient problems for extreme input values \cite{Zhao2024}.
-
-\textbf{3. Softmax Activation Function :}
-
-A softmax activation function is used in multi-class classification problems. It compresses the input vectors into probabilities from 0 to 1, all of which sum up to 1. In the K classification task, the generated probabilities can represent each category, with the larger value indicating the higher probability that it belongs to that particular category \cite{Zhao2024}. Figure \ref{fig:softmax function curve} shows the softmax function curve, and the below formula shows how softmax is formulated mathematically:
-
-\[
-    f(x) = \frac{e^{x_i}}{\sum_{j=1}^{k} e^{x_j}}
-\]
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.7\linewidth]{Rohit_Master_Thesis//Images/softmax.png}
-    \caption{Softmax activation function curve \cite{Zhao2024}}
-    \label{fig:softmax function curve}
-\end{figure}
-
-The gradient becomes zero when the softmax function encounters a negative input value. Therefore, the weights for activation in that region will not update throughout backpropagation, resulting in a dead neuron that never activated \cite{Zhao2024}.
-
-\textbf{4. ReLU Activation Function :}
-
-ReLU, or Rectified Linear Unit, is a segmented linear function, as shown in figure \ref{fig:relu function curve}. It is a fast, simple activation function which is essentially a ramp function given by the following formula:
-
-\[
-    f(x) = max(0,x)
-\]
+%Figure \ref{fig:sigmoid tanh function curve} shows that the sigmoid gradient is smooth, preventing output values from jumping. Nevertheless, Sigmoid has many problems; for example, the chances of the vanishing gradient are high when the activation is near 0 or 1. There is also slow gradient descent convergence due to non-zero-centered output. Finally, due to the sigmoid function's exponential operation, the computation time of the model increases as well \cite{Zhao2024}.
 
 
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/relu_af.png}
-    \caption{ReLU function curve \cite{Zhao2024}}
-    \label{fig:relu function curve}
-\end{figure}
+%\begin{figure}[ht!]
+%    \centering
+ %   \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/sigmoid_tanh_af.png}
+  %  \caption{Sigmoid and Tanh activation function curve \cite{Zhao2024}}
+   % \label{fig:sigmoid tanh function curve}
+%\end{figure}
 
-For positive input, the derivative is 1, which improves the vanishing gradient problem and speeds up the gradient descent convergence. It is also faster than the sigmoid and tanh functions because the ReLU function only has linear relationships. However, this function suffers from a dying ReLU problem, which is when the input is negative, the gradient will be precisely zero, and the neurons will most likely die during training \cite{Zhao2024}.
+%\textbf{2. Tanh Activation Function :}
 
-\textbf{5. Leaky ReLU Activation Function :}
+%The hyperbolic tangent activation function(HTAF), or tanh, compresses the input vector in the range of -1 to 1 and offers a zero-centered output. The below formula and the figure \ref{fig:sigmoid tanh function curve} shows the tanh curve and mathematical representation:
 
-Leaky ReLU addresses the dying ReLU problem to some extent by introducing very small linear components for negative inputs to solve zero gradients associated with negatives and extending the range of ReLU. Although Leaky ReLU has all the features of ReLU, in practice, it is not always the case that Leaky ReLU is better than ReLU \cite{Zhao2024}. Below is the mathematical formulation of Leaky ReLU, and figure \ref{fig:leaky relu function curve} shows its function curve.
+%\[
+%    f(x) = \frac{2}{1 + e^{-2x}} - 1
+%\]
 
-\[
-f(x) =
-\begin{cases} 
-    x, & \text{if } x \geq 0 \\
-    ax, & \text{if } x < 0 
-\end{cases}
-\]
+%From the figure \ref{fig:sigmoid tanh function curve}, we can see that tanh and sigmoid function are relatively similar S-shaped curves. Tanh and Sigmoid have the following relationship:
 
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/leaky_relu_af.png}
-    \caption{Leaky ReLU function curve \cite{Zhao2024}}
-    \label{fig:leaky relu function curve}
-\end{figure}
+%\[
+%    Tanh(x) = 2Sigmoid(2x) - 1
+%\]
+
+%In practice, tanh is used more than sigmoid as it solves the sigmoid functions problem of not centering the output to zero. However, like sigmoid, tanh also suffers from vanishing gradient problems for extreme input values \cite{Zhao2024}.
+
+%\textbf{3. Softmax Activation Function :}
+
+%A softmax activation function is used in multi-class classification problems. It compresses the input vectors into probabilities from 0 to 1, all of which sum up to 1. In the K classification task, the generated probabilities can represent each category, with the larger value indicating the higher probability that it belongs to that particular category \cite{Zhao2024}. Figure \ref{fig:softmax function curve} shows the softmax function curve, and the below formula shows how softmax is formulated mathematically:
+
+%\[
+%    f(x) = \frac{e^{x_i}}{\sum_{j=1}^{k} e^{x_j}}
+%\]
+
+%\begin{figure}[ht!]
+%    \centering
+%    \includegraphics[width=0.7\linewidth]{Rohit_Master_Thesis//Images/softmax.png}
+ %   \caption{Softmax activation function curve \cite{Zhao2024}}
+  %  \label{fig:softmax function curve}
+%\end{figure}
+
+%The gradient becomes zero when the softmax function encounters a negative input value. Therefore, the weights for activation in that region will not update throughout backpropagation, resulting in a dead neuron that never activated \cite{Zhao2024}.
+
+%\textbf{4. ReLU Activation Function :}
+
+%ReLU, or Rectified Linear Unit, is a segmented linear function, as shown in figure \ref{fig:relu function curve}. It is a fast, simple activation function which is essentially a ramp function given by the following formula:
+
+%\[
+%    f(x) = max(0,x)
+%\]
+
+
+%\begin{figure}[ht!]
+ %   \centering
+  %  \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/relu_af.png}
+   % \caption{ReLU function curve \cite{Zhao2024}}
+    %\label{fig:relu function curve}
+%\end{figure}
+
+%For positive input, the derivative is 1, which improves the vanishing gradient problem and speeds up the gradient descent convergence. It is also faster than the sigmoid and tanh functions because the ReLU function only has linear relationships. However, this function suffers from a dying ReLU problem, which is when the input is negative, the gradient will be precisely zero, and the neurons will most likely die during training \cite{Zhao2024}.
+
+%\textbf{5. Leaky ReLU Activation Function :}
+
+%Leaky ReLU addresses the dying ReLU problem to some extent by introducing very small linear components for negative inputs to solve zero gradients associated with negatives and extending the range of ReLU. Although Leaky ReLU has all the features of ReLU, in practice, it is not always the case that Leaky ReLU is better than ReLU \cite{Zhao2024}. Below is the mathematical formulation of Leaky ReLU, and figure \ref{fig:leaky relu function curve} shows its function curve.
+
+%\[
+%f(x) =
+%\begin{cases} 
+%    x, & \text{if } x \geq 0 \\
+%    ax, & \text{if } x < 0 
+%\end{cases}
+%\]
+
+%\begin{figure}[ht!]
+%    \centering
+%    \includegraphics[width=0.8\linewidth]{Rohit_Master_Thesis//Images/leaky_relu_af.png}
+%    \caption{Leaky ReLU function curve \cite{Zhao2024}}
+%    \label{fig:leaky relu function curve}
+%\end{figure}
 
 \subsection{ResNet}
 \label{subsec:ResNet}
@@ -415,13 +415,19 @@ As stated, \gls{yolo} unifies the separate object detection components into a si
 
 \subsection*{\gls{yolo}'s versions: }
 
-\textbf{\gls{yolo}v2}\cite{redmon2017yolo9000}, also known as YOLO9000. It integrated several existing techniques of that time. The entire object detection architecture was converted into a full convolutional network, which helps achieve high accuracy and speed. Later, the high-resolution and low-resolution features were combined, and an anchor-based prediction method was adopted. Due to its simple input and output formats, \gls{yolo}v2 remains one of the mainly used object detection methods in the maintenance and development of various industrial settings, particularly on low-end devices which has very limited computing capabilities \cite{wang2024yolov1}.
+\textbf{\gls{yolo}v2} \cite{redmon2017yolo9000}, also known as YOLO9000. It integrated several existing techniques of that time. The entire object detection architecture was converted into a full convolutional network, which helps achieve high accuracy and speed. Later, the high-resolution and low-resolution features were combined, and an anchor-based prediction method was adopted. Due to its simple input and output formats, \gls{yolo}v2 remains one of the mainly used object detection methods in the maintenance and development of various industrial settings, particularly on low-end devices which has very limited computing capabilities \cite{wang2024yolov1}.
 
-\textbf{\gls{yolo}v3}\cite{redmon2018yolov3}, integrated advanced technology of the existing object detection and made the necessary optimizations to one-stage object detectors. \gls{yolo}v3 has architecture which combines \gls{fpn}, allowing for simultaneous predictions across multiple scales. \gls{yolo}v3 made notable changes to the label assignment task. There are two changes in the \gls{yolo}v3. The first change involves assigning a ground truth to a single anchor, and the second change involves transitioning from soft label to hard label for \gls{iou}-aware objectness. \gls{yolo}v3 is still the most popular version of \gls{yolo} series \cite{wang2024yolov1}.
+\textbf{\gls{yolo}v3} \cite{redmon2018yolov3}, integrated advanced technology of the existing object detection and made the necessary optimizations to one-stage object detectors. \gls{yolo}v3 has architecture which combines \gls{fpn}, allowing for simultaneous predictions across multiple scales. \gls{yolo}v3 made notable changes to the label assignment task. There are two changes in the \gls{yolo}v3. The first change involves assigning a ground truth to a single anchor, and the second change involves transitioning from soft label to hard label for \gls{iou}-aware objectness. \gls{yolo}v3 is still the most popular version of \gls{yolo} series \cite{wang2024yolov1}.
 
 \textbf{Scaled-\gls{yolo}v4} \cite{wang2021scaled}, can be used for edge and clound computing both. Due to the efforts of the DarkNet and PyTorch \gls{yolo}v3 communities, scaled-\gls{yolo}v4 can forgo the pre-training steps necessary with ImageNet and instead directly use a train-from-scratch method to achieve high-quality object detection outcomes. Scaled-\gls{yolo}v4 has introduced CSPNet into \gls{pan}, significantly improving the speed, parameters, accuracy, and number of calculations. Scaled-\gls{yolo}v4 also introduced model scaling methods for different edge devices and offers three types of models: P5, P6, and P7. During training, it also used the decoder and label assignment strategy introduced in the initial version of \gls{yolo}v5 \cite{wang2024yolov1}.
 
-There are now many more such \gls{yolo} versions with incremental updates such as \gls{yolo}v5 \cite{yolov5}, \gls{yolo}v8 \cite{Ultralytics2024} which is used in the current solution at Siemens as mentioned in section \ref{subsec:current solution at siemens} and latest being \gls{yolo}v10 \cite{Ultralytics2024v10}.
+\textbf{\gls{yolo}v5} \cite{ultralytics2024yolov5}, uses the design concepts of PyTorch \gls{yolo}v3 with a more simplified and revised architecture. It inherits many functions of \gls{yolo}v3, like auto anchor and hyperparameter search algorithms. The successive versions of \gls{yolo}v5 were optimized for speed-accuracy trade-off and activation functions. With continuous version updates and maintenance, \gls{yolo}v5 became one of the most popular \gls{yolo} development platforms. The two main features are Power-based Decoder and Neighborhood Positive Samples. \gls{yolo}v5 introduces a power-based decoder to enhance training stability, and to make up for the deficiency caused by recall, more neighbor grids are added as positive samples \cite{wang2024yolov1}.
+
+\textbf{\gls{yolo}v6} \cite{ultralytics2024yolov6} is specially designed for industry applications, so a lot of effort was put into the quantization issues of earlier versions \cite{wang2024yolov1}. \gls{yolo}v6 introduced some unique features, which are the Bidirectional Concentration (BiC) module, which is integrated in the neck of the detector, improving the localization signals while achieving better performance with minimal impact on speed. The Anchor-Aided Training (AAT) strategy is introduced in the model that leverages the advantages of both the anchor-based and anchor-free paradigms, all while maintaining the inference efficiency. To enhance the smaller model's performance, a new self-distillation strategy is introduced, which focuses on improving the auxiliary regression branch during the training phase while also removing it during inference to prevent a significant decrease in speed \cite{ultralytics2024yolov6}.
+
+\textbf{\gls{yolo}v7} \cite{ultralytics2024yolov7} outperformed other object detectors like Scaled-\gls{yolo}v4, \gls{yolo}v5, \gls{yolo}X, and many more in terms of speed and accuracy. It introduced a planned re-parameterized model, which serves as a strategy applicable to layers across different networks, with the concepts of gradient propagation path. To solve the issue of training a model with multiple output layers, that is, assigning dynamic targets for the outputs of different branches. A new label assignment technique called coarse-to-fine lead guided label assignment. \gls{yolo}v7 also introduced "extend" and "compound scaling" methods for real-time object detection, which can effectively use parameters and computation. Also, the methods proposed by \gls{yolo}v7 can significantly reduce about 40\% of parameters and about 50\% of computation and also have improved detection accuracy and faster inference speed \cite{ultralytics2024yolov6}.
+
+\textbf{\gls{yolo}v8} \cite{ultralytics2024yolov8} is a refined iteration of \gls{yolo}v5 with overall updates to the way the API is used and many code optimizations. Changes in \gls{yolo}v7 ELAN architecture are made while incorporating an additional residual connection, while the decoder remains the same as that of \gls{yolo}v6 2.0. It effectively consolidates the APIs of various downstream tasks and links them in a sequential manner. The underlying code optimizations in \gls{yolo}v8 have resulted in a 30\% increase in training performance. \gls{yolo}v8 provides a simple API to connect with the detection models with various downstream tasks \cite{wang2024yolov1}. It also adopted an anchor-free split Ultralytics head, which improves accuracy and also contributes to a more efficient detection process in contrast to anchor-based approaches \cite{ultralytics2024yolov6}.
 
 \section{Unsupervised Image Processing}
 \label{sec:unsupervised image processing}
