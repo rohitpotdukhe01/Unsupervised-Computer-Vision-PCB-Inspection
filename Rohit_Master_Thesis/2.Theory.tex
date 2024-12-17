@@ -93,7 +93,7 @@ Basic \gls{cnn} architecture consists of three types of layers they are \textbf{
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=1.1\linewidth]{Rohit_Master_Thesis//Images/cnn_architecture.pdf}
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/cnn_architecture.pdf}
     \caption{A common \gls{cnn} architecture \cite{oshea2015introductionconvolutionalneuralnetworks}}
     \label{fig:cnn architecture}
 \end{figure}
@@ -498,58 +498,20 @@ During testing, the trained model is given new data points to extract their feat
 
 \gls{dfm} has been extensively tested on several benchmark datasets, proving its effectiveness in detecting anomalies across various domains. The evaluation of the model's performance is done using metrics such as the \gls{auroc}, \gls{aupr}, and accuracy. \gls{dfm} demonstrated competitive results with \gls{auroc} score of about 98\%, outperforming traditional methods for anomaly detection \cite{ahuja2019probabilisticmodelingdeepfeatures}.
 
-\subsection{EfficientAD}
-\label{subsec:efficientad}
+\subsection{Deep Feature Kernel Density Estimation (DFKDE)}
+\label{subsec:dfkde}
 
-EfficientAD is an effective anomaly detection model for real-world computer vision applications focusing on computational efficiency and a lightweight feature extractor that can process an image under a millisecond using a modern GPU. EfficientAD employs a \gls{s-t} approach to detect anomalous features. It establishes new standards for detecting and localizing the anomalies, coupled with its low error rate. This makes EffienctAD an economical option for real-world applications \cite{batzner2024efficientadaccuratevisualanomaly}.
+\gls{dfkde} is a fast one-class anomaly detection model. It consists of two stages:
 
-\subsubsection*{Core Concept :}
+1. Feature extraction stage,
 
-EffientAD sets new benchmarks for both the accuracy of anomaly detection and the speed of inference. In order to detect anomalous features, a \gls{s-t} approach is used, where the student network is trained to predict features computed by a pre-trained teacher network on normal training images. EffienctAD introduces training loss that prevents the student network from imitating the teacher network beyond the normal images. This loss enables the use of efficient network architecture for both the student and the teacher while improving anomaly detection \cite{batzner2024efficientadaccuratevisualanomaly}. The components of EfficientAD can be divided into three main components:
+2. Anomaly detection stage,
 
-1. Efficient \gls{pdn},
+In the feature extraction stage, the features are extracted using \gls{dnn} as the backbone, such as ResNet, which was pre-trained on ImageNet\cite{5206848} dataset \cite{10208786}. The penultimate layer, which is the average pooling layer of the backbone, is used to obtain a semantic feature vector of a fixed length of 2048 \cite{Anomalib2024}.
 
-2. Lightweight Student-Teacher model,
+In the anomaly detection stage, once the features are extracted, then these features undergo dimensionality reduction using \gls{pca}\cite{IBM2023} to get the first 16 principal components. \gls{pca} is among the simple and most straightforward ways of doing dimensionality reduction. It is a technique that reduces high-dimensional data into a lower-dimensional representation by using the dependencies between variables without losing too much information \cite{Shalizi2012}. After the features are reduced using \gls{pca}, then on these reduced features, Gaussian \gls{kde} is applied. The main idea behind \gls{kde} is that the training datasets will follow some random distribution, and this distribution can be modeled by employing \gls{kde} \cite{10208786}.
 
-3. Autoencoder for Logical Anomaly Detection,
-
-\subsubsection*{Efficient Patch Description Network (PDN) :}
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=1.1\linewidth]{Rohit_Master_Thesis//Images/pdn.png}
-    \caption{\gls{pdn} architecture for EfficientAD. All features can be obtained in a single forward pass using it on an image in a fully convolutional manner \cite{batzner2024efficientadaccuratevisualanomaly}.}
-    \label{fig:pdn architecture}
-\end{figure}
-
-Recent anomaly detection methods often employ deep pre-trained networks for feature extraction. EffienctAD employs a feature extractor network of drastically reduced depth. This feature extractor is referred to as \gls{pdn}, and its architecture, as shown in figure \ref{fig:pdn architecture}, contains only four convolutional layers. The receptive field of each output neuron is $33\times33$ pixels, which makes \gls{pdn} possible to generate all feature vectors in a single forward pass for images of different sizes \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-To overcome the large feature map size, high computational costs, and memory requirement problems, \gls{pdn} performs early stage downsampling by strided average-pooling layers after the first and second convolutional layers as shown in figure \ref{fig:pdn architecture}. To generate expressive features, \gls{pdn} is trained by distilling a deep pre-trained classification network into it. \gls{pdn} trained in images from ImageNet by reducing the mean squared difference between its output and the features extracted from the pre-trained network. Besides higher efficiency, this has another benefit in that the features generated by \gls{pdn} only depend on local pixels, avoiding long-range dependencies in other methods. This ensures that an anomaly detected in one area of the image cannot activate anomalous feature vectors in other distant areas, which can compromise the localization of anomalies \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-\subsubsection*{Lightweight Student-Teacher model :}
-
-For anomalous feature vector detection, EfficientAD uses a \gls{s-t} approach, with the teacher being the \gls{pdn}. The student network also uses the teacher's architecture to maintain low overall latency. The EfficientAD model introduces a training loss, substantially improving anomaly detection without affecting the computational test time requirements. The goal is to provide the student with enough data so that it can mimic the teacher on normal images while avoiding generalization on anomalous images. Therefore, the student's loss is restricted to the most relevant parts of an image, i.e., the patches where the student mimics the teacher the least. A hard feature loss is proposed, which primarily uses the output elements with the highest loss for the purpose of backpropagation \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-Apart from hard feature loss, EfficientAD adds a loss penalty during training that further hinders the student's ability to imitate the teacher on images that are not included in the normal training images. The teacher network is either pre-trained on an image classification dataset or is a distilled version of a pre-trained network. However, the student is only trained on the application's normal images. To hinder the student's ability to generalize its imitation of the teacher to out-of-distribution images, a penalty in terms of using images from the teacher's pretraining during the training of student is proposed \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-\subsubsection*{Autoencoder for Logical Anomaly Detection :}
-
-For learning logical anomalies of the training images and detecting any violations of these constraints, EfficientAD uses an autoencoder on training images. Figure \ref{fig:EfficientAD pipeline} illustrates the anomaly detection pipeline for EfficientAD. It consists of \gls{s-t} pair and an autoencoder. The autoencoder is trained to predict the output generated by teacher's output. A standard convolutional autoencoder is used, which consists of strided convolutions in the encoder and bilinear upsampling in the decoder \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-Usually, for both the logical anomalies as well as normal images, the autoencoder fails to generate the accurate latent code needed for reconstruction of the image in the teacher's feature space, as can be seen in the figure \ref{fig:EfficientAD pipeline}. Using the difference between the teacher's output and the autoencoder's reconstruction as an anomaly map might cause false-positive detections. To avoid this, the student's output channels are doubled and trained to predict the output of the autoencoder in addition to the output of the teacher \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=1.1\linewidth]{Rohit_Master_Thesis/Images/efficientAD_pipeline.pdf}
-    \caption{EfficientAD pipeline}
-    \label{fig:EfficientAD pipeline}
-\end{figure}
-
-The student learns the systematic reconstruction errors of the autoencoder on normal images. However, it does not learn the reconstruction errors for anomalies as they are not part of the training set. This makes the difference between the student's and the autoencoder's output suitable for computing the anomaly map, which is calculated as the squared difference between the two outputs and then averaged across all channels. EfficientAD produces two anomaly maps, the one generated by the autoencoder-student pair is called a global anomaly map, and the one generated by \gls{s-t} pair is called a local anomaly map as seen in the figure \ref{fig:EfficientAD pipeline}. These two maps are then normalized to a similar scale and averaged to generate the combined anomaly map. Its maximum value is used as the image-level anomaly score \cite{batzner2024efficientadaccuratevisualanomaly}.
-
-\subsubsection*{Performance :}
-
-EfficientAD achieves an impressive image-level \gls{auroc} score of $99.8\%$ on MVTec AD dataset\cite{8954181} with early stopping enabled. For the overall anomaly detection performance, EfficientAD achieves very strong image-level detection and pixel-level localization performance with the highest score of $98.1$ for VisA\cite{zou2022spotthedifferenceselfsupervisedpretraininganomaly} dataset. The computational cost of EfficientAD was measured using the metrics latency and throughput, with the EfficientAD showing latency of $2.2ms$ and throughput of 614 $img/s$ \cite{batzner2024efficientadaccuratevisualanomaly}.
+During inference, if a lower probability density is observed below the threshold determined by the training dataset, this indicates the existence of an anomaly compared to the data distribution learned from the training data \cite{10208786}. The \gls{dfkde} gives competitive results on MVTec AD\cite{8954181}, for the metric \gls{auroc} \gls{dfkde} gives the highest of 96.5 score \cite{Anomalib2024}.
 
 \subsection{FastFlow}
 \label{subsec:fastflow}
@@ -583,18 +545,78 @@ The first step in the whole pipeline involves extracting representative features
 
 The 2D flow function is used to project the image features into the hidden variable using a bijective invertible mapping. At the time of inference, the features of anomalous images should be out of distribution and, therefore, will have lower likelihoods than normal images. This likelihood can be used as the anomaly score. Specifically, the sum of the 2D probabilities of each channel is done to obtain the final probability map, and then it is upsampled to the input image resolution using bilinear interpolation. In order to convert the original normalization flow into a 2D format, alternate $3\times3$ and $1\times1$ convolutional layers are used in the default subnet as shown in the figure\ref{fig:fastflow pipeline} to retain the spatial information in the flow model and the loIn the feature extraction stage, the features are extracted using \gls{dnn} as the backbone, such as ResNet[mention reference], which was pre-trained on ImageNet\cite{5206848} dataset \cite{10208786}., CIFAR-10\cite{krizhevsky2009learning}, BTAD\cite{Mishra_2021} datasets. For the MVTec AD dataset, the FastFlow model was compared with many state-of-the-art models with two metrics image-level \gls{auc} and pixel-level \gls{auc}. FastFlow demonstrates exceptional performance in anomaly detection, achieving a 99.4 image-level \gls{auc} and 98.5 pixel-level \gls{auc}, surpassing all the other models. In the case of the CIFAR-10 dataset, FastFlow achieves an \gls{auc} 66.7, which is the best performing model when compared with others. For the BTAD dataset, FastFlow again surpasses all the compared models and achieves a pixel-level \gls{auc} of 97.0 \cite{yu2021fastflowunsupervisedanomalydetection}.
 
-\subsection{Deep Feature Kernel Density Estimation (DFKDE)}
-\label{subsec:dfkde}
+\subsection{EfficientAD}
+\label{subsec:efficientad}
 
-\gls{dfkde} is a fast one-class anomaly detection model. It consists of two stages:
+EfficientAD is an effective anomaly detection model for real-world computer vision applications focusing on computational efficiency and a lightweight feature extractor that can process an image under a millisecond using a modern GPU. EfficientAD employs a \gls{s-t} approach to detect anomalous features. It establishes new standards for detecting and localizing the anomalies, coupled with its low error rate. This makes EffienctAD an economical option for real-world applications \cite{batzner2024efficientadaccuratevisualanomaly}.
 
-1. Feature extraction stage,
+\subsubsection*{Core Concept :}
 
-2. Anomaly detection stage,
+EffientAD sets new benchmarks for both the accuracy of anomaly detection and the speed of inference. In order to detect anomalous features, a \gls{s-t} approach is used, where the student network is trained to predict features computed by a pre-trained teacher network on normal training images. EffienctAD introduces training loss that prevents the student network from imitating the teacher network beyond the normal images. This loss enables the use of efficient network architecture for both the student and the teacher while improving anomaly detection \cite{batzner2024efficientadaccuratevisualanomaly}. The components of EfficientAD can be divided into three main components:
 
-In the feature extraction stage, the features are extracted using \gls{dnn} as the backbone, such as ResNet[mention reference], which was pre-trained on ImageNet\cite{5206848} dataset \cite{10208786}. The penultimate layer, which is the average pooling layer of the backbone, is used to obtain a semantic feature vector of a fixed length of 2048 \cite{Anomalib2024}.
+1. Efficient \gls{pdn},
 
-In the anomaly detection stage, once the features are extracted, then these features undergo dimensionality reduction using \gls{pca}\cite{IBM2023} to get the first 16 principal components. \gls{pca} is among the simple and most straightforward ways of doing dimensionality reduction. It is a technique that reduces high-dimensional data into a lower-dimensional representation by using the dependencies between variables without losing too much information \cite{Shalizi2012}. After the features are reduced using \gls{pca}, then on these reduced features, Gaussian \gls{kde} is applied. The main idea behind \gls{kde} is that the training datasets will follow some random distribution, and this distribution can be modeled by employing \gls{kde} \cite{10208786}.
+2. Lightweight Student-Teacher model,
 
-During inference, if a lower probability density is observed below the threshold determined by the training dataset, this indicates the existence of an anomaly compared to the data distribution learned from the training data \cite{10208786}. The \gls{dfkde} gives competitive results on MVTec AD\cite{8954181}, for the metric \gls{auroc} \gls{dfkde} gives the highest of 96.5 score \cite{Anomalib2024}.
+3. Autoencoder for Logical Anomaly Detection,
+
+\subsubsection*{Efficient Patch Description Network (PDN) :}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/pdn.png}
+    \caption{\gls{pdn} architecture for EfficientAD. All features can be obtained in a single forward pass using it on an image in a fully convolutional manner \cite{batzner2024efficientadaccuratevisualanomaly}.}
+    \label{fig:pdn architecture}
+\end{figure}
+
+Recent anomaly detection methods often employ deep pre-trained networks for feature extraction. EffienctAD employs a feature extractor network of drastically reduced depth. This feature extractor is referred to as \gls{pdn}, and its architecture, as shown in figure \ref{fig:pdn architecture}, contains only four convolutional layers. The receptive field of each output neuron is $33\times33$ pixels, which makes \gls{pdn} possible to generate all feature vectors in a single forward pass for images of different sizes \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+To overcome the large feature map size, high computational costs, and memory requirement problems, \gls{pdn} performs early stage downsampling by strided average-pooling layers after the first and second convolutional layers as shown in figure \ref{fig:pdn architecture}. To generate expressive features, \gls{pdn} is trained by distilling a deep pre-trained classification network into it. \gls{pdn} trained in images from ImageNet by reducing the mean squared difference between its output and the features extracted from the pre-trained network. Besides higher efficiency, this has another benefit in that the features generated by \gls{pdn} only depend on local pixels, avoiding long-range dependencies in other methods. This ensures that an anomaly detected in one area of the image cannot activate anomalous feature vectors in other distant areas, which can compromise the localization of anomalies \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+\subsubsection*{Lightweight Student-Teacher model :}
+
+For anomalous feature vector detection, EfficientAD uses a \gls{s-t} approach, with the teacher being the \gls{pdn}. The student network also uses the teacher's architecture to maintain low overall latency. The EfficientAD model introduces a training loss, substantially improving anomaly detection without affecting the computational test time requirements. The goal is to provide the student with enough data so that it can mimic the teacher on normal images while avoiding generalization on anomalous images. Therefore, the student's loss is restricted to the most relevant parts of an image, i.e., the patches where the student mimics the teacher the least. A hard feature loss is proposed, which primarily uses the output elements with the highest loss for the purpose of backpropagation \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+Apart from hard feature loss, EfficientAD adds a loss penalty during training that further hinders the student's ability to imitate the teacher on images that are not included in the normal training images. The teacher network is either pre-trained on an image classification dataset or is a distilled version of a pre-trained network. However, the student is only trained on the application's normal images. To hinder the student's ability to generalize its imitation of the teacher to out-of-distribution images, a penalty in terms of using images from the teacher's pretraining during the training of student is proposed \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+\subsubsection*{Autoencoder for Logical Anomaly Detection :}
+
+For learning logical anomalies of the training images and detecting any violations of these constraints, EfficientAD uses an autoencoder on training images. Figure \ref{fig:EfficientAD pipeline} illustrates the anomaly detection pipeline for EfficientAD. It consists of \gls{s-t} pair and an autoencoder. The autoencoder is trained to predict the output generated by teacher's output. A standard convolutional autoencoder is used, which consists of strided convolutions in the encoder and bilinear upsampling in the decoder \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+Usually, for both the logical anomalies as well as normal images, the autoencoder fails to generate the accurate latent code needed for reconstruction of the image in the teacher's feature space, as can be seen in the figure \ref{fig:EfficientAD pipeline}. Using the difference between the teacher's output and the autoencoder's reconstruction as an anomaly map might cause false-positive detections. To avoid this, the student's output channels are doubled and trained to predict the output of the autoencoder in addition to the output of the teacher \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.1\linewidth]{Rohit_Master_Thesis/Images/efficientAD_pipeline.pdf}
+    \caption{EfficientAD pipeline}
+    \label{fig:EfficientAD pipeline}
+\end{figure}
+
+The student learns the systematic reconstruction errors of the autoencoder on normal images. However, it does not learn the reconstruction errors for anomalies as they are not part of the training set. This makes the difference between the student's and the autoencoder's output suitable for computing the anomaly map, which is calculated as the squared difference between the two outputs and then averaged across all channels. EfficientAD produces two anomaly maps, the one generated by the autoencoder-student pair is called a global anomaly map, and the one generated by \gls{s-t} pair is called a local anomaly map as seen in the figure \ref{fig:EfficientAD pipeline}. These two maps are then normalized to a similar scale and averaged to generate the combined anomaly map. Its maximum value is used as the image-level anomaly score \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+\subsubsection*{Performance :}
+
+EfficientAD achieves an impressive image-level \gls{auroc} score of $99.8\%$ on MVTec AD dataset\cite{8954181} with early stopping enabled. For the overall anomaly detection performance, EfficientAD achieves very strong image-level detection and pixel-level localization performance with the highest score of $98.1$ for VisA\cite{zou2022spotthedifferenceselfsupervisedpretraininganomaly} dataset. The computational cost of EfficientAD was measured using the metrics latency and throughput, with the EfficientAD showing latency of $2.2ms$ and throughput of 614 $img/s$ \cite{batzner2024efficientadaccuratevisualanomaly}.
+
+\subsection*{Summary of all the models}
+
+The table \ref{tab:model_key_characteristics} summarizes all the models we have gone through above.
+
+\begin{table}[ht!]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Model} & \textbf{Key Characteristics} \\ \hline
+YOLO & Real-time object detection; maps pixels to bounding box coordinates and class probabilities \\ \hline
+PatchCore & Uses locally-aware patch features and memory banks for anomaly detection \\ \hline
+DFM (Deep Feature Modelling) & Models normal data distribution using deep feature extraction and density modeling \\ \hline
+EfficientAD & Combines lightweight student-teacher networks with efficient patch descriptors \\ \hline
+FastFlow & Extends normalizing flow models to 2D for feature distribution estimation \\ \hline
+DFKDE (Deep Feature Kernel Density Estimation) & Extracts features with ResNet and applies Kernel Density Estimation on reduced features \\ \hline
+\end{tabular}%
+}
+\caption{Summary of Models and Their Key Characteristics}
+\label{tab:model_key_characteristics}
+\end{table}
 

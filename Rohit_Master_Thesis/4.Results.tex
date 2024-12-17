@@ -67,12 +67,14 @@ The confusion matrix, as shown in figure \ref{fig:yolov8l confusion matrix}, pro
 
 The \textbf{\gls{yolo}v8-M} model, which is smaller and more lightweight when compared to \gls{yolo}v8-L, reaches an accuracy of 93.75\%. This is slightly lower than its bigger model, as seen from the table \ref{tab:yolov8_performance}, but its overall performance was still quite impressive.
 
-\begin{figure}[ht!]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=1.3\linewidth]{Rohit_Master_Thesis//Images/yolov8m_confusion_matrix.png}
+    \includegraphics[width=0.9\linewidth]{Rohit_Master_Thesis//Images/yolov8m_confusion_matrix.png}
     \caption{Confusion matrix for the baseline model \gls{yolo}v8-M, its accuracy is 93.75\%}
     \label{fig:yolov8m confusion matrix}
 \end{figure}
+
+\FloatBarrier
 
 The confusion matrix in figure \ref{fig:yolov8m confusion matrix} shows almost similar results to that of \gls{yolo}v8-L. With 79 True positives and 74 true negatives, while only making 6 false positives and 1 false negative prediction, apart from the 1 misclassified normal image as anomalous, the results are similar to that of \gls{yolo}v8-L. This indicates that the performance of the \gls{yolo}v8-M, though highly accurate, still falls just short of \gls{yolo}v8-L's performance due to its smaller capacity for learning complex patterns. As can be seen from the table \ref{tab:yolov8_performance}, the model achieved a precision of 0.9867, meaning that almost all of the predictions of normal(FC) images were correct. The recall for both the \gls{yolo}v8-L and \gls{yolo}v8-M matches and is equal to 0.925, indicating that both models successfully detected the same number of FC cases. The F1-score of the model was 0.9547, which is slightly lower than \gls{yolo}v8-L due to the slight decrease in the precision. While the model was highly accurate, it did produce a small number of false positives, in this case, 6 anomalous(NG) images were misclassified as normal(FC), which reduced its precision slightly.
 
@@ -90,7 +92,7 @@ The confusion matrix in figure \ref{fig:yolov8m confusion matrix} shows almost s
 
 \subsection*{PatchCore}
 
-\begin{figure}[H]
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore heatmap.png}
     \caption{PatchCore heatmap for the experiment where backbone "Wide Resnet50" and different layers were used.}
@@ -137,7 +139,7 @@ For the first configuration, we have used backbone \texttt{wide\_resnet50\_2} wi
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore_config1_confusion_matrix.png}
-    \caption{Confusion matrix for the first configuration where backbone "Wide Resnet50" and layers "2, 3" were used.}
+    \caption{Confusion matrix for PatchCore's first configuration where backbone "Wide Resnet50" and layers "2, 3" were used.}
     \label{fig:patchcore config1 confusion matrix}
 \end{figure}
 
@@ -146,7 +148,7 @@ The second configuration resulted in the best overall performance across all met
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore_config2_confusion_matrix.png}
-    \caption{Confusion matrix for the second configuration where backbone "Wide Resnet50" and layers "1, 2" were used.}
+    \caption{Confusion matrix for PatchCore's second configuration where backbone "Wide Resnet50" and layers "1, 2" were used.}
     \label{fig:patchcore config2 confusion matrix}
 \end{figure}
 
@@ -155,7 +157,7 @@ In the third configuration, layer 2, layer 3, and layer 4 were used for the back
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\linewidth]{Rohit_Master_Thesis//Images/patchcore_config3_confusion_matrix.png}
-    \caption{Confusion matrix for the third configuration where backbone "Wide Resnet50" and layers "2, 3, 4" were used.}
+    \caption{Confusion matrix for PatchCore's third configuration where backbone "Wide Resnet50" and layers "2, 3, 4" were used.}
     \label{fig:patchcore config3 confusion matrix}
 \end{figure}
 
@@ -231,7 +233,7 @@ Here, we used ResNet50's layer4 for feature extraction along with \gls{nll} as t
         Wide-ResNet50-2 (layer2, fre) & 62.12\% & 0.5795 & 0.5681 & 1.0 & 0.7254 \\ \hline
         Wide-ResNet50-2 (layer3) & 62.86\% & 0.7265 & 0.5738 & 1.0 & 0.7292 \\ \hline
     \end{tabular}
-    \caption{Results for ResNet and Wide-ResNet50-2 Backbones}
+    \caption{Results for DFM's ResNet and Wide-ResNet50-2 Backbones}
     \label{tab:dfm resnet results}
 \end{table}
 
@@ -254,7 +256,7 @@ Next, we conducted experiments using different DenseNet backbones. Firstly, we u
         %DenseNet264d (untrained) & 0.8029 & N/A & N/A & N/A & 0.8471 \\ \hline
         %DenseNet201 (denseblock3, 0.97 PCA) & 0.7265 & N/A & N/A & N/A & 0.8460 \\ \hline
     \end{tabular}
-    \caption{Results for DenseNet Backbones}
+    \caption{Results for DFM's DenseNet Backbones}
     \label{tab:dfm densenet results}
 \end{table}
 
@@ -266,6 +268,8 @@ The best performing configuration for the DenseNet architecture comes from the D
     \caption{Confusion matrix for the best performing configuration for \gls{dfm} model with DenseNet169 backbone, its accuracy is 72.86\%}
     \label{fig:dfm densenet169 confusion matrix}
 \end{figure}
+
+\FloatBarrier
 
 After getting good results with the configuration explained above, we thought of checking another variation of the DenseNet169 backbone while keeping the feature extraction layer and scoring type the same as before but using a higher \gls{pca} level of 0.995, allowing for a greater variance in the data. However, the results were more or less similar to the previous configuration, with a slightly lower \gls{auroc} of 0.7190 and an accuracy of 72.14\%, along with a precision of 0.6422 and an F1-score of 0.7821. The recall remained at 1.0, but the decrease in precision compared to the previous configuration indicates that the increased retained variance caused the model to classify a higher number of normal images as anomalous. Finally, DenseNet201 was also tested with the same feature extraction layer, keeping the other hyperparameters the same. This configuration also gave similar results to previous ones highlighted in the table \ref{tab:dfm densenet results}.
 
