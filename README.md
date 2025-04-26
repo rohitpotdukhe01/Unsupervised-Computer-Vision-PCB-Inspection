@@ -78,12 +78,12 @@ This project explores unsupervised anomaly detection approaches to:
 
 | Model          | Accuracy | AUROC | Precision | Recall | F1-Score |
 |----------------|----------|-------|-----------|--------|----------|
-| YOLOv8-L       | 95%      | -     | 1.00      | 0.925  | 0.96     |
+| ##YOLOv8-L     | #95%     | -     | 1.00      | 0.925  | 0.96     |
 | YOLOv8-M       | 93.75%   | -     | 0.99      | 0.925  | 0.95     |
-| PatchCore      | 91.25%   | 0.93  | 0.87      | 0.98   | 0.92     |
-| DFM (best)     | 72.86%   | 0.72  | 0.65      | 0.97   | 0.78     |
-| DFKDE (best)   | 70.71%   | 0.77  | 0.64      | 0.97   | 0.77     |
-| FastFlow (ViT) | 66.87%   | 0.88  | 0.60      | 1.00   | 0.75     |
+| ##PatchCore    | #91.25%  | 0.93  | 0.87      | 0.98   | 0.92     |
+| DFM            | 72.86%   | 0.72  | 0.65      | 0.97   | 0.78     |
+| DFKDE          | 70.71%   | 0.77  | 0.64      | 0.97   | 0.77     |
+| FastFlow       | 66.87%   | 0.88  | 0.60      | 1.00   | 0.75     |
 | EfficientAD    | 60%      | 0.67  | 0.56      | 1.00   | 0.71     |
 
 **Key Finding**: PatchCore achieved the best unsupervised performance, with only a 2.5% gap to the supervised YOLOv8-M baseline.
@@ -106,9 +106,6 @@ This project explores unsupervised anomaly detection approaches to:
 # Clone the repository
 git clone https://github.com/rohitpotdukhe01/UNITE_FAU_Thesis.git
 cd UNITE_FAU_Thesis
-
-# Install dependencies
-pip install -r requirements.txt
 ```
 
 ---
@@ -145,8 +142,8 @@ Finally, my heartfelt thanks go to my family and friends for their unwavering su
 
 For questions regarding this project or collaboration, please contact:
 
-- **Rohit Potdukhe **: [rohitpotdukhe@gmail.com]
-- **Prof. Dr. Enrique Zuazua (Advisor)
-- **Dr. Majid Mortazavi (Supervisor)
+- Rohit Potdukhe : rohitpotdukhe@gmail.com
+- Prof. Dr. Enrique Zuazua (Advisor)
+- Dr. Majid Mortazavi (Supervisor)
 
 > *This README summarizes the core aspects of the thesis and provides practical guidance for reproducing or extending the experiments. For full technical details, please refer to the thesis document and code comments.*
