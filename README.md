@@ -4,6 +4,8 @@ This repository contains the code, experiments, and documentation for the master
 
 The thesis investigates the use of unsupervised anomaly detection techniques — particularly leveraging the **Anomalib** library — to automate the identification of faulty solder joints on PCB assemblies, aiming to reduce dependency on manual labeling and improve scalability in industrial quality control.
 
+---
+
 ## Table of Contents
 - [Project Motivation](#project-motivation)
 - [Dataset](#dataset)
@@ -16,6 +18,8 @@ The thesis investigates the use of unsupervised anomaly detection techniques —
 - [License & Confidentiality](#license--confidentiality)
 - [Contact](#contact)
 
+---
+
 ## Project Motivation
 
 Automated Optical Inspection (AOI) machines are widely used in PCB manufacturing for defect detection. However, these systems often generate a high number of false calls, requiring costly manual intervention and expert labeling for supervised machine learning models. As PCB complexity grows, the need for scalable, label-free inspection methods becomes critical.
@@ -25,10 +29,12 @@ This project explores unsupervised anomaly detection approaches to:
 - Reduce false calls and manual intervention.
 - Provide scalable, adaptable solutions for industrial PCB inspection.
 
+---
+
 ## Dataset
 
 - **Source**: Provided by Siemens AG, Berlin.
-- **Content**: 6014 images of solder joints on PCBs (512x512 pixels), split into:
+- **Content**: 6,014 images of solder joints on PCBs (512x512 pixels), split into:
   - **FC** (No Defects)
   - **NG** (Defective)
 - **Splits**:
@@ -37,6 +43,8 @@ This project explores unsupervised anomaly detection approaches to:
   - **Custom Test**: 80 FC / 80 NG
 - **Image Types**: Both colored and heatmap images.
 - **Preprocessing**: Images resized to 256x256 for modeling.
+
+---
 
 ## Methods and Models
 
@@ -55,12 +63,16 @@ This project explores unsupervised anomaly detection approaches to:
 - **DenseNet121/169/201**
 - **Vision Transformers (DeiT, CaiT)**
 
+---
+
 ## Experiments
 
 - **Data Loading**: Custom Anomalib datamodule for efficient preprocessing and splitting.
 - **Model Training/Inference**: Each model is trained (or features extracted) on normal images only, with hyperparameter tuning for backbone, layers, and thresholds.
 - **Evaluation Metrics**: AUROC, Accuracy, Precision, Recall, F1-Score, Confusion Matrix.
 - **Model Export**: Trained models exported in OpenVINO format for deployment.
+
+---
 
 ## Results
 
@@ -80,6 +92,8 @@ This project explores unsupervised anomaly detection approaches to:
 
 **Future Work**: Further exploration of Vision Transformers and optimization for faster inference are recommended.
 
+---
+
 ## How to Use This Repository
 
 ### Prerequisites
@@ -95,7 +109,7 @@ cd UNITE_FAU_Thesis
 
 # Install dependencies
 pip install -r requirements.txt
-
+```
 
 ---
 
@@ -111,7 +125,13 @@ pip install -r requirements.txt
 
 ## Acknowledgements
 
-First and foremost, I would like to thank my supervisor, Dr. Majid Mortazavi, for his invaluable guidance, support, and encouragement throughout the course of my research. His insights and expertise were crucial to the successful completion of this work. I am also deeply grateful to my advisor, Prof. Dr. Enrique Zuazua, for his continuous support, constructive feedback, and for always being available to discuss ideas and provide guidance. I would like to extend my gratitude to Siemens AG, Berlin, Germany, for providing me with the opportunity to conduct my research in collaboration with their team and for providing me with the required resources. Finally, my heartfelt thanks go to my family and friends for their unwavering support, patience, and understanding throughout this journey. Their encouragement has been a source of strength for me.
+First and foremost, I would like to thank my supervisor, Dr. Majid Mortazavi, for his invaluable guidance, support, and encouragement throughout the course of my research. His insights and expertise were crucial to the successful completion of this work. 
+
+I am also deeply grateful to my advisor, Prof. Dr. Enrique Zuazua, for his continuous support, constructive feedback, and for always being available to discuss ideas and provide guidance. 
+
+I would like to extend my gratitude to Siemens AG, Berlin, Germany, for providing me with the opportunity to conduct my research in collaboration with their team and for providing the required resources. 
+
+Finally, my heartfelt thanks go to my family and friends for their unwavering support, patience, and understanding throughout this journey. Their encouragement has been a source of strength for me.
 
 ---
 
@@ -125,11 +145,8 @@ First and foremost, I would like to thank my supervisor, Dr. Majid Mortazavi, fo
 
 For questions regarding this project or collaboration, please contact:
 
-- Rohit Potdukhe (Author): [your.email@domain.com]
-- Prof. Dr. Enrique Zuazua (Advisor): [university contact]
-- Dr. Majid Mortazavi (Supervisor): [Siemens contact]
-
----
+- **Rohit Potdukhe (Author)**: [your.email@domain.com]
+- **Prof. Dr. Enrique Zuazua (Advisor)**: [university contact]
+- **Dr. Majid Mortazavi (Supervisor)**: [Siemens contact]
 
 > *This README summarizes the core aspects of the thesis and provides practical guidance for reproducing or extending the experiments. For full technical details, please refer to the thesis document and code comments.*
-
