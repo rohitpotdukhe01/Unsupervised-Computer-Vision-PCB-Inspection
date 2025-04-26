@@ -145,8 +145,8 @@ Finally, my heartfelt thanks go to my family and friends for their unwavering su
 
 For questions regarding this project or collaboration, please contact:
 
-- **Rohit Potdukhe (Author)**: [your.email@domain.com]
-- **Prof. Dr. Enrique Zuazua (Advisor)**: [university contact]
-- **Dr. Majid Mortazavi (Supervisor)**: [Siemens contact]
+- **Rohit Potdukhe **: [rohitpotdukhe@gmail.com]
+- **Prof. Dr. Enrique Zuazua (Advisor)
+- **Dr. Majid Mortazavi (Supervisor)
 
 > *This README summarizes the core aspects of the thesis and provides practical guidance for reproducing or extending the experiments. For full technical details, please refer to the thesis document and code comments.*
