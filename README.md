@@ -78,9 +78,9 @@ This project explores unsupervised anomaly detection approaches to:
 
 | Model          | Accuracy | AUROC | Precision | Recall | F1-Score |
 |----------------|----------|-------|-----------|--------|----------|
-| ##YOLOv8-L     | #95%     | -     | 1.00      | 0.925  | 0.96     |
+| YOLOv8-L       | 95%      | -     | 1.00      | 0.925  | 0.96     |
 | YOLOv8-M       | 93.75%   | -     | 0.99      | 0.925  | 0.95     |
-| ##PatchCore    | #91.25%  | 0.93  | 0.87      | 0.98   | 0.92     |
+| PatchCore      | 91.25%   | 0.93  | 0.87      | 0.98   | 0.92     |
 | DFM            | 72.86%   | 0.72  | 0.65      | 0.97   | 0.78     |
 | DFKDE          | 70.71%   | 0.77  | 0.64      | 0.97   | 0.77     |
 | FastFlow       | 66.87%   | 0.88  | 0.60      | 1.00   | 0.75     |
