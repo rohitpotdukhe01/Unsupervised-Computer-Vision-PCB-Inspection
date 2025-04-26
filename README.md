@@ -95,3 +95,41 @@ cd UNITE_FAU_Thesis
 
 # Install dependencies
 pip install -r requirements.txt
+
+
+---
+
+## Key Dependencies
+
+- [Anomalib](https://github.com/openvinotoolkit/anomalib)
+- PyTorch
+- OpenVINO
+- scikit-learn
+- numpy, pandas, matplotlib
+
+---
+
+## Acknowledgements
+
+First and foremost, I would like to thank my supervisor, Dr. Majid Mortazavi, for his invaluable guidance, support, and encouragement throughout the course of my research. His insights and expertise were crucial to the successful completion of this work. I am also deeply grateful to my advisor, Prof. Dr. Enrique Zuazua, for his continuous support, constructive feedback, and for always being available to discuss ideas and provide guidance. I would like to extend my gratitude to Siemens AG, Berlin, Germany, for providing me with the opportunity to conduct my research in collaboration with their team and for providing me with the required resources. Finally, my heartfelt thanks go to my family and friends for their unwavering support, patience, and understanding throughout this journey. Their encouragement has been a source of strength for me.
+
+---
+
+## License & Confidentiality
+
+**Note:** This repository contains or references confidential information and is subject to a non-disclosure agreement with Siemens AG. Duplication or publication of the thesis or any proprietary data/code is **not permitted** without prior written approval from Siemens AG.
+
+---
+
+## Contact
+
+For questions regarding this project or collaboration, please contact:
+
+- Rohit Potdukhe (Author): [your.email@domain.com]
+- Prof. Dr. Enrique Zuazua (Advisor): [university contact]
+- Dr. Majid Mortazavi (Supervisor): [Siemens contact]
+
+---
+
+> *This README summarizes the core aspects of the thesis and provides practical guidance for reproducing or extending the experiments. For full technical details, please refer to the thesis document and code comments.*
+
